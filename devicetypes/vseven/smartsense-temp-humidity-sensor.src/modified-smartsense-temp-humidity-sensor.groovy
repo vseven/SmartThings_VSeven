@@ -13,7 +13,6 @@
  *  for the specific language governing permissions and limitations under the License.
  *
  *  NOTE: Changes made to the default SmartThings "SmartSense Temperature/Humidity Sensor:
- * 		- Renamed Humidity/Temp
  * 		- Humidity is now the primary tile and temperature secondary
  *		- The range for background color have been changed since its no longer temperature based
  */
