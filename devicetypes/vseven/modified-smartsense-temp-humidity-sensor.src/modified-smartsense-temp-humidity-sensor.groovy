@@ -49,10 +49,10 @@ metadata {
 			tileAttribute ("device.humidity", key: "PRIMARY_CONTROL") {
 				attributeState "humidity", label:'${currentValue}%',
 					backgroundColors:[
-						[value: 1, color: "#486e13"],
-						[value: 25, color: "#60931a"],
-						[value: 40, color: "#79b821"],
-						[value: 60, color: "#db1dc9"],
+						[value: 1, color: "#184cdb"],
+						[value: 25, color: "#1a9384"],
+						[value: 40, color: "#699826"],
+						[value: 60, color: "#794044"],
 						[value: 85, color: "#e31515"]
 					]
 			}
