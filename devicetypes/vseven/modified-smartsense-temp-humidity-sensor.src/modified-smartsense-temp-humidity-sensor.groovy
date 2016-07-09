@@ -15,6 +15,7 @@
  *  NOTE: Changes made to the default SmartThings "SmartSense Temperature/Humidity Sensor:
  * 		- Humidity is now the primary tile and temperature secondary
  *		- The range for background color have been changed since its no longer temperature based
+ * 		- Humidity can now be offset the same way that temperature can
  */
 metadata {
 	definition (name: "Modified SmartSense Temp/Humidity Sensor",namespace: "vseven", author: "SmartThings.  Modified by vseven", category: "C2") {
@@ -39,6 +40,9 @@ metadata {
 	preferences {
 		input title: "Temperature Offset", description: "This feature allows you to correct any temperature variations by selecting an offset. Ex: If your sensor consistently reports a temp that's 5 degrees too warm, you'd enter \"-5\". If 3 degrees too cold, enter \"+3\".", displayDuringSetup: false, type: "paragraph", element: "paragraph"
 		input "tempOffset", "number", title: "Degrees", description: "Adjust temperature by this many degrees", range: "*..*", displayDuringSetup: false
+		input title: "Humidity Offset", description: "This feature allows you to correct any humidity variations by selecting an offset. Ex: If your sensor consistently reports a humidity that's 6% higher then a similiar calibrated sensor, you'd enter \"-6\".", displayDuringSetup: false, type: "paragraph", element: "paragraph"
+		input "humidityOffset", "number", title: "Humidity Percent", description: "Adjust humidity by this percentage", range: "*..*", displayDuringSetup: false
+	
 	}
 
 	tiles(scale: 2) {
@@ -231,6 +235,11 @@ private Map getTemperatureResult(value) {
 
 private Map getHumidityResult(value) {
 	log.debug 'Humidity'
+	if (humidtyOffset) {
+		def offset = humidtyOffset as int
+		def v = value as int
+		value = v + offset
+	}
 	return [
 		name: 'humidity',
 		value: value,
@@ -240,7 +249,7 @@ private Map getHumidityResult(value) {
 
 def refresh()
 {
-	log.debug "refresh temperature, humidity, and battery"
+	log.debug "refresh humidity, temperature, and battery"
 	[
 
 		"zcl mfg-code 0xC2DF", "delay 1000",
