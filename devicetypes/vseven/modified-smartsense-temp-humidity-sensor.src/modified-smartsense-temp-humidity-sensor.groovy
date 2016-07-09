@@ -42,7 +42,6 @@ metadata {
 		input "tempOffset", "number", title: "Degrees", description: "Adjust temperature by this many degrees", range: "*..*", displayDuringSetup: false
 		input title: "Humidity Offset", description: "This feature allows you to correct any humidity variations by selecting an offset. Ex: If your sensor consistently reports a humidity that's 6% higher then a similiar calibrated sensor, you'd enter \"-6\".", displayDuringSetup: false, type: "paragraph", element: "paragraph"
 		input "humidityOffset", "number", title: "Humidity Percent", description: "Adjust humidity by this percentage", range: "*..*", displayDuringSetup: false
-	
 	}
 
 	tiles(scale: 2) {
@@ -235,11 +234,13 @@ private Map getTemperatureResult(value) {
 
 private Map getHumidityResult(value) {
 	log.debug 'Humidity'
+	def linkText = getLinkText(device)
 	if (humidtyOffset) {
 		def offset = humidtyOffset as int
-		def v = value as int
-		value = v + offset
+		def w = value as int
+		value = w + offset
 	}
+	def descriptionText = "${linkText} was ${value}%"
 	return [
 		name: 'humidity',
 		value: value,
