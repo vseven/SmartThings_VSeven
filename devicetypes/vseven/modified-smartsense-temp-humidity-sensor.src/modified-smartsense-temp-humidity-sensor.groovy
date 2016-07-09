@@ -17,7 +17,7 @@
  *		- The range for background color have been changed since its no longer temperature based
  */
 metadata {
-	definition (name: "Modified SmartSense Temp/Humidity Sensor",namespace: "smartthings", author: "SmartThings.  Modified by vseven", category: "C2") {
+	definition (name: "Modified SmartSense Temp/Humidity Sensor",namespace: "vseven", author: "SmartThings.  Modified by vseven", category: "C2") {
 		capability "Configuration"
 		capability "Battery"
 		capability "Refresh"
