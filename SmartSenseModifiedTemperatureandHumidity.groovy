@@ -1,5 +1,5 @@
 /**
- *  SmartSense Humidity/Temp Sensor
+ *  SmartSense Temp/Humidity Sensor
  *
  *  Copyright 2014 SmartThings
  *
@@ -18,7 +18,7 @@
  *		- The range for background color have been changed since its no longer temperature based
  */
 metadata {
-	definition (name: "SmartSense Humidity/Temp Sensor",namespace: "smartthings", author: "SmartThings.  Modified by vseven", category: "C2") {
+	definition (name: "Modified SmartSense Temp/Humidity Sensor",namespace: "smartthings", author: "SmartThings.  Modified by vseven", category: "C2") {
 		capability "Configuration"
 		capability "Battery"
 		capability "Refresh"
