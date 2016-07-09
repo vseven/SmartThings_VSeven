@@ -106,7 +106,7 @@ private Map parseCatchAllMessage(String description) {
                 resultMap = getTemperatureResult(value)
                 break
 
-			case 0xFC45:
+	    case 0xFC45:
                 String pctStr = cluster.data[-1, -2].collect { Integer.toHexString(it) }.join('')
                 String display = Math.round(Integer.valueOf(pctStr, 16) / 100)
                 resultMap = getHumidityResult(display)
@@ -235,8 +235,8 @@ private Map getTemperatureResult(value) {
 private Map getHumidityResult(value) {
 	log.debug 'Humidity'
 	def linkText = getLinkText(device)
-	if (humidtyOffset) {
-		def offset = humidtyOffset as int
+	if (humidityOffset) {
+		def offset = humidityOffset as int
 		def w = value as int
 		value = w + offset
 	}
