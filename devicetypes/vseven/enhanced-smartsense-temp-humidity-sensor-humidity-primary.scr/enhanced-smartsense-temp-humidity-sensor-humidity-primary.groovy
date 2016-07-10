@@ -13,12 +13,12 @@
  *  for the specific language governing permissions and limitations under the License.
  *
  *  NOTE: Changes made to the default SmartThings "SmartSense Temperature/Humidity Sensor:
- * 		- Humidity is now the primary tile and temperature secondary
- *		- The range for background color have been changed since its no longer temperature based
+ * 		- A Icon can be added
  * 		- Humidity can now be offset the same way that temperature can
+ * 		- Humidity is the primary value
  */
 metadata {
-	definition (name: "Modified SmartSense Temp/Humidity Sensor",namespace: "vseven", author: "SmartThings.  Modified by vseven", category: "C2") {
+	definition (name: "Enhanced SmartSense Temp/Humidity Sensor",namespace: "vseven", author: "SmartThings.  Modified by vseven", category: "C2") {
 		capability "Configuration"
 		capability "Battery"
 		capability "Refresh"
