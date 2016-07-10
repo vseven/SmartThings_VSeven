@@ -17,7 +17,7 @@
  * 		- Humidity can now be offset the same way that temperature can
  */
 metadata {
-	definition (name: "Modified SmartSense Temp/Humidity Sensor",namespace: "vseven", author: "SmartThings.  Modified by vseven", category: "C2") {
+	definition (name: "Enhanced SmartSense Temp/Humidity Sensor",namespace: "vseven", author: "SmartThings.  Modified by vseven", category: "C2") {
 		capability "Configuration"
 		capability "Battery"
 		capability "Refresh"
