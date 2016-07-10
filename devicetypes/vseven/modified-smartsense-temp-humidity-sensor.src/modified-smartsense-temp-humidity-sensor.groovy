@@ -48,7 +48,7 @@ metadata {
 	}
 
 	tiles(scale: 2) {
-		multiAttributeTile(name:"humidity", type: "generic", width: 6, height: 4){
+		multiAttributeTile(name:"humidity", type: "generic", width: 6, height: 4,canChangeIcon: true){
 			tileAttribute ("device.humidity", key: "PRIMARY_CONTROL") {
 				attributeState "humidity", label:'${currentValue}%',
 					backgroundColors:[
