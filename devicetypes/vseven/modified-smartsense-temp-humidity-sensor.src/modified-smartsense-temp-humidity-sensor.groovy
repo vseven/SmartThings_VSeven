@@ -48,9 +48,7 @@ metadata {
 		}
 
 	tiles(scale: 2) {
-
-
-		if (primarySensor="Temperature") {
+		if (primarySensor=="Temperature") {
 			multiAttributeTile(name:"temperature", type: "generic", width: 6, height: 4){
 				tileAttribute ("device.temperature", key: "PRIMARY_CONTROL") {
 					attributeState "temperature", label:'${currentValue}°',
