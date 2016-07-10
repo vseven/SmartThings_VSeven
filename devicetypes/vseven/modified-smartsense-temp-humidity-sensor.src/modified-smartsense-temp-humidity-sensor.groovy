@@ -38,12 +38,14 @@ metadata {
 	}
 
 	preferences {
-		input "primarySensor", "enum", options: ["temperature":"Temperature", "humidity":"Humidity"], defaultValue: "Temperature", title: "Choose the sensor you want to appear as the primary value, either temperature or humidity.", displayDuringSetup: false
-		input title: "Temperature Offset", description: "This feature allows you to correct any temperature variations by selecting an offset. Ex: If your sensor consistently reports a temp that's 5 degrees too warm, you'd enter \"-5\". If 3 degrees too cold, enter \"+3\".", displayDuringSetup: false, type: "paragraph", element: "paragraph"
-		input "tempOffset", "number", title: "Temperature Offset in Degrees", description: "Adjust temperature by this many degrees", range: "*..*", displayDuringSetup: false
-		input title: "Humidity Offset", description: "This feature allows you to correct any humidity variations by selecting an offset. Ex: If your sensor consistently reports a humidity that's 6% higher then a similiar calibrated sensor, you'd enter \"-6\".", displayDuringSetup: false, type: "paragraph", element: "paragraph"
-		input "humidityOffset", "number", title: "Humidity Offser in Percent", description: "Adjust humidity by this percentage", range: "*..*", displayDuringSetup: false
-	}
+		section("Prefs") {
+			input "primarySensor", "enum", options: ["temperature":"Temperature", "humidity":"Humidity"], defaultValue: "temperature", title: "Choose the sensor you want to appear as the primary value, either temperature or humidity.", displayDuringSetup: false
+			input title: "Temperature Offset", description: "This feature allows you to correct any temperature variations by selecting an offset. Ex: If your sensor consistently reports a temp that's 5 degrees too warm, you'd enter \"-5\". If 3 degrees too cold, enter \"+3\".", displayDuringSetup: false, type: "paragraph", element: "paragraph"
+			input "tempOffset", "number", title: "Temperature Offset in Degrees", description: "Adjust temperature by this many degrees", range: "*..*", displayDuringSetup: false
+			input title: "Humidity Offset", description: "This feature allows you to correct any humidity variations by selecting an offset. Ex: If your sensor consistently reports a humidity that's 6% higher then a similiar calibrated sensor, you'd enter \"-6\".", displayDuringSetup: false, type: "paragraph", element: "paragraph"
+			input "humidityOffset", "number", title: "Humidity Offser in Percent", description: "Adjust humidity by this percentage", range: "*..*", displayDuringSetup: false
+			}
+		}
 
 	tiles(scale: 2) {
 		multiAttributeTile(name:"humidity", type: "generic", width: 6, height: 4,canChangeIcon: true){
