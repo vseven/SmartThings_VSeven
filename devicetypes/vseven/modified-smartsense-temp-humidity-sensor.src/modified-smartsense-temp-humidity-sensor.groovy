@@ -48,7 +48,7 @@ metadata {
 		}
 
 	tiles(scale: 2) {
-		if ($primarySensor=="temperature") {
+		if (${primarySensor}=="temperature") {
 			multiAttributeTile(name:"temperature", type: "generic", width: 6, height: 4){
 				tileAttribute ("device.temperature", key: "PRIMARY_CONTROL") {
 					attributeState "temperature", label:'${currentValue}°',
@@ -276,8 +276,8 @@ private Map getHumidityResult(value) {
 def refresh()
 {
 	log.debug "refresh humidity, temperature, and battery"
-	log.debug "Current Preferences: primarySensor - $(primarySensor), tempOffset - $(tempOffset), humidityOffset - $(humidityOffset)
-	[
+	log.debug "Current Preferences: primarySensor - ${primarySensor}, tempOffset - ${tempOffset}, humidityOffset - ${humidityOffset}"
+		[
 
 		"zcl mfg-code 0xC2DF", "delay 1000",
 		"zcl global read 0xFC45 0", "delay 1000",
