@@ -18,7 +18,7 @@
  * 		- Humidity is the primary value
  */
 metadata {
-	definition (name: "Enhanced SmartSense Humidity Sensor",namespace: "vseven", author: "SmartThings.  Modified by vseven", category: "C2") {
+	definition (name: "Enhanced SmartSense Humidity/Temp Sensor",namespace: "vseven", author: "SmartThings.  Modified by vseven", category: "C2") {
 		capability "Configuration"
 		capability "Battery"
 		capability "Refresh"
@@ -38,12 +38,10 @@ metadata {
 	}
 
 	preferences {
-		section("Prefs") {
-			input title: "Temperature Offset", description: "This feature allows you to correct any temperature variations by selecting an offset. Ex: If your sensor consistently reports a temp that's 5 degrees too warm, you'd enter \"-5\". If 3 degrees too cold, enter \"+3\".", displayDuringSetup: false, type: "paragraph", element: "paragraph"
-			input "tempOffset", "number", title: "Temperature Offset in Degrees", description: "Adjust temperature by this many degrees", range: "*..*", displayDuringSetup: false
-			input title: "Humidity Offset", description: "This feature allows you to correct any humidity variations by selecting an offset. Ex: If your sensor consistently reports a humidity that's 6% higher then a similiar calibrated sensor, you'd enter \"-6\".", displayDuringSetup: false, type: "paragraph", element: "paragraph"
-			input "humidityOffset", "number", title: "Humidity Offser in Percent", description: "Adjust humidity by this percentage", range: "*..*", displayDuringSetup: false
-			}
+		input title: "Temperature Offset", description: "This feature allows you to correct any temperature variations by selecting an offset. Ex: If your sensor consistently reports a temp that's 5 degrees too warm, you'd enter \"-5\". If 3 degrees too cold, enter \"+3\".", displayDuringSetup: false, type: "paragraph", element: "paragraph"
+		input "tempOffset", "number", title: "Temperature Offset in Degrees", description: "Adjust temperature by this many degrees", range: "*..*", displayDuringSetup: false
+		input title: "Humidity Offset", description: "This feature allows you to correct any humidity variations by selecting an offset. Ex: If your sensor consistently reports a humidity that's 6% higher then a similiar calibrated sensor, you'd enter \"-6\".", displayDuringSetup: false, type: "paragraph", element: "paragraph"
+		input "humidityOffset", "number", title: "Humidity Offser in Percent", description: "Adjust humidity by this percentage", range: "*..*", displayDuringSetup: false
 		}
 
 	tiles(scale: 2) {
@@ -62,11 +60,12 @@ metadata {
 		
 		valueTile("temperature", "device.temperature", inactiveLabel: false, width: 2, height: 2) {
 			state "temperature", label:'${currentValue}° temp', unit:""
-			}		
+		}		
 		
 		valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
 			state "battery", label:'${currentValue}% battery'
 		}
+		
 		standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 			state "default", action:"refresh.refresh", icon:"st.secondary.refresh"
 		}
@@ -255,14 +254,12 @@ private Map getHumidityResult(value) {
 def refresh()
 {
 	log.debug "refresh humidity, temperature, and battery"
-		[
-
+	[
 		"zcl mfg-code 0xC2DF", "delay 1000",
 		"zcl global read 0xFC45 0", "delay 1000",
 		"send 0x${device.deviceNetworkId} 1 1", "delay 1000",
-        "st rattr 0x${device.deviceNetworkId} 1 0x402 0", "delay 200",
-        "st rattr 0x${device.deviceNetworkId} 1 1 0x20"
-
+		"st rattr 0x${device.deviceNetworkId} 1 0x402 0", "delay 200",
+        	"st rattr 0x${device.deviceNetworkId} 1 1 0x20"
 	]
 }
 
