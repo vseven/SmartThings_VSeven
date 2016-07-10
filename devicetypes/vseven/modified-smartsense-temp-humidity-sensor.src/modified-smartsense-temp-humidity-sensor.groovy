@@ -276,6 +276,7 @@ private Map getHumidityResult(value) {
 def refresh()
 {
 	log.debug "refresh humidity, temperature, and battery"
+	log.debug "Current Preferences: primarySensor - $(primarySensor), tempOffset - $(tempOffset), humidityOffset - $(humidityOffset)
 	[
 
 		"zcl mfg-code 0xC2DF", "delay 1000",
