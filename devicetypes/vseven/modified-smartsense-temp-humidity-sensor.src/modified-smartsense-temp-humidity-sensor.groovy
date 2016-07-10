@@ -48,33 +48,53 @@ metadata {
 		}
 
 	tiles(scale: 2) {
-		multiAttributeTile(name:"humidity", type: "generic", width: 6, height: 4,canChangeIcon: true){
-			tileAttribute ("device.humidity", key: "PRIMARY_CONTROL") {
-				attributeState "humidity", label:'${currentValue}%',
-					backgroundColors:[
-						[value: 25, color: "#153591"],
-						[value: 40, color: "#699826"],
-						[value: 50, color: "#44b621"],
-						[value: 60, color: "#794044"],
-						[value: 80, color: "#bc2323"]
-					]
+
+
+		if (primarySensor == "temperature") {
+			multiAttributeTile(name:"temperature", type: "generic", width: 6, height: 4){
+				tileAttribute ("device.temperature", key: "PRIMARY_CONTROL") {
+					attributeState "temperature", label:'${currentValue}°',
+						backgroundColors:[
+							[value: 31, color: "#153591"],
+							[value: 44, color: "#1e9cbb"],
+							[value: 59, color: "#90d2a7"],
+							[value: 74, color: "#44b621"],
+							[value: 84, color: "#f1d801"],
+							[value: 95, color: "#d04e00"],
+							[value: 96, color: "#bc2323"]
+						]
+				}
 			}
+			valueTile("humidity", "device.humidity", inactiveLabel: false, width: 2, height: 2) {
+				state "humidity", label:'${currentValue}% humidity', unit:""
+			}
+			main "temperature", "humidity"
+			details(["temperature", "humidity", "battery", "refresh"])
+		} else {
+			multiAttributeTile(name:"humidity", type: "generic", width: 6, height: 4,canChangeIcon: true){
+				tileAttribute ("device.humidity", key: "PRIMARY_CONTROL") {
+					attributeState "humidity", label:'${currentValue}%',
+						backgroundColors:[
+							[value: 25, color: "#153591"],
+							[value: 40, color: "#699826"],
+							[value: 50, color: "#44b621"],
+							[value: 60, color: "#794044"],
+							[value: 80, color: "#bc2323"]
+						]
+				}
+			}
+			valueTile("temperature", "device.temperature", inactiveLabel: false, width: 2, height: 2) {
+				state "temperature", label:'${currentValue}° temp', unit:""
+			}
+			main "humidity","temperature"
+			details(["humidity","temperature",  "battery", "refresh"])
 		}
-		valueTile("temperature", "device.temperature", inactiveLabel: false, width: 2, height: 2) {
-			state "temperature", label:'${currentValue}° temp', unit:""
-		}
+		
 		valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false, width: 2, height: 2) {
 			state "battery", label:'${currentValue}% battery'
 		}
 		standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 			state "default", action:"refresh.refresh", icon:"st.secondary.refresh"
-		}
-		if (primarySensor == "temperature") {
-			main "temperature", "humidity"
-			details(["temperature", "humidity", "battery", "refresh"])
-		} else {
-			main "humidity","temperature"
-			details(["humidity","temperature",  "battery", "refresh"])
 		}
 	}
 }
