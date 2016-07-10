@@ -48,6 +48,7 @@ metadata {
 		}
 
 	tiles(scale: 2) {
+		log.debug "Current Preferences: primarySensor - ${primarySensor}, tempOffset - ${tempOffset}, humidityOffset - ${humidityOffset}"
 		if ("${primarySensor}"=="temperature") {
 			multiAttributeTile(name:"temperature", type: "generic", width: 6, height: 4){
 				tileAttribute ("device.temperature", key: "PRIMARY_CONTROL") {
