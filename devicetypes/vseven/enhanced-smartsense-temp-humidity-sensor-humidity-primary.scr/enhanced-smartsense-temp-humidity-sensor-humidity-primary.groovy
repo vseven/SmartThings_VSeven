@@ -18,7 +18,7 @@
  * 		- Humidity is the primary value
  */
 metadata {
-	definition (name: "Enhanced SmartSense Temp/Humidity Sensor with Humidity Primary",namespace: "vseven", author: "SmartThings.  Modified by vseven", category: "C2") {
+	definition (name: "Enhanced SmartSense Humidity Sensor",namespace: "vseven", author: "SmartThings.  Modified by vseven", category: "C2") {
 		capability "Configuration"
 		capability "Battery"
 		capability "Refresh"
