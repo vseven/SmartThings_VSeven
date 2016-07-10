@@ -69,9 +69,13 @@ metadata {
 		standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 			state "default", action:"refresh.refresh", icon:"st.secondary.refresh"
 		}
-
-		main "humidity","temperature"
-		details(["humidity","temperature",  "battery", "refresh"])
+		if (primarySensor == "temperature") {
+			main "temperature", "humidity"
+			details(["temperature", "humidity", "battery", "refresh"])
+		} else {
+			main "humidity","temperature"
+			details(["humidity","temperature",  "battery", "refresh"])
+		}
 	}
 }
 
