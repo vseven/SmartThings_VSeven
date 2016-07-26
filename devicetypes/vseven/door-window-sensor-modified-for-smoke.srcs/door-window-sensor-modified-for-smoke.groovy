@@ -17,7 +17,7 @@
  */
 
 metadata {
-	definition (name: "Z-Wave Door/Window Sensor Modified for Smoke Alarm", namespace: "vseven", author: "SmartThings.  Modified by vseven.") {
+	definition (name: "Z-Wave Door/Window Sensor for Smoke", namespace: "vseven", author: "SmartThings.  Modified by vseven.") {
 		capability "Contact Sensor"
 		capability "Sensor"
 		capability "Battery"
@@ -31,15 +31,15 @@ metadata {
 	// simulator metadata
 	simulator {
 		// status messages
-		status "Normal":  "command: 2001, payload: FF"
-		status "Alarm": "command: 2001, payload: 00"
+		status "normal":  "command: 2001, payload: FF"
+		status "alarm": "command: 2001, payload: 00"
 	}
 
 	// UI tile definitions
 	tiles {
 		standardTile("contact", "device.contact", width: 2, height: 2) {
-			state "Normal", label: '${name}', icon: "st.alarm.smoke.clear", backgroundColor: "#ffa81e"
-			state "Alarm", label: '${name}', icon: "st.alarm.smoke.alarm", backgroundColor: "#79b821"
+			state "normal", label: '${name}', icon: "st.alarm.smoke.clear", backgroundColor: "#ffa81e"
+			state "alarm", label: '${name}', icon: "st.alarm.smoke.smoke", backgroundColor: "#79b821"
 		}
 		valueTile("battery", "device.battery", inactiveLabel: false, decoration: "flat") {
 			state "battery", label:'${currentValue}% battery', unit:""
@@ -99,9 +99,9 @@ def configure() {
 
 def sensorValueEvent(value) {
 	if (value) {
-		createEvent(name: "contact", value: "Normal", descriptionText: "$device.displayName is Normal")
+		createEvent(name: "contact", value: "normal", descriptionText: "$device.displayName is Normal")
 	} else {
-		createEvent(name: "contact", value: "Alarm", descriptionText: "$device.displayName is in Alarm")
+		createEvent(name: "contact", value: "alarm", descriptionText: "$device.displayName is in Alarm")
 	}
 }
 
