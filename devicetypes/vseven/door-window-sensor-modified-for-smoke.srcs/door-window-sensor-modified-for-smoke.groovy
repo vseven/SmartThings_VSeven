@@ -38,8 +38,8 @@ metadata {
 	// UI tile definitions
 	tiles {
 		standardTile("contact", "device.contact", width: 2, height: 2) {
-			state "normal", label: '${name}', icon: "st.alarm.smoke.clear", backgroundColor: "#ffa81e"
-			state "alarm", label: '${name}', icon: "st.alarm.smoke.smoke", backgroundColor: "#79b821"
+			state "normal", label: '${name}', icon: "st.alarm.smoke.clear", backgroundColor: "#44b621"
+			state "alarm", label: '${name}', icon: "st.alarm.smoke.smoke", backgroundColor: "#bc2323"
 		}
 		valueTile("battery", "device.battery", inactiveLabel: false, decoration: "flat") {
 			state "battery", label:'${currentValue}% battery', unit:""
