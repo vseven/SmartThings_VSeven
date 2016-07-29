@@ -18,7 +18,7 @@
 
 metadata {
 	definition (name: "Modified Z-Wave Door/Window Sensor for Smoke", namespace: "vseven", author: "SmartThings.  Modified by vseven.") {
-		capability "Contact Sensor"
+		capability "Smoke Detector"
 		capability "Sensor"
 		capability "Battery"
 		capability "Configuration"
@@ -37,7 +37,7 @@ metadata {
 
 	// UI tile definitions
 	tiles {
-		standardTile("contact", "device.contact", width: 2, height: 2) {
+		standardTile("smoke", "device.smoke", width: 2, height: 2) {
 			state "normal", label: '${name}', icon: "st.alarm.smoke.clear", backgroundColor: "#44b621"
 			state "alarm", label: '${name}', icon: "st.alarm.smoke.smoke", backgroundColor: "#bc2323"
 		}
@@ -45,8 +45,8 @@ metadata {
 			state "battery", label:'${currentValue}% battery', unit:""
 		}
 
-		main "contact"
-		details(["contact", "battery"])
+		main "smoke"
+		details(["smoke", "battery"])
 	}
 }
 
@@ -99,9 +99,9 @@ def configure() {
 
 def sensorValueEvent(value) {
 	if (value) {
-		createEvent(name: "contact", value: "normal", descriptionText: "$device.displayName is Normal")
+		createEvent(name: "smoke", value: "normal", descriptionText: "$device.displayName is Normal")
 	} else {
-		createEvent(name: "contact", value: "alarm", descriptionText: "$device.displayName is in Alarm")
+		createEvent(name: "smoke", value: "alarm", descriptionText: "$device.displayName is in Alarm")
 	}
 }
 
