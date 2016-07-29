@@ -31,15 +31,15 @@ metadata {
 	// simulator metadata
 	simulator {
 		// status messages
-		status "normal":  "command: 2001, payload: FF"
-		status "alarm": "command: 2001, payload: 00"
+		status "clear":  "command: 2001, payload: FF"
+		status "detected": "command: 2001, payload: 00"
 	}
 
 	// UI tile definitions
 	tiles {
 		standardTile("smoke", "device.smoke", width: 2, height: 2) {
-			state "normal", label: '${name}', icon: "st.alarm.smoke.clear", backgroundColor: "#44b621"
-			state "alarm", label: '${name}', icon: "st.alarm.smoke.smoke", backgroundColor: "#bc2323"
+			state "clear", label: '${name}', icon: "st.alarm.smoke.clear", backgroundColor: "#44b621"
+			state "detected", label: '${name}', icon: "st.alarm.smoke.smoke", backgroundColor: "#bc2323"
 		}
 		valueTile("battery", "device.battery", inactiveLabel: false, decoration: "flat") {
 			state "battery", label:'${currentValue}% battery', unit:""
@@ -99,9 +99,9 @@ def configure() {
 
 def sensorValueEvent(value) {
 	if (value) {
-		createEvent(name: "smoke", value: "normal", descriptionText: "$device.displayName is Normal")
+		createEvent(name: "smoke", value: "clear", descriptionText: "$device.displayName is Normal")
 	} else {
-		createEvent(name: "smoke", value: "alarm", descriptionText: "$device.displayName is in Alarm")
+		createEvent(name: "smoke", value: "detected", descriptionText: "$device.displayName is in Alarm")
 	}
 }
 
