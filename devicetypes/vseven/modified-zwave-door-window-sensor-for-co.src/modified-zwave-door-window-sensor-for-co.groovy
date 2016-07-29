@@ -18,7 +18,7 @@
 
 metadata {
 	definition (name: "Modified Z-Wave Door/Window Sensor for CO", namespace: "vseven", author: "SmartThings.  Modified by vseven.") {
-		capability "Contact Sensor"
+		capability "Carbon Monoxide Detector"
 		capability "Sensor"
 		capability "Battery"
 		capability "Configuration"
@@ -31,22 +31,22 @@ metadata {
 	// simulator metadata
 	simulator {
 		// status messages
-		status "normal":  "command: 2001, payload: FF"
-		status "alarm": "command: 2001, payload: 00"
+		status "clear":  "command: 2001, payload: FF"
+		status "detected": "command: 2001, payload: 00"
 	}
 
 	// UI tile definitions
 	tiles {
-		standardTile("contact", "device.contact", width: 2, height: 2) {
-			state "normal", label: '${name}', icon: "st.alarm.smoke.clear", backgroundColor: "#44b621"
-			state "alarm", label: '${name}', icon: "st.alarm.carbon-monoxide.carbon-monoxide", backgroundColor: "#bc2323"
+		standardTile("carbonMonoxide", "device.carbonMonoxide", width: 2, height: 2) {
+			state "clear", label: '${name}', icon: "st.alarm.smoke.clear", backgroundColor: "#44b621"
+			state "detected", label: '${name}', icon: "st.alarm.carbon-monoxide.carbon-monoxide", backgroundColor: "#bc2323"
 		}
 		valueTile("battery", "device.battery", inactiveLabel: false, decoration: "flat") {
 			state "battery", label:'${currentValue}% battery', unit:""
 		}
 
-		main "contact"
-		details(["contact", "battery"])
+		main "carbonMonoxide"
+		details(["carbonMonoxide", "battery"])
 	}
 }
 
@@ -99,9 +99,9 @@ def configure() {
 
 def sensorValueEvent(value) {
 	if (value) {
-		createEvent(name: "contact", value: "normal", descriptionText: "$device.displayName is Normal")
+		createEvent(name: "carbonMonoxide", value: "clear", descriptionText: "$device.displayName is Normal")
 	} else {
-		createEvent(name: "contact", value: "alarm", descriptionText: "$device.displayName is in Alarm")
+		createEvent(name: "carbonMonoxide", value: "detected", descriptionText: "$device.displayName is in Alarm")
 	}
 }
 
