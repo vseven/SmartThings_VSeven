@@ -36,12 +36,14 @@ metadata {
 	}
 
 	// UI tile definitions
-	tiles {
-		standardTile("carbonMonoxide", "device.carbonMonoxide", width: 2, height: 2) {
-			state "clear", label: '${name}', icon: "st.alarm.smoke.clear", backgroundColor: "#44b621"
-			state "detected", label: '${name}', icon: "st.alarm.carbon-monoxide.carbon-monoxide", backgroundColor: "#bc2323"
+	tiles (scale: 2) {
+        multiAttributeTile(name:"carbonMonoxide", type: "lighting", width: 6, height: 4){
+			tileAttribute ("device.carbonMonoxide", key: "PRIMARY_CONTROL") {
+				attributeState("clear", label:"clear", icon:"st.alarm.smoke.clear", backgroundColor:"#ffffff")
+				attributeState("detected", label:"CO", icon:"st.alarm.carbon-monoxide.carbon-monoxide", backgroundColor:"#e86d13")				
+			}
 		}
-		valueTile("battery", "device.battery", inactiveLabel: false, decoration: "flat") {
+		valueTile("battery", "device.battery", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 			state "battery", label:'${currentValue}% battery', unit:""
 		}
 
