@@ -36,12 +36,14 @@ metadata {
 	}
 
 	// UI tile definitions
-	tiles {
-		standardTile("smoke", "device.smoke", width: 2, height: 2) {
-			state "clear", label: '${name}', icon: "st.alarm.smoke.clear", backgroundColor: "#44b621"
-			state "detected", label: '${name}', icon: "st.alarm.smoke.smoke", backgroundColor: "#bc2323"
+	tiles (scale: 2) {
+        multiAttributeTile(name:"smoke", type: "lighting", width: 6, height: 4){
+			tileAttribute ("device.smoke", key: "PRIMARY_CONTROL") {
+				attributeState("clear", label:"clear", icon:"st.alarm.smoke.clear", backgroundColor:"#ffffff")
+				attributeState("smoke", label:"SMOKE", icon:"st.alarm.smoke.smoke", backgroundColor:"#e86d13")				
+			}
 		}
-		valueTile("battery", "device.battery", inactiveLabel: false, decoration: "flat") {
+		valueTile("battery", "device.battery", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 			state "battery", label:'${currentValue}% battery', unit:""
 		}
 
