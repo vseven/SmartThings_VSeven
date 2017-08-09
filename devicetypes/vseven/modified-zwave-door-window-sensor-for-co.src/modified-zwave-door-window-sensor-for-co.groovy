@@ -37,8 +37,8 @@ metadata {
 
 	// UI tile definitions
 	tiles (scale: 2) {
-        multiAttributeTile(name:"carbonMonoxide", type: "lighting", width: 6, height: 4){
-			tileAttribute ("device.carbonMonoxide", key: "PRIMARY_CONTROL") {
+        multiAttributeTile(name:"carbonMonoxideDetector", type: "generic", width: 6, height: 4){
+			tileAttribute ("device.carbonMonoxideDetector", key: "PRIMARY_CONTROL") {
 				attributeState("clear", label:"clear", icon:"st.alarm.smoke.clear", backgroundColor:"#ffffff")
 				attributeState("detected", label:"CO", icon:"st.alarm.carbon-monoxide.carbon-monoxide", backgroundColor:"#e86d13")				
 			}
@@ -47,7 +47,7 @@ metadata {
 			state "battery", label:'${currentValue}% battery', unit:""
 		}
 
-		main "carbonMonoxide"
+		main "carbonMonoxideDetector"
 		details(["carbonMonoxide", "battery"])
 	}
 }
