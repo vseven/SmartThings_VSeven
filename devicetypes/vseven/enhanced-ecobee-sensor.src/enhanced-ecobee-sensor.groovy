@@ -16,7 +16,7 @@
  *  Modified by: Allan (vseven) - added ability to change icon and switched to multiatributetile which looks a lot better
  */
 metadata {
-	definition (name: "Ecobee Sensor", namespace: "smartthings", author: "SmartThings") {
+	definition (name: "Enhanced Ecobee Sensor", namespace: "vseven", author: "SmartThings.  Modified by vseven") {
 		capability "Sensor"
 		capability "Temperature Measurement"
 		capability "Motion Sensor"
