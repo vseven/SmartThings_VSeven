@@ -18,7 +18,7 @@
  *  Modified by: Allan (vseven) 8-27-17 - switched to multiatributetile which looks a lot better.  Otherwise stock.
  */
 metadata {
-	definition (name: "Enhanced Ecobee Thermostat", namespace: "smartthings", author: "SmartThings") {
+	definition (name: "Enhanced Ecobee Thermostat", namespace: "vseven", author: "SmartThings.  Modified by vseven") {
 		capability "Actuator"
 		capability "Thermostat"
 		capability "Temperature Measurement"
