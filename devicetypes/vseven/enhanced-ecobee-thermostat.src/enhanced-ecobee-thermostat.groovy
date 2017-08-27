@@ -116,11 +116,8 @@ metadata {
 			state "resume", action:"resumeProgram", nextState: "updating", label:'Resume', icon:"st.samsung.da.oven_ic_send"
 			state "updating", label:"Working", icon: "st.secondary.secondary"
 		}
-		valueTile("humidity", "device.humidity",  width: 2, height: 2, decoration: "flat") {
-			state "humidity", label:'${currentValue}%'
-		}
 		main "thermostatFull"
-		details(["thermostatFull", "upButtonControl", "displayThermostatSetpoint", "downButtonControl", "currentStatus", "mode", "fanMode","humidity", "resumeProgram", "refresh"])
+		details(["thermostatFull", "upButtonControl", "displayThermostatSetpoint", "downButtonControl", "currentStatus", "mode", "fanMode", "resumeProgram", "refresh"])
 	}
 
 	preferences {
