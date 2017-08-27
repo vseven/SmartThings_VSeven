@@ -80,7 +80,7 @@ metadata {
 		standardTile("downButtonControl", "device.thermostatSetpoint", inactiveLabel: false, width: 2, height: 2, decoration: "flat") {
 			state "setpoint", action:"lowerSetpoint", icon:"st.thermostat.thermostat-down"
 		}
-		standardTile("mode", "device.thermostatMode", inactiveLabel: false, decoration: "flat") {
+		standardTile("mode", "device.thermostatMode", inactiveLabel: false, width: 2, height: 2) {
 			state "off", action:"switchMode", nextState: "updating", icon: "st.thermostat.heating-cooling-off"
 			state "heat", action:"switchMode",  nextState: "updating", icon: "st.thermostat.heat"
 			state "cool", action:"switchMode",  nextState: "updating", icon: "st.thermostat.cool"
@@ -88,7 +88,7 @@ metadata {
 			state "auxheatonly", action:"switchMode", icon: "st.thermostat.emergency-heat"
 			state "updating", label:"Working", icon: "st.secondary.secondary"
 		}
-		standardTile("fanMode", "device.thermostatFanMode", inactiveLabel: false, decoration: "flat") {
+		standardTile("fanMode", "device.thermostatFanMode", inactiveLabel: false, width: 2, height: 2, decoration: "flat") {
 			state "auto", action:"switchFanMode", nextState: "updating", icon: "st.thermostat.fan-auto"
 			state "on", action:"switchFanMode", nextState: "updating", icon: "st.thermostat.fan-on"
 			state "updating", label:"Working", icon: "st.secondary.secondary"
@@ -116,7 +116,7 @@ metadata {
 			state "humidity", label:'${currentValue}%'
 		}
 		main "temperature"
-		details(["temperature", "upButtonControl", "displayThermostatSetpoint", "currentStatus", "downButtonControl", "mode", "fanMode","humidity", "resumeProgram", "refresh"])
+		details(["temperature", "upButtonControl", "displayThermostatSetpoint", "downButtonControl", "currentStatus", "mode", "fanMode","humidity", "resumeProgram", "refresh"])
 	}
 
 	preferences {
