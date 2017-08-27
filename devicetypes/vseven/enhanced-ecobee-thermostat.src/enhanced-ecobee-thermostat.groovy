@@ -45,34 +45,33 @@ metadata {
 	}
 
 	tiles(scale: 2) {
-		multiAttributeTile("temperature", "generic", width: 6, height: 4) {
-      tileAttribute{("device.temperature", key: "PRIMARY_CONTROL") {
-			    attributeState ("temperature", label:'${currentValue}°', unit:"F", icon: "st.thermostat.ac.air-conditioning",
-					  backgroundColors:[
-							// Celsius
-							[value: 0, color: "#153591"],
-							[value: 7, color: "#1e9cbb"],
-							[value: 15, color: "#90d2a7"],
-							[value: 23, color: "#44b621"],
-							[value: 28, color: "#f1d801"],
-							[value: 35, color: "#d04e00"],
-							[value: 37, color: "#bc2323"],
-							// Fahrenheit
-							[value: 40, color: "#153591"],
-							[value: 44, color: "#1e9cbb"],
-							[value: 59, color: "#90d2a7"],
-							[value: 74, color: "#44b621"],
-							[value: 84, color: "#f1d801"],
-							[value: 95, color: "#d04e00"],
-							[value: 96, color: "#bc2323"]
-					  ]
-			 }              
-       
-       tileAttribute("device.thermostatStatus", key: "SECONDARY_CONTROL") {
-          attributeState("thermostatStatus", label:'${currentValue}', backgroundColor:"#ffffff")
-       }
+		multiAttributeTile(name: "temperature", type: "generic", width: 6, height: 4) {
+      			tileAttribute("device.temperature", key: "PRIMARY_CONTROL") {
+			    attributeState "temperature", label:'${currentValue}°', unit:"F", icon: "st.thermostat.ac.air-conditioning",
+				backgroundColors:[
+					// Celsius
+					[value: 0, color: "#153591"],
+					[value: 7, color: "#1e9cbb"],
+					[value: 15, color: "#90d2a7"],
+					[value: 23, color: "#44b621"],
+					[value: 28, color: "#f1d801"],
+					[value: 35, color: "#d04e00"],
+					[value: 37, color: "#bc2323"],
+					// Fahrenheit
+					[value: 40, color: "#153591"],
+					[value: 44, color: "#1e9cbb"],
+					[value: 59, color: "#90d2a7"],
+					[value: 74, color: "#44b621"],
+					[value: 84, color: "#f1d801"],
+					[value: 95, color: "#d04e00"],
+					[value: 96, color: "#bc2323"]
+				  ]
+			}              
+       			tileAttribute("device.thermostatStatus", key: "SECONDARY_CONTROL") {
+				attributeState("thermostatStatus", label:'${currentValue}', backgroundColor:"#ffffff")
+			}
 		}
-    standardTile("upButtonControl", "device.thermostatSetpoint", inactiveLabel: false, decoration: "flat") {
+    		standardTile("upButtonControl", "device.thermostatSetpoint", inactiveLabel: false, decoration: "flat") {
 			state "setpoint", action:"raiseSetpoint", icon:"st.thermostat.thermostat-up"
 		}
 		valueTile("displayThermostatSetpoint", "device.displayThermostatSetpoint", width: 1, height: 1, decoration: "flat") {
@@ -94,7 +93,6 @@ metadata {
 			state "on", action:"switchFanMode", nextState: "updating", icon: "st.thermostat.fan-on"
 			state "updating", label:"Working", icon: "st.secondary.secondary"
 		}
-		
 		controlTile("heatSliderControl", "device.heatingSetpoint", "slider", height: 1, width: 2, inactiveLabel: false) {
 			state "setHeatingSetpoint", action:"thermostat.setHeatingSetpoint", backgroundColor:"#d04e00"
 		}
