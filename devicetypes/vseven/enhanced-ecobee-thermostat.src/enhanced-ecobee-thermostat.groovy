@@ -45,7 +45,7 @@ metadata {
 	}
 
 	tiles(scale: 2) {
-		multiAttributeTile(name: "temperature", type: "generic", width: 6, height: 4) {
+		multiAttributeTile(name: "thermostatFull", type: "thermostat", width: 6, height: 4) {
       			tileAttribute("device.temperature", key: "PRIMARY_CONTROL") {
 			    attributeState "temperature", label:'${currentValue}°', unit:"F", icon: "st.thermostat.ac.air-conditioning",
 				backgroundColors:[
@@ -67,9 +67,20 @@ metadata {
 					[value: 96, color: "#bc2323"]
 				  ]
 			}              
-       			tileAttribute("device.thermostatStatus", key: "SECONDARY_CONTROL") {
-				attributeState("thermostatStatus", label:'${currentValue}', backgroundColor:"#ffffff")
-			}
+   			 tileAttribute("device.humidity", key: "SECONDARY_CONTROL") {
+   				     attributeState("humidity", label:'${currentValue}%', unit:"%", defaultState: true)
+   			 }
+  			  tileAttribute("device.thermostatOperatingState", key: "OPERATING_STATE") {
+			        attributeState("idle", backgroundColor:"#00A0DC")
+			        attributeState("heating", backgroundColor:"#e86d13")
+			        attributeState("cooling", backgroundColor:"#00A0DC")
+		    }
+		    tileAttribute("device.thermostatMode", key: "THERMOSTAT_MODE") {
+ 		       attributeState("off", label:'${name}')
+      	 		 attributeState("heat", label:'${name}')
+	       		 attributeState("cool", label:'${name}')
+		        attributeState("auto", label:'${name}')
+		    }
 		}
     		standardTile("upButtonControl", "device.thermostatSetpoint", inactiveLabel: false, width: 2, height: 2) {
 			state "setpoint", action:"raiseSetpoint", icon:"st.thermostat.thermostat-up"
@@ -77,7 +88,7 @@ metadata {
 		valueTile("displayThermostatSetpoint", "device.displayThermostatSetpoint", width: 2, height: 2, decoration: "flat") {
 			state "displayThermostatSetpoint", label:'${currentValue}'
 		}
-		standardTile("downButtonControl", "device.thermostatSetpoint", inactiveLabel: false, width: 2, height: 2, decoration: "flat") {
+		standardTile("downButtonControl", "device.thermostatSetpoint", inactiveLabel: false, width: 2, height: 2) {
 			state "setpoint", action:"lowerSetpoint", icon:"st.thermostat.thermostat-down"
 		}
 		standardTile("mode", "device.thermostatMode", inactiveLabel: false, width: 2, height: 2) {
