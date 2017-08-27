@@ -45,7 +45,7 @@ metadata {
 	}
 
 	tiles(scale: 2) {
-		multiAttributeTile(name: "thermostatFull", type: "thermostat", width: 6, height: 4) {
+		multiAttributeTile(name: "thermostat", type: "thermostat", width: 6, height: 4) {
       			tileAttribute("device.temperature", key: "PRIMARY_CONTROL") {
 			    attributeState "temperature", label:'${currentValue}°', unit:"F", icon: "st.thermostat.ac.air-conditioning",
 				backgroundColors:[
