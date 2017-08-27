@@ -76,7 +76,7 @@ metadata {
 			        attributeState("cooling", backgroundColor:"#00A0DC")
 		    }
 		    tileAttribute("device.thermostatMode", key: "THERMOSTAT_MODE") {
-			attributeState("off", action:"switchMode", nextState: "updating", icon: "st.thermostat.heating-cooling-off")
+			attributeState("off",label:'${name}', action:"switchMode", nextState: "updating", icon: "st.thermostat.heating-cooling-off")
 			attributeState("heat",label:'${name}', action:"switchMode",  nextState: "updating", icon: "st.thermostat.heat")
 			attributeState("cool",label:'${name}', action:"switchMode",  nextState: "updating", icon: "st.thermostat.cool")
 			attributeState("auto",label:'${name}', action:"switchMode",  nextState: "updating", icon: "st.thermostat.auto")
