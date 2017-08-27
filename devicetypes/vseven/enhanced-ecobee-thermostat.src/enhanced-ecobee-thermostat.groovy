@@ -71,13 +71,13 @@ metadata {
 				attributeState("thermostatStatus", label:'${currentValue}', backgroundColor:"#ffffff")
 			}
 		}
-    		standardTile("upButtonControl", "device.thermostatSetpoint", inactiveLabel: false, decoration: "flat") {
+    		standardTile("upButtonControl", "device.thermostatSetpoint", inactiveLabel: false, width: 2, height: 2) {
 			state "setpoint", action:"raiseSetpoint", icon:"st.thermostat.thermostat-up"
 		}
-		valueTile("displayThermostatSetpoint", "device.displayThermostatSetpoint", width: 1, height: 1, decoration: "flat") {
+		valueTile("displayThermostatSetpoint", "device.displayThermostatSetpoint", width: 2, height: 2, decoration: "flat") {
 			state "displayThermostatSetpoint", label:'${currentValue}'
 		}
-		standardTile("downButtonControl", "device.thermostatSetpoint", inactiveLabel: false, decoration: "flat") {
+		standardTile("downButtonControl", "device.thermostatSetpoint", inactiveLabel: false, width: 2, height: 2, decoration: "flat") {
 			state "setpoint", action:"lowerSetpoint", icon:"st.thermostat.thermostat-down"
 		}
 		standardTile("mode", "device.thermostatMode", inactiveLabel: false, decoration: "flat") {
