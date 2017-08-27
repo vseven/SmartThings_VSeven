@@ -45,7 +45,7 @@ metadata {
 	}
 
 	tiles(scale: 2) {
-		multiAttributeTile(name: "thermostat", type: "thermostat", width: 6, height: 4) {
+		multiAttributeTile(name: "thermostatFull", type: "thermostat", width: 6, height: 4) {
       			tileAttribute("device.temperature", key: "PRIMARY_CONTROL") {
 			    attributeState "temperature", label:'${currentValue}°', unit:"F", icon: "st.thermostat.ac.air-conditioning",
 				backgroundColors:[
@@ -80,7 +80,6 @@ metadata {
 			attributeState("heat",label:'${name}', action:"switchMode",  nextState: "updating", icon: "st.thermostat.heat")
 			attributeState("cool",label:'${name}', action:"switchMode",  nextState: "updating", icon: "st.thermostat.cool")
 			attributeState("auto",label:'${name}', action:"switchMode",  nextState: "updating", icon: "st.thermostat.auto")
-			attributeState("auxheatonly",label:'${name}', action:"switchMode", icon: "st.thermostat.emergency-heat")
 			attributeState("updating",label:'${name}', icon: "st.secondary.secondary")
 		    }
 		}
@@ -120,8 +119,8 @@ metadata {
 		valueTile("humidity", "device.humidity",  width: 2, height: 2, decoration: "flat") {
 			state "humidity", label:'${currentValue}%'
 		}
-		main "temperature"
-		details(["temperature", "upButtonControl", "displayThermostatSetpoint", "downButtonControl", "currentStatus", "mode", "fanMode","humidity", "resumeProgram", "refresh"])
+		main "thermostatFull"
+		details(["thermostatFull", "upButtonControl", "displayThermostatSetpoint", "downButtonControl", "currentStatus", "mode", "fanMode","humidity", "resumeProgram", "refresh"])
 	}
 
 	preferences {
