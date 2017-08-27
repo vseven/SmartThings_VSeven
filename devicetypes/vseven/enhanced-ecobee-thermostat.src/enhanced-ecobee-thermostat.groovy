@@ -81,7 +81,7 @@ metadata {
 			attributeState("cool",label:'${name}', action:"switchMode",  nextState: "updating", icon: "st.thermostat.cool")
 			attributeState("auto",label:'${name}', action:"switchMode",  nextState: "updating", icon: "st.thermostat.auto")
 			attributeState("auxheatonly",label:'${name}', action:"switchMode", icon: "st.thermostat.emergency-heat")
-			attributeState("updating",label:'${name}', label:"Working", icon: "st.secondary.secondary")
+			attributeState("updating",label:'${name}', icon: "st.secondary.secondary")
 		    }
 		}
     		standardTile("upButtonControl", "device.thermostatSetpoint", inactiveLabel: false, width: 2, height: 2) {
