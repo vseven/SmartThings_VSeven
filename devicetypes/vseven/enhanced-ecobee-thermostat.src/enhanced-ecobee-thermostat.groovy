@@ -98,7 +98,7 @@ metadata {
     		standardTile("upButtonControl", "device.thermostatSetpoint", inactiveLabel: false, width: 2, height: 2) {
 			state "setpoint", action:"raiseSetpoint", icon:"st.thermostat.thermostat-up"
 		}
-		standardTile("thermostatStatus", "device.thermostatStatus", width: 2, height: 2) {
+		standardTile("thermostatStatus", "device.thermostatStatus", width: 6, height: 1) {
 			state "thermostatStatus", label:'${currentValue}'
 		}
 		valueTile("displayThermostatSetpoint", "device.displayThermostatSetpoint", width: 2, height: 2, decoration: "flat") {
@@ -808,7 +808,7 @@ def generateStatusEvent() {
 
 	if (mode == "heat" || mode == "auxheatonly") {
 		if (temperature >= heatingSetpoint) {
-			statusText = "Currently Idle"
+			statusText = "Right Now: Idle"
 		} else {
 			statusText = "Heating to ${heatingSetpoint} ${location.temperatureScale}"
 			operatingState = "heating"
@@ -828,7 +828,7 @@ def generateStatusEvent() {
 			operatingState = "cooling"
 		}
 	} else if (mode == "off") {
-		statusText = "Currently Off"
+		statusText = "Right Now: Off"
 	} else {
 		statusText = "?"
 	}
