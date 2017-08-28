@@ -118,8 +118,9 @@ metadata {
 			state "updating", label:"Working", icon: "st.secondary.secondary"
 		}
 		standardTile("fanMode", "device.thermostatFanMode", inactiveLabel: false, width: 2, height: 2) {
-			state "auto", action:"switchFanMode", nextState: "updating", icon: "st.thermostat.fan-auto"
-			state "on", action:"switchFanMode", nextState: "updating", icon: "st.thermostat.fan-on"
+			state "auto", label:'Auto', action:"thermostat.fanOn", nextState: "updating", icon: "st.thermostat.fan-auto"
+			state "on", label:'On', action:"thermostat.fanAuto", nextState: "updating", icon: "st.thermostat.fan-on"
+			state "off", label:'Off', action:"thermostat.fanAuto", nextState: "updating", icon: "st.thermostat.fan-off"
 			state "updating", label:"Working", icon: "st.secondary.secondary"
 		}
 		controlTile("heatSliderControl", "device.heatingSetpoint", "slider", height: 2, width: 2, inactiveLabel: false) {
