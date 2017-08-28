@@ -81,10 +81,10 @@ metadata {
 				attributeState('default', label: 'idle', backgroundColor:"#d28de0")
 		    	}
 		    tileAttribute("device.thermostatMode", key: "THERMOSTAT_MODE") {
-			attributeState("off",label:'${name}', action:"switchMode", nextState: "updating", icon: "st.thermostat.heating-cooling-off")
-			attributeState("heat",label:'${name}', action:"switchMode",  nextState: "updating", icon: "st.thermostat.heat")
-			attributeState("cool",label:'${name}', action:"switchMode",  nextState: "updating", icon: "st.thermostat.cool")
-			attributeState("auto",label:'${name}', action:"switchMode",  nextState: "updating", icon: "st.thermostat.auto")
+			attributeState("off",label:"Set to " + '${name}', action:"switchMode", nextState: "updating", icon: "st.thermostat.heating-cooling-off")
+			attributeState("heat",label:"Set to " + '${name}', action:"switchMode",  nextState: "updating", icon: "st.thermostat.heat")
+			attributeState("cool",label:"Set to " + '${name}', action:"switchMode",  nextState: "updating", icon: "st.thermostat.cool")
+			attributeState("auto",label:"Set to " + '${name}', action:"switchMode",  nextState: "updating", icon: "st.thermostat.auto")
 			attributeState("updating",label:'${name}', icon: "st.secondary.secondary")
 		    }
 		}
@@ -96,6 +96,14 @@ metadata {
 		}
 		standardTile("downButtonControl", "device.thermostatSetpoint", inactiveLabel: false, width: 2, height: 2) {
 			state "setpoint", action:"lowerSetpoint", icon:"st.thermostat.thermostat-down"
+		}
+		standardTile("mode", "device.thermostatMode", inactiveLabel: false, width: 2, height: 2) {
+			state "off", action:"switchMode", nextState: "updating", icon: "st.thermostat.heating-cooling-off"
+			state "heat", action:"switchMode",  nextState: "updating", icon: "st.thermostat.heat"
+			state "cool", action:"switchMode",  nextState: "updating", icon: "st.thermostat.cool"
+			state "auto", action:"switchMode",  nextState: "updating", icon: "st.thermostat.auto"
+			state "auxheatonly", action:"switchMode", icon: "st.thermostat.emergency-heat"
+			state "updating", label:"Working", icon: "st.secondary.secondary"
 		}
 		standardTile("fanMode", "device.thermostatFanMode", inactiveLabel: false, width: 2, height: 2) {
 			state "auto", action:"switchFanMode", nextState: "updating", icon: "st.thermostat.fan-auto"
