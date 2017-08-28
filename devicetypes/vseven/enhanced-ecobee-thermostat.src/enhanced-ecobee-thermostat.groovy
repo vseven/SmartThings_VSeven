@@ -79,11 +79,16 @@ metadata {
                 		attributeState("fan only", backgroundColor:"#66cc00")
 				attributeState("heating", backgroundColor:"#ff9c14")
 				attributeState("cooling", backgroundColor:"#2db9e7")
-				attributeState('heating (smart recovery)', backgroundColor:"#ff9c14")
-				attributeState('cooling (smart recovery)', backgroundColor:"#2db9e7")
 				attributeState('offline', backgroundColor:"#ff4d4d")
 				attributeState('default', label: 'idle', backgroundColor:"#d28de0")
 		    	}
+			    tileAttribute("device.thermostatMode", key: "THERMOSTAT_MODE") {
+        attributeState("off", label:'${name}')
+        attributeState("heat", label:'${name}')
+        attributeState("cool", label:'${name}')
+        attributeState("auto", label:'${name}')
+    }
+			/*
 			tileAttribute("device.thermostatMode", key: "THERMOSTAT_MODE") {
 				attributeState "off", action:"switchMode", nextState: "updating", icon: "st.thermostat.heating-cooling-off"
 				attributeState "heat", action:"switchMode",  nextState: "updating", icon: "st.thermostat.heat"
@@ -91,7 +96,7 @@ metadata {
 				attributeState "auto", action:"switchMode",  nextState: "updating", icon: "st.thermostat.auto"
 				attributeState "auxheatonly", action:"switchMode", icon: "st.thermostat.emergency-heat"
 				attributeState "updating", label:"Working", icon: "st.secondary.secondary"
-		    	}
+		    	} */
 			tileAttribute("device.heatingSetpoint", key: "HEATING_SETPOINT") {
         			attributeState("heatingSetpoint", label:'${currentValue}', unit:"dF", defaultState: true)
     			}
