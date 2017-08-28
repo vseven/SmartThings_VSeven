@@ -78,14 +78,15 @@ metadata {
                 		attributeState('offline', label: "Offline",backgroundColor:"#ff4d4d")
 				attributeState('default', label: 'Idle', backgroundColor:"#d28de0")
 		    	}
-			/*
+			
 		    tileAttribute("device.thermostatMode", key: "THERMOSTAT_MODE") {
+			attributeState("idle",label:"Currently Idle", action:"switchMode", nextState: "updating", icon: "st.thermostat.heating-cooling-off")
 			attributeState("off",label:"Set to " + '${name}', action:"switchMode", nextState: "updating", icon: "st.thermostat.heating-cooling-off")
 			attributeState("heat",label:"Set to " + '${name}', action:"switchMode",  nextState: "updating", icon: "st.thermostat.heat")
 			attributeState("cool",label:"Set to " + '${name}', action:"switchMode",  nextState: "updating", icon: "st.thermostat.cool")
 			attributeState("auto",label:"Set to " + '${name}', action:"switchMode",  nextState: "updating", icon: "st.thermostat.auto")
 			attributeState("updating",label:'${name}', icon: "st.secondary.secondary")
-		    }*/
+		    }
 		}
     		standardTile("upButtonControl", "device.thermostatSetpoint", inactiveLabel: false, width: 2, height: 2) {
 			state "setpoint", action:"raiseSetpoint", icon:"st.thermostat.thermostat-up"
