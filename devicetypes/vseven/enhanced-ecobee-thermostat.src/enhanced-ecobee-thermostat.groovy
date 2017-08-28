@@ -142,7 +142,7 @@ metadata {
 			state "updating", label:"Working", icon: "st.secondary.secondary"
 		}
 		main "thermostatFull"
-		details(["thermostatFull", "thermostatStatus", "currentStatus","mode", "fanMode", "resumeProgram", "refresh"])
+		details(["thermostatFull", "thermostatStatus","mode", "fanMode", "resumeProgram", "refresh"])
 	}
 
 	preferences {
