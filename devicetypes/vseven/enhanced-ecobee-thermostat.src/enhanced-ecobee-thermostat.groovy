@@ -71,10 +71,15 @@ metadata {
    				     attributeState("humidity", label:'${currentValue}%', unit:"%", defaultState: true)
    			 }
   			  tileAttribute("device.thermostatOperatingState", key: "OPERATING_STATE") {
-			        attributeState("idle", backgroundColor:"#00A0DC")
-			        attributeState("heating", backgroundColor:"#e86d13")
-			        attributeState("cooling", backgroundColor:"#00A0DC")
-		    }
+				attributeState('idle', backgroundColor:"#d28de0")
+                		attributeState('fan only', backgroundColor:"66cc00")
+				attributeState('heating', backgroundColor:"#ff9c14")
+				attributeState('cooling', backgroundColor:"#2db9e7")
+                		attributeState('heating (smart recovery)', backgroundColor:"#ff9c14")
+                		attributeState('cooling (smart recovery)', backgroundColor:"#2db9e7")
+                		attributeState('offline', backgroundColor:"#ff4d4d")
+				attributeState('default', label: 'idle', backgroundColor:"#d28de0")
+		    	}
 		    tileAttribute("device.thermostatMode", key: "THERMOSTAT_MODE") {
 			attributeState("off",label:'${name}', action:"switchMode", nextState: "updating", icon: "st.thermostat.heating-cooling-off")
 			attributeState("heat",label:'${name}', action:"switchMode",  nextState: "updating", icon: "st.thermostat.heat")
@@ -87,7 +92,7 @@ metadata {
 			state "setpoint", action:"raiseSetpoint", icon:"st.thermostat.thermostat-up"
 		}
 		valueTile("displayThermostatSetpoint", "device.displayThermostatSetpoint", width: 2, height: 2, decoration: "flat") {
-			state "displayThermostatSetpoint", label:'${currentValue}'
+			state "displayThermostatSetpoint", label:" Currently /n set to " + '${currentValue}°'
 		}
 		standardTile("downButtonControl", "device.thermostatSetpoint", inactiveLabel: false, width: 2, height: 2) {
 			state "setpoint", action:"lowerSetpoint", icon:"st.thermostat.thermostat-down"
