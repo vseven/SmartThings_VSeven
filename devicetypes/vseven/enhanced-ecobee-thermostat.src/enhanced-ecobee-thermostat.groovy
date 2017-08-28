@@ -71,7 +71,7 @@ metadata {
    				     attributeState("humidity", label:'${currentValue}%', unit:"%", defaultState: true)
    			 }
   			  tileAttribute("device.thermostatOperatingState", key: "OPERATING_STATE") {
-				attributeState("idle", label:"12", backgroundColor:"#cccccc")
+				attributeState("idle", backgroundColor:"#cccccc")
                 		attributeState("fan only", backgroundColor:"#66cc00")
 				attributeState("heating", backgroundColor:"#ff9c14")
 				attributeState("cooling", backgroundColor:"#2db9e7")
@@ -88,12 +88,18 @@ metadata {
 				attributeState "auxheatonly", action:"switchMode", icon: "st.thermostat.emergency-heat"
 				attributeState "updating", label:"Working", icon: "st.secondary.secondary"
 		    	}
+			tileAttribute("device.heatingSetpoint", key: "HEATING_SETPOINT") {
+        			attributeState("heatingSetpoint", label:'${currentValue}', unit:"dF", defaultState: true)
+    			}
+    			tileAttribute("device.coolingSetpoint", key: "COOLING_SETPOINT") {
+        			attributeState("coolingSetpoint", label:'${currentValue}', unit:"dF", defaultState: true)
+    			}
 		}
     		standardTile("upButtonControl", "device.thermostatSetpoint", inactiveLabel: false, width: 2, height: 2) {
 			state "setpoint", action:"raiseSetpoint", icon:"st.thermostat.thermostat-up"
 		}
 		standardTile("thermostatStatus", "device.thermostatStatus", width: 2, height: 2) {
-			state "thermostatStatus", label:'${currentValue}%'
+			state "thermostatStatus", label:'${currentValue}'
 		}
 		valueTile("displayThermostatSetpoint", "device.displayThermostatSetpoint", width: 2, height: 2, decoration: "flat") {
 			state "displayThermostatSetpoint", label:" Currently set to " + '${currentValue}°'
@@ -802,14 +808,14 @@ def generateStatusEvent() {
 
 	if (mode == "heat" || mode == "auxheatonly") {
 		if (temperature >= heatingSetpoint) {
-			statusText = "Right Now: Idle"
+			statusText = "Currently Idle"
 		} else {
 			statusText = "Heating to ${heatingSetpoint} ${location.temperatureScale}"
 			operatingState = "heating"
 		}
 	} else if (mode == "cool") {
 		if (temperature <= coolingSetpoint) {
-			statusText = "Right Now: Idle"
+			statusText = "Currently Idle"
 		} else {
 			statusText = "Cooling to ${coolingSetpoint} ${location.temperatureScale}"
 			operatingState = "cooling"
@@ -822,7 +828,7 @@ def generateStatusEvent() {
 			operatingState = "cooling"
 		}
 	} else if (mode == "off") {
-		statusText = "Right Now: Off"
+		statusText = "Currently Off"
 	} else {
 		statusText = "?"
 	}
