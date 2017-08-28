@@ -74,6 +74,7 @@ metadata {
    			 tileAttribute("device.humidity", key: "SECONDARY_CONTROL") {
    				     attributeState("humidity", label:'${currentValue}%', unit:"%", defaultState: true)
    			 }
+			/*
   			  tileAttribute("device.thermostatOperatingState", key: "OPERATING_STATE") {
 				attributeState("idle", backgroundColor:"#cccccc")
                 		attributeState("fan only", backgroundColor:"#66cc00")
@@ -81,7 +82,13 @@ metadata {
 				attributeState("cooling", backgroundColor:"#2db9e7")
 				attributeState('offline', backgroundColor:"#ff4d4d")
 				attributeState('default', label: 'idle', backgroundColor:"#d28de0")
-		    	}
+		    	}*/
+			
+    tileAttribute("device.thermostatOperatingState", key: "OPERATING_STATE") {
+        attributeState("idle", backgroundColor:"#00A0DC")
+        attributeState("heating", backgroundColor:"#e86d13")
+        attributeState("cooling", backgroundColor:"#00A0DC")
+    }
 			    tileAttribute("device.thermostatMode", key: "THERMOSTAT_MODE") {
         attributeState("off", label:'${name}')
         attributeState("heat", label:'${name}')
