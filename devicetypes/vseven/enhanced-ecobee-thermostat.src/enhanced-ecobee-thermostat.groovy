@@ -47,7 +47,7 @@ metadata {
 	tiles(scale: 2) {
 		multiAttributeTile(name: "thermostatFull", type: "thermostat", width: 6, height: 4) {
       			tileAttribute("device.temperature", key: "PRIMARY_CONTROL") {
-			    attributeState "temperature", label:'${currentValue}°', unit:"F", icon: "st.thermostat.ac.air-conditioning",
+			    attributeState "temperature", label:'${currentValue}°', unit:"dF", icon: "st.thermostat.ac.air-conditioning",
 				backgroundColors:[
 					// Celsius
 					[value: 0, color: "#153591"],
@@ -66,7 +66,11 @@ metadata {
 					[value: 95, color: "#d04e00"],
 					[value: 96, color: "#bc2323"]
 				  ]
-			}              
+			}
+			tileAttribute("device.temperature", key: "VALUE_CONTROL") {
+        			attributeState("VALUE_UP", action: "tempUp")
+        			attributeState("VALUE_DOWN", action: "tempDown")
+    			}
    			 tileAttribute("device.humidity", key: "SECONDARY_CONTROL") {
    				     attributeState("humidity", label:'${currentValue}%', unit:"%", defaultState: true)
    			 }
