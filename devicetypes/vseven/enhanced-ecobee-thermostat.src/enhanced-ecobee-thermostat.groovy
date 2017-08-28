@@ -817,7 +817,7 @@ def generateStatusEvent() {
 		}
 	} else if (mode == "cool") {
 		if (temperature <= coolingSetpoint) {
-			statusText = "Currently Idle"
+			statusText = "Right Now: Idle"
 		} else {
 			statusText = "Cooling to ${coolingSetpoint} ${location.temperatureScale}"
 			operatingState = "cooling"
