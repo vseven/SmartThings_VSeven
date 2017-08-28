@@ -92,7 +92,7 @@ metadata {
 			state "setpoint", action:"raiseSetpoint", icon:"st.thermostat.thermostat-up"
 		}
 		valueTile("displayThermostatSetpoint", "device.displayThermostatSetpoint", width: 2, height: 2, decoration: "flat") {
-			state "displayThermostatSetpoint", label:" Currently /n set to " + '${currentValue}°'
+			state "displayThermostatSetpoint", label:" Currently set to " + '${currentValue}°'
 		}
 		standardTile("downButtonControl", "device.thermostatSetpoint", inactiveLabel: false, width: 2, height: 2) {
 			state "setpoint", action:"lowerSetpoint", icon:"st.thermostat.thermostat-down"
