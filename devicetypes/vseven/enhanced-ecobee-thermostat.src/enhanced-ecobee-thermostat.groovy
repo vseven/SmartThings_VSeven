@@ -100,7 +100,7 @@ metadata {
     		standardTile("upButtonControl", "device.thermostatSetpoint", inactiveLabel: false, width: 2, height: 2) {
 			state "setpoint", action:"raiseSetpoint", icon:"st.thermostat.thermostat-up"
 		}
-		standardTile("thermostatStatus", "device.thermostatStatus", width: 6, height: 2) {
+		standardTile("thermostatStatus", "device.thermostatStatus", width: 2, height: 2) {
 			state "thermostatStatus", label:'${currentValue}'
 		}
 		valueTile("displayThermostatSetpoint", "device.displayThermostatSetpoint", width: 2, height: 2, decoration: "flat") {
@@ -142,7 +142,7 @@ metadata {
 			state "updating", label:"Working", icon: "st.secondary.secondary"
 		}
 		main "thermostatFull"
-		details(["thermostatFull", "thermostatStatus","mode", "fanMode", "resumeProgram", "refresh"])
+		details(["thermostatFull", "upButtonControl", "thermostatStatus", "downButtonControl", "mode", "fanMode", "resumeProgram", "refresh"])
 	}
 
 	preferences {
