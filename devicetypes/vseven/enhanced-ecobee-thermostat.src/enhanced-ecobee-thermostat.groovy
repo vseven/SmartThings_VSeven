@@ -66,11 +66,11 @@ metadata {
 					[value: 95, color: "#d04e00"],
 					[value: 96, color: "#bc2323"]
 				  ]
-			}
+			} /*
 			tileAttribute("device.temperature", key: "VALUE_CONTROL") {
         			attributeState("VALUE_UP", action: "tempUp")
         			attributeState("VALUE_DOWN", action: "tempDown")
-    			}
+    			} */
    			tileAttribute("device.humidity", key: "SECONDARY_CONTROL") {
    				     attributeState("humidity", label:'${currentValue}%', unit:"%", defaultState: true)
    			}
