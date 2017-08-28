@@ -71,7 +71,7 @@ metadata {
    				     attributeState("humidity", label:'${currentValue}%', unit:"%", defaultState: true)
    			 }
   			  tileAttribute("device.thermostatOperatingState", key: "OPERATING_STATE") {
-				attributeState("idle", backgroundColor:"#cccccc")
+				attributeState("idle", label:"12", backgroundColor:"#cccccc")
                 		attributeState("fan only", backgroundColor:"#66cc00")
 				attributeState("heating", backgroundColor:"#ff9c14")
 				attributeState("cooling", backgroundColor:"#2db9e7")
