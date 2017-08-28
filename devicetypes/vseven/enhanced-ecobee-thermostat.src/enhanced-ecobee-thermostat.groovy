@@ -71,31 +71,17 @@ metadata {
         			attributeState("VALUE_UP", action: "tempUp")
         			attributeState("VALUE_DOWN", action: "tempDown")
     			}
-   			 tileAttribute("device.humidity", key: "SECONDARY_CONTROL") {
+   			tileAttribute("device.humidity", key: "SECONDARY_CONTROL") {
    				     attributeState("humidity", label:'${currentValue}%', unit:"%", defaultState: true)
-   			 }
-			/*
-  			  tileAttribute("device.thermostatOperatingState", key: "OPERATING_STATE") {
+   			}
+  			tileAttribute("device.thermostatOperatingState", key: "OPERATING_STATE") {
 				attributeState("idle", backgroundColor:"#cccccc")
                 		attributeState("fan only", backgroundColor:"#66cc00")
 				attributeState("heating", backgroundColor:"#ff9c14")
 				attributeState("cooling", backgroundColor:"#2db9e7")
 				attributeState('offline', backgroundColor:"#ff4d4d")
-				attributeState('default', label: 'idle', backgroundColor:"#d28de0")
-		    	}*/
-			
-    tileAttribute("device.thermostatOperatingState", key: "OPERATING_STATE") {
-        attributeState("idle", backgroundColor:"#cccccc")
-        attributeState("heating", backgroundColor:"#e86d13")
-        attributeState("cooling", backgroundColor:"#00A0DC")
-    }
-			    tileAttribute("device.thermostatMode", key: "THERMOSTAT_MODE") {
-        attributeState("off", label:'${name}')
-        attributeState("heat", label:'${name}')
-        attributeState("cool", label:'${name}')
-        attributeState("auto", label:'${name}')
-    }
-			/*
+				attributeState('default', label: '${currentValue}', backgroundColor:"#d28de0")
+			}
 			tileAttribute("device.thermostatMode", key: "THERMOSTAT_MODE") {
 				attributeState "off", action:"switchMode", nextState: "updating", icon: "st.thermostat.heating-cooling-off"
 				attributeState "heat", action:"switchMode",  nextState: "updating", icon: "st.thermostat.heat"
@@ -103,7 +89,7 @@ metadata {
 				attributeState "auto", action:"switchMode",  nextState: "updating", icon: "st.thermostat.auto"
 				attributeState "auxheatonly", action:"switchMode", icon: "st.thermostat.emergency-heat"
 				attributeState "updating", label:"Working", icon: "st.secondary.secondary"
-		    	} */
+		    	}
 			tileAttribute("device.heatingSetpoint", key: "HEATING_SETPOINT") {
         			attributeState("heatingSetpoint", label:'${currentValue}', unit:"dF", defaultState: true)
     			}
