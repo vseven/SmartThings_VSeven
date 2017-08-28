@@ -131,7 +131,7 @@ metadata {
 			state "updating", label:"Working", icon: "st.secondary.secondary"
 		}
 		main "thermostatFull"
-		details(["thermostatFull", "upButtonControl", "displayThermostatSetpoint", "downButtonControl", "currentStatus", "mode", "fanMode", "resumeProgram", "refresh"])
+		details(["thermostatFull", "mode", "fanMode", "resumeProgram", "refresh"])
 	}
 
 	preferences {
