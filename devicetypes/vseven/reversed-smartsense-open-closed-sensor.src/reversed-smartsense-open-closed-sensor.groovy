@@ -118,7 +118,7 @@ def parse(String description) {
 
 private Map parseIasMessage(String description) {
 	ZoneStatus zs = zigbee.parseZoneStatus(description)
-	return zs.isAlarm1Set() ? getContactResult('open') : getContactResult('closed')
+	return zs.isAlarm1Set() ? getContactResult('closed') : getContactResult('open')
 }
 
 private Map getBatteryResult(rawValue) {
@@ -146,7 +146,7 @@ private Map getBatteryResult(rawValue) {
 private Map getContactResult(value) {
 	log.debug 'Contact Status'
 	def linkText = getLinkText(device)
-	def descriptionText = "${linkText} was ${value == 'closed' ? 'closed' : 'open'}"
+	def descriptionText = "${linkText} was ${value == 'open' ? 'opened' : 'closed'}"
 	return [
 			name           : 'contact',
 			value          : value,
