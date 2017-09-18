@@ -16,7 +16,7 @@
 import physicalgraph.zigbee.clusters.iaszone.ZoneStatus
 
 metadata {
-	definition(name: "SmartSense Open/Closed Sensor Reversible", namespace: "vseven", author: "SmartThings.  Modified by vseven") {
+	definition(name: "SmartSense Open/Closed Sensor Reversible", namespace: "vseven", author: "SmartThings") {
 		capability "Battery"
 		capability "Configuration"
 		capability "Contact Sensor"
@@ -37,7 +37,6 @@ metadata {
 	simulator {
 
 	}
-
 
 	preferences {
 		input title: "Temperature Offset", description: "This feature allows you to correct any temperature variations by selecting an offset. Ex: If your sensor consistently reports a temp that's 5 degrees too warm, you'd enter \"-5\". If 3 degrees too cold, enter \"+3\".", displayDuringSetup: false, type: "paragraph", element: "paragraph"
@@ -119,7 +118,7 @@ def parse(String description) {
 
 private Map parseIasMessage(String description) {
 	ZoneStatus zs = zigbee.parseZoneStatus(description)
-	return zs.isAlarm1Set() ? getContactResult('closed') : getContactResult('open')
+	return zs.isAlarm1Set() ? getContactResult('open') : getContactResult('closed')
 }
 
 private Map getBatteryResult(rawValue) {
