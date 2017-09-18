@@ -156,7 +156,7 @@ private Map getContactResult(value) {
 	return [
 			name           : 'contact',
 			value          : value,
-			descriptionText: descriptionText
+			descriptionText: descriptionText 
 	]
 }
 
