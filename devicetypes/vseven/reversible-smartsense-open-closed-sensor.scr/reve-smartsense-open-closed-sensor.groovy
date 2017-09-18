@@ -16,7 +16,7 @@
 import physicalgraph.zigbee.clusters.iaszone.ZoneStatus
 
 metadata {
-	definition(name: "Reversible SmartSense Open/Closed Sensor", namespace: "vseven", author: "SmartThings (modified by vseven)") {
+	definition(name: "Reve SmartSense Open/Closed Sensor", namespace: "vseven", author: "SmartThings (modified by vseven)") {
 		capability "Battery"
 		capability "Configuration"
 		capability "Contact Sensor"
