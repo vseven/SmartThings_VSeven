@@ -39,6 +39,7 @@ metadata {
 	}
 
 	preferences {
+		input(name: "invertDevice", type: "boolean", title: "Invert the actual input of the device.  Useful for when you want to reverse the actual device status from what it physically is reading.  For example the physical contact is Open when the device reads Closed so you want the logic reversed.")
 		input title: "Temperature Offset", description: "This feature allows you to correct any temperature variations by selecting an offset. Ex: If your sensor consistently reports a temp that's 5 degrees too warm, you'd enter \"-5\". If 3 degrees too cold, enter \"+3\".", displayDuringSetup: false, type: "paragraph", element: "paragraph"
 		input "tempOffset", "number", title: "Degrees", description: "Adjust temperature by this many degrees", range: "*..*", displayDuringSetup: false
 	}
@@ -118,7 +119,11 @@ def parse(String description) {
 
 private Map parseIasMessage(String description) {
 	ZoneStatus zs = zigbee.parseZoneStatus(description)
-	return zs.isAlarm1Set() ? getContactResult('closed') : getContactResult('open')
+	if (invertDevice.equals("true")) {
+		return zs.isAlarm1Set() ? getContactResult('closed') : getContactResult('open')
+	} else {
+		return zs.isAlarm1Set() ? getContactResult('open') : getContactResult('closed')
+	}
 }
 
 private Map getBatteryResult(rawValue) {
