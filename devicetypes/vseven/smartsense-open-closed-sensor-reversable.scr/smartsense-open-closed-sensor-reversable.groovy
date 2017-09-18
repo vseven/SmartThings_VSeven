@@ -16,7 +16,7 @@
 import physicalgraph.zigbee.clusters.iaszone.ZoneStatus
 
 metadata {
-	definition(name: "Reversed SmartSense Open/Closed Sensor", namespace: "vseven", author: "SmartThings.  Modified by vseven") {
+	definition(name: "SmartSense Open/Closed Sensor - Reversable", namespace: "vseven", author: "SmartThings.  Modified by vseven") {
 		capability "Battery"
 		capability "Configuration"
 		capability "Contact Sensor"
@@ -39,7 +39,8 @@ metadata {
 	}
 
 	preferences {
-		input(name: "invertDevice", type: "boolean", title: "Invert the actual input of the device.  Useful for when you want to reverse the actual device status from what it physically is reading.  For example the physical contact is Open when the device reads Closed so you want the logic reversed.")
+		input title: "Invert Input", description: "Invert the actual input of the device.  Useful for when you want to reverse the  device status from what it physically is reading. Ex: Physically open will show closed and vice versa.", displayDuringSetup: false, type: "paragraph", element: "paragraph"
+		input "invertDevice", type: "boolean", title: "Invert", description: "Invert input"
 		input title: "Temperature Offset", description: "This feature allows you to correct any temperature variations by selecting an offset. Ex: If your sensor consistently reports a temp that's 5 degrees too warm, you'd enter \"-5\". If 3 degrees too cold, enter \"+3\".", displayDuringSetup: false, type: "paragraph", element: "paragraph"
 		input "tempOffset", "number", title: "Degrees", description: "Adjust temperature by this many degrees", range: "*..*", displayDuringSetup: false
 	}
