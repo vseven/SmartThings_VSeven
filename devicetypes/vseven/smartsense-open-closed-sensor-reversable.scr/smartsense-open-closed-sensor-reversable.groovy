@@ -37,12 +37,14 @@ metadata {
 	simulator {
 
 	}
-
+	
 	preferences {
-		input title: "Invert Input", description: "Invert the actual input of the device.  Useful for when you want to reverse the  device status from what it physically is reading. Ex: Physically open will show closed and vice versa.", displayDuringSetup: false, type: "paragraph", element: "paragraph"
-		input(name: "invertDevice", type: "boolean", title: "Invert", description: "Invert input")
-		input title: "Temperature Offset", description: "This feature allows you to correct any temperature variations by selecting an offset. Ex: If your sensor consistently reports a temp that's 5 degrees too warm, you'd enter \"-5\". If 3 degrees too cold, enter \"+3\".", displayDuringSetup: false, type: "paragraph", element: "paragraph"
-		input(name: "tempOffset", "number", title: "Degrees", description: "Adjust temperature by this many degrees", range: "*..*", displayDuringSetup: false)
+		section("Prefs") {
+			input title: "Invert Input", description: "Invert the actual input of the device.  Useful for when you want to reverse the  device status from what it physically is reading. Ex: Physically open will show closed and vice versa.", displayDuringSetup: false, type: "paragraph", element: "paragraph"
+			input "invertDevice", type: "boolean", title: "Invert", description: "Invert input", displayDuringSetup: false
+			input title: "Temperature Offset", description: "This feature allows you to correct any temperature variations by selecting an offset. Ex: If your sensor consistently reports a temp that's 5 degrees too warm, you'd enter \"-5\". If 3 degrees too cold, enter \"+3\".", displayDuringSetup: false, type: "paragraph", element: "paragraph"
+			input "tempOffset", "number", title: "Degrees", description: "Adjust temperature by this many degrees", range: "*..*", displayDuringSetup: false
+		}
 	}
 
 	tiles(scale: 2) {
