@@ -24,7 +24,7 @@
  * 
  */
 metadata {
-	definition (name: "Child Contact Sensor", namespace: "ogiewon", author: "Dan Ogorchock") {
+	definition (name: "Child Contact Sensor", namespace: "vseven", author: "Dan Ogorchock (Modified by vseven)") {
 		capability "Contact Sensor"
 		capability "Sensor"        
         
