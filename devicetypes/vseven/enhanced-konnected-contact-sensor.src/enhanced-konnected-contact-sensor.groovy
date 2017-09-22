@@ -14,7 +14,7 @@
  *
  */
 metadata {
-  definition (name: "Konnected Contact Sensor", namespace: "vseven", author: "konnected.io") {
+  definition (name: "Enhanced Konnected Contact Sensor", namespace: "vseven", author: "konnected.io") {
     capability "Contact Sensor"
     capability "Sensor"
   }
