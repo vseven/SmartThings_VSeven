@@ -21,15 +21,15 @@
 // for the UI
 metadata {
 	definition (name: "Hue Bulb", namespace: "smartthings", author: "SmartThings") {
-    capability "Switch Level"
-    capability "Switch"
-		capability "Relay Switch"
-		capability "Actuator"
-    capability "Sensor"
+	capability "Switch Level"
+	capability "Switch"
+	capability "Relay Switch"
+	capability "Actuator"
+	capability "Sensor"
 
-		capability "Color Control"
+	capability "Color Control"
 
-    command "generateEvent", ["string", "string"]
+	command "generateEvent", ["string", "string"]
 	}
 
 	simulator {
@@ -37,7 +37,7 @@ metadata {
 	}
 
 	tiles (scale: 2){
-		multiAttributeTile(name:"rich-control", type: "lighting", width: 6, height: 4, canChangeIcon: true){
+		multiAttributeTile(name:"switch", type: "lighting", width: 6, height: 4, canChangeIcon: true){
 			tileAttribute ("device.switch", key: "PRIMARY_CONTROL") {
 				attributeState "on", label:'${name}', action:"switch.off", icon:"st.lights.philips.hue-single", backgroundColor:"#00A0DC", nextState:"turningOff"
 				attributeState "off", label:'${name}', action:"switch.on", icon:"st.lights.philips.hue-single", backgroundColor:"#ffffff", nextState:"turningOn"
@@ -46,22 +46,21 @@ metadata {
 			}
 			tileAttribute ("device.level", key: "SLIDER_CONTROL") {
 				attributeState "level", action:"switch level.setLevel", range:"(0..100)"
-            }
+            		}
 			tileAttribute ("device.color", key: "COLOR_CONTROL") {
-				attributeState "color", action:"setAdjustedColor"
+				attributeState "color", action:"color control.setColor"
 			}
 		}
-    
-    valueTile("level", "device.level", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
+		
+		valueTile("level", "device.level", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 			state "level", label:'${currentValue} %', unit:"%", backgroundColor:"#ffffff"
 		}
  		valueTile("lastUpdated", "device.lastUpdated", inactiveLabel: false, decoration: "flat", width: 4, height: 2) {
-    		state "default", label:'Last Updated ${currentValue}', backgroundColor:"#ffffff"
-    }
+    			state "default", label:'Last Updated ${currentValue}', backgroundColor:"#ffffff"
+		}
 
-
-		main(["rich-control"])
-		details(["rich-control", "level", "lastUpdated"])
+		main(["switch"])
+		details(["switch", "level", "lastUpdated"])
 	}
 }
 
@@ -86,6 +85,29 @@ def setLevel(value) {
 	sendEvent(name: "level", value: level, unit: "%")
     
     parent.childSetLevel(device.deviceNetworkId, level)
+}
+
+def setColor(value) {
+	def result = []
+	log.debug "setColor: ${value}"
+	if (value.hex) {
+		def c = value.hex.findAll(/[0-9a-fA-F]{2}/).collect { Integer.parseInt(it, 16) }
+		result << zwave.switchColorV3.switchColorSet(red:c[0], green:c[1], blue:c[2], warmWhite:0, coldWhite:0)
+	} else {
+		def hue = value.hue ?: device.currentValue("hue")
+		def saturation = value.saturation ?: device.currentValue("saturation")
+		if(hue == null) hue = 13
+		if(saturation == null) saturation = 13
+		def rgb = huesatToRGB(hue, saturation)
+		result << zwave.switchColorV3.switchColorSet(red: rgb[0], green: rgb[1], blue: rgb[2], warmWhite:0, coldWhite:0)
+	}
+
+	if(value.hue) sendEvent(name: "hue", value: value.hue)
+	if(value.hex) sendEvent(name: "color", value: value.hex)
+	if(value.switch) sendEvent(name: "switch", value: value.switch)
+	if(value.saturation) sendEvent(name: "saturation", value: value.saturation)
+
+	commands(result)
 }
 
 def generateEvent(String name, String value) {
