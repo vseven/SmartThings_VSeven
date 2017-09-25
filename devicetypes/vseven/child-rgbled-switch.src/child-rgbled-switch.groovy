@@ -1,5 +1,5 @@
 /**
- *  Child RGB Switch
+ *  Child RGBLED Switch
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  *  in compliance with the License. You may obtain a copy of the License at:
@@ -20,7 +20,7 @@
 
 // for the UI
 metadata {
-	definition (name: "Child RGB Switch", namespace: "vseven", author: "Alan (vseven) - based on code by Dan Ogorchock") {
+	definition (name: "Child RGBLED Switch", namespace: "vseven", author: "Alan (vseven) - based on code by Dan Ogorchock") {
 	capability "Switch Level"
 	capability "Switch"
 	capability "Relay Switch"
@@ -87,33 +87,14 @@ def setLevel(value) {
     parent.childSetLevel(device.deviceNetworkId, level)
 }
 
-def setColor(value) {
-	def result = []
-	log.debug "setColor: ${value}"
-	if (value.hex) {
-		def c = value.hex.findAll(/[0-9a-fA-F]{2}/).collect { Integer.parseInt(it, 16) }
-		result << zwave.switchColorV3.switchColorSet(red:c[0], green:c[1], blue:c[2], warmWhite:0, coldWhite:0)
-	} else {
-		def hue = value.hue ?: device.currentValue("hue")
-		def saturation = value.saturation ?: device.currentValue("saturation")
-		if(hue == null) hue = 13
-		if(saturation == null) saturation = 13
-		def rgb = huesatToRGB(hue, saturation)
-		result << zwave.switchColorV3.switchColorSet(red: rgb[0], green: rgb[1], blue: rgb[2], warmWhite:0, coldWhite:0)
-	}
-
-	if(value.hue) sendEvent(name: "hue", value: value.hue)
-	if(value.hex) sendEvent(name: "color", value: value.hex)
-	if(value.switch) sendEvent(name: "switch", value: value.switch)
-	if(value.saturation) sendEvent(name: "saturation", value: value.saturation)
-
-	commands(result)
+def setColor(value) {	
+    parent.childSetColor(device.deviceNetworkId, value.hex)
 }
 
 def generateEvent(String name, String value) {
-	//log.debug("Passed values to routine generateEvent in device named $device: Name - $name  -  Value - $value")
+  //log.debug("Passed values to routine generateEvent in device named $device: Name - $name  -  Value - $value")
   // The name coming in from ST_Anything will be "dimmerSwitch", but we want to the ST standard "switch" attribute for compatibility with normal SmartApps
-	sendEvent(name: "switch", value: value)
+  sendEvent(name: "switch", value: value)
   // Update lastUpdated date and time
   def nowDay = new Date().format("MMM dd", location.timeZone)
   def nowTime = new Date().format("h:mm a", location.timeZone)
