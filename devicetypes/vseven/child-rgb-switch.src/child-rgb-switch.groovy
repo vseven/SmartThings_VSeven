@@ -20,7 +20,7 @@
 
 // for the UI
 metadata {
-	definition (name: "Child RGBLED Switch", namespace: "vseven", author: "Alan (vseven) - based on code by Dan Ogorchock") {
+	definition (name: "Child RGB Switch", namespace: "vseven", author: "Alan (vseven) - based on code by Dan Ogorchock") {
 	capability "Switch Level"
 	capability "Switch"
 	capability "Relay Switch"
