@@ -23,10 +23,6 @@ metadata {
 	definition (name: "Child RGB Switch", namespace: "vseven", author: "Alan (vseven) - based on code by Dan Ogorchock") {
 	capability "Switch Level"
 	capability "Switch"
-	capability "Relay Switch"
-	capability "Actuator"
-	capability "Sensor"
-
 	capability "Color Control"
 
 	command "generateEvent", ["string", "string"]
@@ -60,7 +56,7 @@ metadata {
 		}
 
 		main(["switch"])
-		details(["switch", "level", "lastUpdated"])
+		details(["switch", "level", "color", "lastUpdated"])
 	}
 }
 
@@ -100,4 +96,3 @@ def generateEvent(String name, String value) {
   def nowTime = new Date().format("h:mm a", location.timeZone)
   sendEvent(name: "lastUpdated", value: nowDay + " at " + nowTime, displayed: false)
 }
-
