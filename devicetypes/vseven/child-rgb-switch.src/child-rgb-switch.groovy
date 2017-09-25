@@ -83,7 +83,8 @@ def setLevel(value) {
     parent.childSetLevel(device.deviceNetworkId, level)
 }
 
-def setColor(value) {	
+def setColor(value) {
+    log.debug("Color value in hex: $value.hex")
     parent.childSetColor(device.deviceNetworkId, value.hex)
 }
 
