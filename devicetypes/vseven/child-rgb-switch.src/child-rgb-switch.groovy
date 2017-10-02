@@ -55,14 +55,20 @@ metadata {
 
 void on() {
 	parent.childOn(device.deviceNetworkId)
+	// Send the last hex value to turn back on
+	parent.childSetColor(device.deviceNetworkId, "000000")
 }
 
 void off() {
 	parent.childOff(device.deviceNetworkId)
+	// Send a all 0 hex value to turn off the LED
+	parent.childSetColor(device.deviceNetworkId, "000000")
 }
 
 def setColor(value) {
     log.debug("Color value in hex: $value.hex")
+    // If the color is being changed we should also turn on
+    parent.childOn(device.deviceNetworkId)
     parent.childSetColor(device.deviceNetworkId, value.hex)
 }
 
