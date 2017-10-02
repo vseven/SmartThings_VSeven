@@ -14,14 +14,13 @@
  *
  *    Date        Who            What
  *    ----        ---            ----
- *    2017-09-24  Allan (vseven) Original Creation (based on Dan Ogorchock's child dimmer switch)
+ *    2017-10-01  Allan (vseven) Original Creation (based on Dan Ogorchock's child dimmer switch)
  * 
  */
 
 // for the UI
 metadata {
 	definition (name: "Child RGB Switch", namespace: "vseven", author: "Alan (vseven) - based on code by Dan Ogorchock") {
-	capability "Switch Level"
 	capability "Switch"
 	capability "Color Control"
 
@@ -40,23 +39,16 @@ metadata {
 				attributeState "turningOn", label:'${name}', action:"switch.off", icon:"st.lights.philips.hue-single", backgroundColor:"#00A0DC", nextState:"turningOff"
 				attributeState "turningOff", label:'${name}', action:"switch.on", icon:"st.lights.philips.hue-single", backgroundColor:"#ffffff", nextState:"turningOn"
 			}
-			tileAttribute ("device.level", key: "SLIDER_CONTROL") {
-				attributeState "level", action:"switch level.setLevel", range:"(0..100)"
-            		}
 			tileAttribute ("device.color", key: "COLOR_CONTROL") {
 				attributeState "color", action:"color control.setColor"
 			}
 		}
-		
-		valueTile("level", "device.level", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-			state "level", label:'${currentValue} %', unit:"%", backgroundColor:"#ffffff"
-		}
- 		valueTile("lastUpdated", "device.lastUpdated", inactiveLabel: false, decoration: "flat", width: 4, height: 2) {
+ 		valueTile("lastUpdated", "device.lastUpdated", inactiveLabel: false, decoration: "flat", width: 6, height: 2) {
     			state "default", label:'Last Updated ${currentValue}', backgroundColor:"#ffffff"
 		}
 
 		main(["switch"])
-		details(["switch", "level", "color", "lastUpdated"])
+		details(["switch", "color", "lastUpdated"])
 	}
 }
 
@@ -67,20 +59,6 @@ void on() {
 
 void off() {
 	parent.childOff(device.deviceNetworkId)
-}
-
-def setLevel(value) {
-	log.debug "setLevel >> value: $value"
-	def valueaux = value as Integer
-	def level = Math.max(Math.min(valueaux, 99), 0)
-	if (level > 0) {
-		sendEvent(name: "switch", value: "on")
-	} else {
-		sendEvent(name: "switch", value: "off")
-	}
-	sendEvent(name: "level", value: level, unit: "%")
-    
-    parent.childSetLevel(device.deviceNetworkId, level)
 }
 
 def setColor(value) {
