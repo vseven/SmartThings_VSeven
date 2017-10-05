@@ -28,7 +28,7 @@
  */
  
 metadata {
-	definition (name: "Parent_ST_Anything_Ethernet", namespace: "ogiewon", author: "Dan Ogorchock") {
+	definition (name: "Parent_ST_Anything_Ethernet", namespace: "vseven", author: "Dan Ogorchock.  Modified by Allan (vseven)") {
 		capability "Configuration"
         capability "Refresh"
         capability "Button"
