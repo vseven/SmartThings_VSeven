@@ -121,7 +121,7 @@ metadata {
 
 void on() {
 	def lastColor = device.latestValue("color.hex")
-	log.debug("On pressed.  Turning status on and sending last known HEX value of $lastColor")
+	//log.debug("On pressed.  Turning status on and sending last known HEX value of $lastColor")
 	sendEvent(name: "switch", value: "on")
 	//parent.childOn(device.deviceNetworkId)
 	// Send the last hex value to turn back on
@@ -129,7 +129,7 @@ void on() {
 }
 
 void off() {
-	log.debug("Off pressed.  Sending HEX of #000000 but not updating device (retain last set color).")
+	//log.debug("Off pressed.  Sending HEX of #000000 but not updating device (retain last set color).")
 	sendEvent(name: "switch", value: "off")
 	//parent.childOff(device.deviceNetworkId)
 	// Send a all 0 hex value to turn off the LED
@@ -138,7 +138,16 @@ void off() {
 
 def setColor(value) {
     toggleTiles("off") //turn off the hard color tiles
-    log.debug("Color value: $value")
+    //log.debug("Color value: $value")
+    // Update our color and then just call the set level with the current level
+    sendEvent(name: "color", value: value)
+    def lastLevel = device.latestValue("level")
+    if (lastLevel == null) {lastLevel = 50}
+    setLevel(lastLevel)
+}
+
+def setColorFromButtons(value) {
+    //log.debug("Color value: $value")
     // Update our color and then just call the set level with the current level
     sendEvent(name: "color", value: value)
     def lastLevel = device.latestValue("level")
@@ -147,7 +156,7 @@ def setColor(value) {
 }
 
 def setLevel(level) {
-    log.debug("Level value in percentage: $level")
+    //log.debug("Level value in percentage: $level")
     sendEvent(name: "level", value: level)
     //parent.childSetLevel(device.deviceNetworkId, level)
 	
@@ -158,7 +167,6 @@ def setLevel(level) {
 	on()
 	// Get the last known color and if null use full on
 	def colorHex = device.latestValue("color.hex")
-	log.debug("colorHex is $colorHex")
 	if (colorHex == null) {colorHex = "#FFFFFF"}
 	adjustColor(colorHex,level)
     }
@@ -174,7 +182,7 @@ def adjustColor(hex, level) {
     def b = hex(c.b * (level/100))
 
     def adjustedColor = "#" + $r + $g + $b
-    log.debug("Adjusted color is $adjustedColor")
+    //log.debug("Adjusted color is $adjustedColor")
 	
     //parent.childSetColorRGB(device.deviceNetworkId, adjustedColor)
 }
@@ -196,7 +204,7 @@ def doColorButton(colorName) {
 
     def colorButtonHEX = getColorData(colorName)
     
-    setColor(colorButtonHEX)
+    setColorFromButtons(colorButtonHEX)
 }
 
 def getColorData(colorName) {
