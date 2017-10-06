@@ -209,6 +209,14 @@ def getColorData(colorName) {
     colorHex
 }
 
+private hex(value, width=2) {
+	def s = new BigInteger(Math.round(value).toString()).toString(16)
+	while (s.size() < width) {
+		s = "0" + s
+	}
+	s
+}
+
 def hexToRgb(colorHex) {
     def rrInt = Integer.parseInt(colorHex.substring(1,3),16)
     def ggInt = Integer.parseInt(colorHex.substring(3,5),16)
@@ -222,14 +230,10 @@ def hexToRgb(colorHex) {
 }
 
 def rgbToHex(rgb) {
-	log.debug("step 1")
-    def r = Integer.toString(rgb.r,16)
-	log.debug("step 2")
+    def r = hex(rgb.r)
     def g = hex(rgb.g)
-	log.debug("step 3")
     def b = hex(rgb.b)
 	
-	log.debug("step 4")
     def hexColor = "#${r}${g}${b}"
 
     log.debug("rgbToHex hexColor: $hexColor")
