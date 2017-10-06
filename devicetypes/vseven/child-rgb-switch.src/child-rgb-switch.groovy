@@ -165,7 +165,7 @@ def setLevel(level) {
 }
 
 def adjustColor(hex, level) {
-    log.debug("adjustColor Routine")
+    log.debug("adjustColor Routine.  Passed values:  Hex: $hex  Level: $level")
     // Convert the hex color, apply the level, then send to the setColor routine
     def c = hexToRgb(hex)
 
@@ -280,7 +280,7 @@ def toggleTiles(color) {
     	if ( it == color ) {
         	log.debug "Turning ${it} on"
         } else {
-        	log.debug "Turning ${it} off"
+        	//log.debug "Turning ${it} off"
         }
     })
 }
