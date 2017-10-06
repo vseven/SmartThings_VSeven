@@ -40,7 +40,10 @@ metadata {
 				attributeState "off", label:'${name}', action:"switch.on", icon:"st.illuminance.illuminance.dark", backgroundColor:"#ffffff", nextState:"turningOn"
 				attributeState "turningOn", label:'${name}', action:"switch.off", icon:"st.illuminance.illuminance.light", backgroundColor:"#00A0DC", nextState:"turningOff"
 				attributeState "turningOff", label:'${name}', action:"switch.on", icon:"st.illuminance.illuminance.light", backgroundColor:"#ffffff", nextState:"turningOn"
-			}
+			}    
+			tileAttribute ("device.level", key: "SLIDER_CONTROL") {
+        			attributeState "level", action:"switch level.setLevel"
+    			}
 			tileAttribute ("device.color", key: "COLOR_CONTROL") {
 				attributeState "color", action:"color control.setColor"
 			}
@@ -74,8 +77,32 @@ def setColor(value) {
     // Keep track of last color selected
     sendEvent(name: "lastColor", value: $value.hex)
     // If the color is being changed we should also turn on
-    parent.childOn(device.deviceNetworkId)
-    parent.childSetColorRGB(device.deviceNetworkId, value.hex)
+    //parent.childOn(device.deviceNetworkId)
+    //parent.childSetColorRGB(device.deviceNetworkId, value.hex)
+}
+
+def setLevel(value) {
+    log.debug("Level value in percentage: $value")
+    // Turn on or off based on level selection
+    if (level == 0) { off() }
+    else if (device.latestValue("switch") == "off") { on() }
+    // Get the last known color and if null use full on
+    def colorHex = device.latestValue("color")
+    if (colorHex == null)
+	colorHex = "#FFFFFF"
+    // Convert the hex color, apply the level, then send to the setColor routine
+    def c = hexToRgb(colorHex)
+
+    def r = hex(c.r * (level/100))
+    def g = hex(c.g * (level/100))
+    def b = hex(c.b * (level/100))
+
+    def adjustedColor = "#" + $r + $g + $b
+    log.debug("Adjusted color is $adjustedColor")
+	
+    sendEvent(name: "level", value: level, unit: "%")
+    //parent.childSetLevel(device.deviceNetworkId, level)
+    setColor(adjustedColor)
 }
 
 def generateEvent(String name, String value) {
