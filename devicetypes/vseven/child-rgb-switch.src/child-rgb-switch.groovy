@@ -78,13 +78,13 @@ def setColor(value) {
     // Update our color and then just call the set level with the current level
     sendEvent(name: "color", value: value)
     def lastLevel = device.latestValue("level")
-   log.debug("lastLevel: $lastLevel)
+   log.debug("lastLevel: $lastLevel")
     if (lastLevel == null) {lastLevel = 100}
     setLevel(lastLevel)
 }
 
 def setLevel(level) {
-    log.debug("Level value in percentage: $value")
+    log.debug("Level value in percentage: $level")
     sendEvent(name: "level", value: level)
     //parent.childSetLevel(device.deviceNetworkId, level)
 	
