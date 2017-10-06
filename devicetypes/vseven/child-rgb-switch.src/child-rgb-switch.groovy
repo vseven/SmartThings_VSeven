@@ -167,7 +167,7 @@ def setLevel(level) {
 def adjustColor(hex, level) {
     log.debug("adjustColor Routine")
     // Convert the hex color, apply the level, then send to the setColor routine
-    def c = hexToRgb(colorHex)
+    def c = hexToRgb(hex)
 
     def r = hex(c.r * (level/100))
     def g = hex(c.g * (level/100))
@@ -177,16 +177,6 @@ def adjustColor(hex, level) {
     log.debug("Adjusted color is $adjustedColor")
 	
     //parent.childSetColorRGB(device.deviceNetworkId, adjustedColor)
-}
-
-def hexToRgb(colorHex) {
-    def rrInt = Integer.parseInt(colorHex.substring(1,3),16)
-    def ggInt = Integer.parseInt(colorHex.substring(3,5),16)
-    def bbInt = Integer.parseInt(colorHex.substring(5,7),16)
-
-    def colorData = [:]
-    colorData = [r: rrInt, g: ggInt, b: bbInt]
-    colorData
 }
 
 def generateEvent(String name, String value) {
@@ -216,6 +206,25 @@ def getColorData(colorName) {
     def colorHex = rgbToHex(colorRGB)
 
     colorHex
+}
+
+def hexToRgb(colorHex) {
+    def rrInt = Integer.parseInt(colorHex.substring(1,3),16)
+    def ggInt = Integer.parseInt(colorHex.substring(3,5),16)
+    def bbInt = Integer.parseInt(colorHex.substring(5,7),16)
+
+    def colorData = [:]
+    colorData = [r: rrInt, g: ggInt, b: bbInt]
+    colorData
+}
+
+def rgbToHex(rgb) {
+    def r = hex(rgb.r)
+    def g = hex(rgb.g)
+    def b = hex(rgb.b)
+    def hexColor = "#${r}${g}${b}"
+
+    hexColor
 }
 
 def colorNameToRgb(color) {
