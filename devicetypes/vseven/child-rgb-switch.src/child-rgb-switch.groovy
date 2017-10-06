@@ -60,16 +60,16 @@ metadata {
 
 void on() {
 	log.debug("On pressed.  Turning status on and sending last known HEX value of $lastColor")
-	parent.childOn(device.deviceNetworkId)
+	//parent.childOn(device.deviceNetworkId)
 	// Send the last hex value to turn back on
-	parent.childSetColor(device.deviceNetworkId, device.color.hex)
+	//parent.childSetColor(device.deviceNetworkId, device.color.hex)
 }
 
 void off() {
 	log.debug("Off pressed.  Sending HEX of #000000")
-	parent.childOff(device.deviceNetworkId)
+	//parent.childOff(device.deviceNetworkId)
 	// Send a all 0 hex value to turn off the LED
-	parent.childSetColor(device.deviceNetworkId, "#000000")
+	//parent.childSetColor(device.deviceNetworkId, "#000000")
 }
 
 def setColor(value) {
