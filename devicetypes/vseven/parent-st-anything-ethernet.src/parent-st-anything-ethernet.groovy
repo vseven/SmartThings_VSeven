@@ -24,7 +24,6 @@
  *    2017-07-09  Dan Ogorchock  Added number of defined buttons tile
  *    2017-08-24  Allan (vseven) Change the way values are pushed to child devices to allow a event to be executed allowing future customization
  *    2007-09-24  Allan (vseven) Added RGB LED light support with a setColor routine
- *    2007-10-06  Allan (vseven) Added RGBW LED light support with a setColorRGBW routine
  *
  */
  
