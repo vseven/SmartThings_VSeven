@@ -53,7 +53,7 @@ metadata {
 		}
 
 		main(["switch"])
-		details(["switch", "color", "lastUpdated"])
+		details(["switch", "level", "color", "lastUpdated"])
 	}
 }
 
