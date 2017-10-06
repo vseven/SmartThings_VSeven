@@ -25,6 +25,8 @@ metadata {
 	capability "Color Control"
 
 	command "generateEvent", ["string", "string"]
+		
+	attribute "lastColor", "string"
 	}
 
 	simulator {
@@ -54,21 +56,23 @@ metadata {
 
 
 void on() {
-	log.debug("On pressed.  Devices color is: $device.color.hex")
+	log.debug("On pressed.  Turning status on and sending last known HEX value of $lastColor")
 	parent.childOn(device.deviceNetworkId)
 	// Send the last hex value to turn back on
 	parent.childSetColor(device.deviceNetworkId, device.color.hex)
 }
 
 void off() {
-	log.debug("Off pressed.  Sending HEX of 000000")
+	log.debug("Off pressed.  Sending HEX of #000000")
 	parent.childOff(device.deviceNetworkId)
 	// Send a all 0 hex value to turn off the LED
-	parent.childSetColor(device.deviceNetworkId, "000000")
+	parent.childSetColor(device.deviceNetworkId, "#000000")
 }
 
 def setColor(value) {
     log.debug("Color value in hex: $value.hex")
+    // Keep track of last color selected
+    sendEvent(name: "lastColor", value: value.hex)
     // If the color is being changed we should also turn on
     parent.childOn(device.deviceNetworkId)
     parent.childSetColorRGB(device.deviceNetworkId, value.hex)
