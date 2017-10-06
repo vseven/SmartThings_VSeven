@@ -197,7 +197,14 @@ def doColorButton(colorName) {
     def colorButtonHEX = getColorData(colorName)
     
     def lastLevel = device.latestValue("level")
-    if (lastLevel == null) {lastLevel = 50}
+	log.debug(device.latestValue("level"))
+	log.debug("Device.level directly:  $device.level")
+    if (lastLevel == null) {
+	    lastLevel = 50
+	    log.debug("tried to set last level to 50.  Value: $lastLevel
+    }
+		      
+    log.debug("Calling adjustColor")
 	
     adjustColor(colorButtonHEX,lastlevel)
 }
