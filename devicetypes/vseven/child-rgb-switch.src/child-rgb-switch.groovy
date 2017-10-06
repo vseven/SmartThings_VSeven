@@ -123,12 +123,14 @@ void on() {
 	def lastColor = device.latestValue("color.hex")
 	//log.debug("On pressed.  Turning status on and sending last known HEX value of $lastColor")
 	sendEvent(name: "switch", value: "on")
+	sendEvent(name: "color", value: lastColor)
 	//parent.childOn(device.deviceNetworkId)
 	// Send the last hex value to turn back on
 	//parent.childSetColor(device.deviceNetworkId, lastColor)
 }
 
 void off() {
+	toggleTiles("off")
 	//log.debug("Off pressed.  Sending HEX of #000000 but not updating device (retain last set color).")
 	sendEvent(name: "switch", value: "off")
 	//parent.childOff(device.deviceNetworkId)
@@ -198,7 +200,7 @@ def generateEvent(String name, String value) {
 }
 
 def doColorButton(colorName) {
-    log.debug "doColorButton: '${colorName}()'"
+    //log.debug "doColorButton: '${colorName}()'"
 
     toggleTiles(colorName.toLowerCase().replaceAll("\\s",""))
 
@@ -208,10 +210,9 @@ def doColorButton(colorName) {
 }
 
 def getColorData(colorName) {
-    log.debug "getColorData: ${colorName}"
+    //log.debug "getColorData: ${colorName}"
 
     def colorRGB = colorNameToRgb(colorName)
-	log.debug("colorRGB: $colorRGB")
     def colorHex = rgbToHex(colorRGB)
 
     colorHex
