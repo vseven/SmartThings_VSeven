@@ -21,8 +21,11 @@
 // for the UI
 metadata {
 	definition (name: "Child RGB Switch", namespace: "vseven", author: "Alan (vseven) - based on code by Dan Ogorchock") {
-	capability "Switch"
+	capability "Switch"		
+	capability "Switch Level"
+	capability "Actuator"
 	capability "Color Control"
+	capability "Sensor"
 
 	command "generateEvent", ["string", "string"]
 		
@@ -61,6 +64,7 @@ metadata {
 void on() {
 	def lastColor = device.latestValue("color.hex")
 	log.debug("On pressed.  Turning status on and sending last known HEX value of $lastColor")
+	sendEvent(name: "switch", value: "on")
 	//parent.childOn(device.deviceNetworkId)
 	// Send the last hex value to turn back on
 	//parent.childSetColor(device.deviceNetworkId, lastColor)
@@ -68,6 +72,7 @@ void on() {
 
 void off() {
 	log.debug("Off pressed.  Sending HEX of #000000 but not updating device (retain last set color).")
+	sendEvent(name: "switch", value: "off")
 	//parent.childOff(device.deviceNetworkId)
 	// Send a all 0 hex value to turn off the LED
 	//parent.childSetColor(device.deviceNetworkId, "#000000")
