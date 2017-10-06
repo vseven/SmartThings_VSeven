@@ -143,16 +143,16 @@ def setColor(value) {
     // Update our device color
     sendEvent(name: "color", value: value)
     // Then update the parent
-    adjustColor()
+    adjustColor(value.hex)
 }
 
 def setColorFromButtons(value) {
     // Update our color and then just call the set level with the current level
     log.debug("setColor value: $value")
     // Update our device color
-    sendEvent(name: "color", value: value)
+    sendEvent(name: "color.hex", value: value)
     // Then update the parent
-    adjustColor()
+    adjustColor(value)
 }
 
 def setLevel(level) {
