@@ -203,6 +203,7 @@ def getColorData(colorName) {
     log.debug "getColorData: ${colorName}"
 
     def colorRGB = colorNameToRgb(colorName)
+	log.debug("colorRGB: $colorRGB")
     def colorHex = rgbToHex(colorRGB)
 
     colorHex
@@ -215,6 +216,8 @@ def hexToRgb(colorHex) {
 
     def colorData = [:]
     colorData = [r: rrInt, g: ggInt, b: bbInt]
+	
+    log.debug("HexToRgb colorData: $colorData")
     colorData
 }
 
@@ -224,6 +227,7 @@ def rgbToHex(rgb) {
     def b = hex(rgb.b)
     def hexColor = "#${r}${g}${b}"
 
+    log.debug("rgbToHex hexColor: $hexColor")
     hexColor
 }
 
@@ -247,7 +251,7 @@ def colorNameToRgb(color) {
 	]
     def colorData = [:]
     colorData = colors.find { it.name == color }
-
+    log.debug("colorData: $colorData")
     colorData
 }
 
