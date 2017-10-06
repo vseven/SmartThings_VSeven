@@ -54,15 +54,15 @@ metadata {
 
 
 void on() {
-	parent.childOn(device.deviceNetworkId)
 	log.debug("On pressed.  Devices color is: $device.color.hex")
+	parent.childOn(device.deviceNetworkId)
 	// Send the last hex value to turn back on
 	parent.childSetColor(device.deviceNetworkId, device.color.hex)
 }
 
 void off() {
-	parent.childOff(device.deviceNetworkId)
 	log.debug("Off pressed.  Sending HEX of 000000")
+	parent.childOff(device.deviceNetworkId)
 	// Send a all 0 hex value to turn off the LED
 	parent.childSetColor(device.deviceNetworkId, "000000")
 }
