@@ -226,7 +226,10 @@ def rgbToHex(rgb) {
     def r = Integer.toString(rgb.r,16)
 	log.debug("step 2")
     def g = hex(rgb.g)
+	log.debug("step 3")
     def b = hex(rgb.b)
+	
+	log.debug("step 4")
     def hexColor = "#${r}${g}${b}"
 
     log.debug("rgbToHex hexColor: $hexColor")
