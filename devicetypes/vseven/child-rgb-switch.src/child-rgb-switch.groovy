@@ -88,15 +88,13 @@ def setLevel(level) {
     //parent.childSetLevel(device.deviceNetworkId, level)
 	
     // Turn on or off based on level selection
-    if (level == 0) { off() } 
-    else if (device.latestValue("switch") == "off") { on() }
-    // Then if level is above 0 adjust the color
-	log.debug("Got here")
-    if (level > 0) {
-	    log.debug("level is above 0")
+    if (level == 0) { 
+	off() 
+    } else if (device.latestValue("switch") == "off") {
+	on()
 	// Get the last known color and if null use full on
 	def colorHex = device.latestValue("color.hex")
-	    log.debug("colorHex is $colorHex")
+	log.debug("colorHex is $colorHex")
 	if (colorHex == null) {colorHex = "#FFFFFF"}
 	adjustColor(colorHex,level)
     }
