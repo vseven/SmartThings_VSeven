@@ -92,15 +92,17 @@ def setLevel(level) {
     if (level == 0) { off() } 
     else if (device.latestValue("switch") == "off") { on() }
     // Then if level is above 0 adjust the color
+	log.debug("Got here")
     if (level > 0) {
 	// Get the last known color and if null use full on
-	def colorHex = device.latestValue("color")
+	def colorHex = device.latestValue("color").hex
 	if (colorHex == null) {colorHex = "#FFFFFF"}
 	adjustColor(colorHex,level)
     }
 }
 
 def adjustColor(hex, level) {
+	log.debug("adjustColor Routine")
     // Convert the hex color, apply the level, then send to the setColor routine
     def c = hexToRgb(colorHex)
 
