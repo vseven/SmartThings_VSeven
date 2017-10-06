@@ -59,7 +59,7 @@ metadata {
 
 
 void on() {
-	log.debug("On pressed.  Turning status on and sending last known HEX value of $device.latestValue("color")")
+	log.debug("On pressed.  Turning status on and sending last known HEX value of device.latestValue("color")")
 	//parent.childOn(device.deviceNetworkId)
 	// Send the last hex value to turn back on
 	//parent.childSetColor(device.deviceNetworkId, device.latestValue("color"))
