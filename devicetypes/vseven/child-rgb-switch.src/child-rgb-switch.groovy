@@ -225,7 +225,6 @@ def hexToRgb(colorHex) {
     def colorData = [:]
     colorData = [r: rrInt, g: ggInt, b: bbInt]
 	
-    log.debug("HexToRgb colorData: $colorData")
     colorData
 }
 
@@ -236,7 +235,6 @@ def rgbToHex(rgb) {
 	
     def hexColor = "#${r}${g}${b}"
 
-    log.debug("rgbToHex hexColor: $hexColor")
     hexColor
 }
 
@@ -260,7 +258,6 @@ def colorNameToRgb(color) {
 	]
     def colorData = [:]
     colorData = colors.find { it.name == color }
-    log.debug("colorData: $colorData")
     colorData
 }
 
@@ -275,9 +272,11 @@ def toggleTiles(color) {
     state.colorTiles.each({
     	if ( it == color ) {
         	log.debug "Turning ${it} on"
+            cmds << sendEvent(name: it, value: "on${it}", displayed: True, descriptionText: "${device.displayName} ${color} is 'ON'", isStateChange: true)
         } else {
         	//log.debug "Turning ${it} off"
-        }
+        	cmds << sendEvent(name: it, value: "off${it}", displayed: false)
+	}
     })
 }
 
