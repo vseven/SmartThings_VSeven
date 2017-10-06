@@ -72,7 +72,7 @@ void off() {
 def setColor(value) {
     log.debug("Color value in hex: $value.hex")
     // Keep track of last color selected
-    sendEvent(name: "lastColor", value: value.hex)
+    sendEvent(name: "lastColor", value: $value.hex)
     // If the color is being changed we should also turn on
     parent.childOn(device.deviceNetworkId)
     parent.childSetColorRGB(device.deviceNetworkId, value.hex)
