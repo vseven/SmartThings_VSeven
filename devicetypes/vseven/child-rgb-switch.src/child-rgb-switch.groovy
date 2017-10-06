@@ -167,7 +167,7 @@ def setLevel(level) {
     } else if (device.latestValue("switch") == "off") {
 	on()
 	    log.debug(" I got here")
-	adjustColor(device.color.hex,level)
+	adjustColor(color.hex,level)
     }
 }
 
