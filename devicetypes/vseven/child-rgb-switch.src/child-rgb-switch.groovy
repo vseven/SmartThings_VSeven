@@ -198,7 +198,6 @@ def doColorButton(colorName) {
     
     def lastLevel = device.latestValue("level")
     if (lastLevel == null) {lastLevel = 50}
-    setLevel(lastLevel)
 	
     adjustColor(colorButtonHEX,lastlevel)
 }
