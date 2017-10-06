@@ -139,7 +139,7 @@ void off() {
 
 def setColor(value) {
     toggleTiles("off") //turn off the hard color tiles
-    //log.debug("Color value: $value")
+    log.debug("setColor value: $value")
     // Update our color and then just call the set level with the current level
     sendEvent(name: "color", value: value)
     def lastLevel = device.latestValue("level")
@@ -148,7 +148,7 @@ def setColor(value) {
 }
 
 def setColorFromButtons(value) {
-    //log.debug("Color value: $value")
+    //log.debug("setColorFromButtons value: $value")
     // Update our color and then just call the set level with the current level
     sendEvent(name: "color", value: value)
     def lastLevel = device.latestValue("level")
@@ -166,10 +166,8 @@ def setLevel(level) {
 	off() 
     } else if (device.latestValue("switch") == "off") {
 	on()
-	// Get the last known color and if null use full on
-	def colorHex = device.latestValue("color.hex")
-	if (colorHex == null) {colorHex = "#FFFFFF"}
-	adjustColor(colorHex,level)
+	    log.debug(" I got here")
+	adjustColor(device.color.hex,level)
     }
 }
 
