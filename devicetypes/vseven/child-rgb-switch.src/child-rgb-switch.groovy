@@ -75,12 +75,9 @@ void off() {
 
 def setColor(value) {
     log.debug("Color value: $value")
-    if(value.hex?.trim()) {sendEvent(name: "color", value: value.hex, displayed: false)}
+    // Update our color and then just call the set level with the current level
     sendEvent(name: "color", value: value)
-    // If the color is being changed we should also turn on
-    //parent.childOn(device.deviceNetworkId)
-    // If selecting a color and device is off then turn it on
-
+    setLevel(device.latestValue("level"))
 }
 
 def setLevel(level) {
