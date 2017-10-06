@@ -113,7 +113,8 @@ metadata {
 		    state "onwhite", label:"White", action:"white", icon:"st.illuminance.illuminance.bright", backgroundColor:"#FFFFFF"
 		}
 		main(["switch"])
-		details(["switch", "level", "color", "lastUpdated"])
+		details(["switch", "level", "color", "softwhite","daylight","warmwhite","red","green","blue","white","cyan",
+			 "magenta","orange","purple","yellow","lastUpdated"])
 	}
 }
 
