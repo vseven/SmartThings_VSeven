@@ -235,7 +235,7 @@ def rgbToHex(rgb) {
     def g = hex(rgb.g)
     def b = hex(rgb.b)
 	
-    def hexColor = "#${r}${g}${b}"
+    def hexColor = "${r}${g}${b}"
 
     hexColor
 }
