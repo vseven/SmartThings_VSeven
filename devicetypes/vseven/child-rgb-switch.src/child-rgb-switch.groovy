@@ -195,8 +195,12 @@ def doColorButton(colorName) {
     toggleTiles(colorName.toLowerCase().replaceAll("\\s",""))
 
     def colorButtonHEX = getColorData(colorName)
-
-    adjustColor(colorButtonHEX)
+    
+    def lastLevel = device.latestValue("level")
+    if (lastLevel == null) {lastLevel = 50}
+    setLevel(lastLevel)
+	
+    adjustColor(colorButtonHEX,lastlevel)
 }
 
 def getColorData(colorName) {
