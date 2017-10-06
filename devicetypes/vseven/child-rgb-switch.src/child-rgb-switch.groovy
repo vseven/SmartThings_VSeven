@@ -1,5 +1,5 @@
 /**
- *  Child RGBLED Switch
+ *  Child RGB Switch
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  *  in compliance with the License. You may obtain a copy of the License at:
@@ -15,6 +15,7 @@
  *    Date        Who            What
  *    ----        ---            ----
  *    2017-10-01  Allan (vseven) Original Creation (based on Dan Ogorchock's child dimmer switch)
+ *    2017-10-06  Allan (vseven) Added preset color buttons and logic behind them.
  * 
  */
 
@@ -26,19 +27,20 @@ metadata {
 	capability "Actuator"
 	capability "Color Control"
 	capability "Sensor"
+	capability "Light"
 
 	command "generateEvent", ["string", "string"]
 	command "softwhite"
-        command "daylight"
-        command "warmwhite"
-        command "red"
-        command "green"
-        command "blue"
-        command "cyan"
-        command "magenta"
-        command "orange"
-        command "purple"
-        command "yellow"
+	command "daylight"
+	command "warmwhite"
+	command "red"
+	command "green"
+	command "blue"
+	command "cyan"
+	command "magenta"
+	command "orange"
+	command "purple"
+	command "yellow"
 	command "white"
 	}
 
@@ -118,45 +120,35 @@ metadata {
 	}
 }
 
-
 void on() {
-	def lastColor = device.latestValue("color")
-	log.debug("On pressed.  Turning status on and sending last known HEX value of $lastColor")
-	sendEvent(name: "switch", value: "on")
-	sendEvent(name: "color", value: $lastColor)
-	//parent.childOn(device.deviceNetworkId)
-	adjustColor()
+    sendEvent(name: "switch", value: "on")
+    def lastColor = device.latestValue("color")
+    log.debug("On pressed.  Sending last known color value of $lastColor or if null command to white.")
+    //parent.childOn(device.deviceNetworkId)
+    if ( lastColor == Null ) {
+    	white() 
+    } else {
+    	adjustColor(lastColor)
+    }
 }
 
 void off() {
-	toggleTiles("off")
-	//log.debug("Off pressed.  Sending HEX of #000000 but not updating device (retain last set color).")
-	sendEvent(name: "switch", value: "off")
-	//parent.childOff(device.deviceNetworkId)
-	// Send a all 0 hex value to turn off the LED
-	//parent.childSetColor(device.deviceNetworkId, "#000000")
+    toggleTiles("off")
+    sendEvent(name: "switch", value: "off")
+    //log.debug("Off pressed.  Send HEX of #000000 directly to parent but don't update device (retain last set color).")
+    //parent.childOff(device.deviceNetworkId)
+    //parent.childSetColorRGB(device.deviceNetworkId, "#000000")
 }
 
 def setColor(value) {
     toggleTiles("off") //turn off the hard color tiles
-    log.debug("setColor value: $value")
-    // Update our device color
-    sendEvent(name: "color", value: value)
-    // Then update the parent
+    sendEvent(name: "color", value: value.hex)
     adjustColor(value.hex)
 }
 
-def setColorFromButtons(value) {
-    // Update our color and then just call the set level with the current level
-    log.debug("setColor value: $value")
-    // Update our device color
-    sendEvent(name: "color.hex", value: value)
-    // Then update the parent
-    adjustColor(value)
-}
-
-def setLevel(level) {
-    //log.debug("Level value in percentage: $level")
+def setLevel(value) {
+    def level = Math.min(value as Integer, 99)
+    log.debug("Level value in percentage: $level")
     sendEvent(name: "level", value: level)
     //parent.childSetLevel(device.deviceNetworkId, level)
 	
@@ -165,46 +157,51 @@ def setLevel(level) {
 	off() 
     } else if (device.latestValue("switch") == "off") {
 	on()
+	def lastColor = device.latestValue("color")
+    adjustColor(lastColor)
     }
 }
 
-def adjustColor() {
-     // Convert the hex color, apply the level, then send to the setColor routine
-    def c = hexToRgb(color.hex)
+def adjustColor(colorInHEX) {
+    // Convert the hex color, apply the level after making sure its valid, then send to parent
+    //log.debug("colorInHEX passed in: $colorInHEX")
+    def level = device.latestValue("level")
+    if(level == null)
+    	level = 50
+    log.debug "level is: ${level}"
 
+    def c = hexToRgb(colorInHEX)
+    
     def r = hex(c.r * (level/100))
     def g = hex(c.g * (level/100))
     def b = hex(c.b * (level/100))
 
-    def adjustedColor = "#" + $r + $g + $b
+    def adjustedColor = "#${r}${g}${b}"
     log.debug("Adjusted color is $adjustedColor")
 	
     //parent.childSetColorRGB(device.deviceNetworkId, adjustedColor)
 }
 
 def generateEvent(String name, String value) {
-  //log.debug("Passed values to routine generateEvent in device named $device: Name - $name  -  Value - $value")
-  // The name coming in from ST_Anything will be "dimmerSwitch", but we want to the ST standard "switch" attribute for compatibility with normal SmartApps
-  sendEvent(name: "switch", value: value)
-  // Update lastUpdated date and time
-  def nowDay = new Date().format("MMM dd", location.timeZone)
-  def nowTime = new Date().format("h:mm a", location.timeZone)
-  sendEvent(name: "lastUpdated", value: nowDay + " at " + nowTime, displayed: false)
+    //log.debug("Passed values to routine generateEvent in device named $device: Name - $name  -  Value - $value")
+    // The name coming in from ST_Anything will be "dimmerSwitch", but we want to the ST standard "switch" attribute for compatibility with normal SmartApps
+    sendEvent(name: "switch", value: value)
+    // Update lastUpdated date and time
+    def nowDay = new Date().format("MMM dd", location.timeZone)
+    def nowTime = new Date().format("h:mm a", location.timeZone)
+    sendEvent(name: "lastUpdated", value: nowDay + " at " + nowTime, displayed: false)
 }
 
 def doColorButton(colorName) {
     //log.debug "doColorButton: '${colorName}()'"
-
     toggleTiles(colorName.toLowerCase().replaceAll("\\s",""))
-
     def colorButtonHEX = getColorData(colorName)
     
-    setColorFromButtons(colorButtonHEX)
+    adjustColor(colorButtonHEX)
 }
 
 def getColorData(colorName) {
     //log.debug "getColorData: ${colorName}"
-
     def colorRGB = colorNameToRgb(colorName)
     def colorHex = rgbToHex(colorRGB)
 
@@ -212,21 +209,22 @@ def getColorData(colorName) {
 }
 
 private hex(value, width=2) {
-	def s = new BigInteger(Math.round(value).toString()).toString(16)
-	while (s.size() < width) {
-		s = "0" + s
-	}
-	s
+    def s = new BigInteger(Math.round(value).toString()).toString(16)
+    while (s.size() < width) {
+	s = "0" + s
+    }
+    s
 }
 
 def hexToRgb(colorHex) {
+    //log.debug("passed in colorHex: $colorHex")
     def rrInt = Integer.parseInt(colorHex.substring(1,3),16)
     def ggInt = Integer.parseInt(colorHex.substring(3,5),16)
     def bbInt = Integer.parseInt(colorHex.substring(5,7),16)
 
     def colorData = [:]
     colorData = [r: rrInt, g: ggInt, b: bbInt]
-	
+    
     colorData
 }
 
@@ -235,49 +233,50 @@ def rgbToHex(rgb) {
     def g = hex(rgb.g)
     def b = hex(rgb.b)
 	
-    def hexColor = "${r}${g}${b}"
+    def hexColor = "#${r}${g}${b}"
 
     hexColor
 }
 
 def colorNameToRgb(color) {
-	final colors = [
-		[name:"Soft White",	r: 255, g: 241, b: 224	],
-		[name:"Daylight", 	r: 255, g: 255, b: 251	],
-		[name:"Warm White", 	r: 255, g: 244, b: 229	],
+    final colors = [
+	[name:"Soft White",	r: 255, g: 241, b: 224	],
+	[name:"Daylight", 	r: 255, g: 255, b: 251	],
+	[name:"Warm White", 	r: 255, g: 244, b: 229	],
 
-		[name:"Red", 		r: 255, g: 0,	b: 0	],
-		[name:"Green", 		r: 0, 	g: 255,	b: 0	],
-		[name:"Blue", 		r: 0, 	g: 0,	b: 255	],
+	[name:"Red", 		r: 255, g: 0,	b: 0	],
+	[name:"Green", 		r: 0, 	g: 255,	b: 0	],
+	[name:"Blue", 		r: 0, 	g: 0,	b: 255	],
 
-		[name:"Cyan", 		r: 0, 	g: 255,	b: 255	],
-		[name:"Magenta", 	r: 255, g: 0,	b: 33	],
-		[name:"Orange", 	r: 255, g: 102, b: 0	],
+	[name:"Cyan", 		r: 0, 	g: 255,	b: 255	],
+	[name:"Magenta", 	r: 255, g: 0,	b: 33	],
+	[name:"Orange", 	r: 255, g: 102, b: 0	],
 
-		[name:"Purple", 	r: 170, g: 0,	b: 255	],
-		[name:"Yellow", 	r: 255, g: 255, b: 0	],
-		[name:"White", 		r: 255, g: 255, b: 255	]
-	]
+	[name:"Purple", 	r: 170, g: 0,	b: 255	],
+	[name:"Yellow", 	r: 255, g: 255, b: 0	],
+	[name:"White", 		r: 255, g: 255, b: 255	]
+    ]
     def colorData = [:]
     colorData = colors.find { it.name == color }
     colorData
 }
 
 def toggleTiles(color) {
-	state.colorTiles = []
-	if ( !state.colorTiles ) {
-    	state.colorTiles = ["softwhite","daylight","warmwhite","red","green","blue","cyan","magenta","orange","purple","yellow","white"]
+    state.colorTiles = []
+    if ( !state.colorTiles ) {
+    	state.colorTiles = ["softwhite","daylight","warmwhite","red","green","blue","cyan","magenta",
+			    "orange","purple","yellow","white"]
     }
 
     def cmds = []
 
     state.colorTiles.each({
     	if ( it == color ) {
-        	log.debug "Turning ${it} on"
+            log.debug "Turning ${it} on"
             cmds << sendEvent(name: it, value: "on${it}", displayed: True, descriptionText: "${device.displayName} ${color} is 'ON'", isStateChange: true)
         } else {
-        	//log.debug "Turning ${it} off"
-        	cmds << sendEvent(name: it, value: "off${it}", displayed: false)
+            //log.debug "Turning ${it} off"
+            cmds << sendEvent(name: it, value: "off${it}", displayed: false)
 	}
     })
 }
