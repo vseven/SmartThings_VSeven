@@ -74,7 +74,8 @@ void off() {
 }
 
 def setColor(value) {
-    log.debug("Color value in hex: $value.hex")
+    log.debug("Color value: $value")
+    if(value.hex?.trim()) {sendEvent(name: "color", value: value.hex, displayed: false)}
     sendEvent(name: "color", value: value)
     // If the color is being changed we should also turn on
     //parent.childOn(device.deviceNetworkId)
@@ -82,7 +83,7 @@ def setColor(value) {
 
 }
 
-def setLevel(value) {
+def setLevel(level) {
     log.debug("Level value in percentage: $value")
     sendEvent(name: "level", value: level)
     //parent.childSetLevel(device.deviceNetworkId, level)
