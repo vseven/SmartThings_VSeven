@@ -242,6 +242,23 @@ def colorNameToRgb(color) {
     colorData
 }
 
+def toggleTiles(color) {
+	state.colorTiles = []
+	if ( !state.colorTiles ) {
+    	state.colorTiles = ["softwhite","daylight","warmwhite","red","green","blue","cyan","magenta","orange","purple","yellow","white"]
+    }
+
+    def cmds = []
+
+    state.colorTiles.each({
+    	if ( it == color ) {
+        	log.debug "Turning ${it} on"
+        } else {
+        	log.debug "Turning ${it} off"
+        }
+    })
+}
+
 // rows of buttons
 def softwhite() { doColorButton("Soft White") }
 def daylight()  { doColorButton("Daylight") }
