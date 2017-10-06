@@ -28,8 +28,18 @@ metadata {
 	capability "Sensor"
 
 	command "generateEvent", ["string", "string"]
-		
-	attribute "lastColor", "string"
+	command "softwhite"
+        command "daylight"
+        command "warmwhite"
+        command "red"
+        command "green"
+        command "blue"
+        command "cyan"
+        command "magenta"
+        command "orange"
+        command "purple"
+        command "yellow"
+	command "white"
 	}
 
 	simulator {
@@ -54,7 +64,54 @@ metadata {
  		valueTile("lastUpdated", "device.lastUpdated", inactiveLabel: false, decoration: "flat", width: 6, height: 2) {
     			state "default", label:'Last Updated ${currentValue}', backgroundColor:"#ffffff"
 		}
-
+		standardTile("softwhite", "device.softwhite", height: 1, inactiveLabel: false, canChangeIcon: false) {
+		    state "offsoftwhite", label:"soft white", action:"softwhite", icon:"st.illuminance.illuminance.dark", backgroundColor:"#D8D8D8"
+		    state "onsoftwhite", label:"soft white", action:"softwhite", icon:"st.illuminance.illuminance.bright", backgroundColor:"#FFF1E0"
+		}
+		standardTile("daylight", "device.daylight", height: 1, inactiveLabel: false, canChangeIcon: false) {
+		    state "offdaylight", label:"daylight", action:"daylight", icon:"st.illuminance.illuminance.dark", backgroundColor:"#D8D8D8"
+		    state "ondaylight", label:"daylight", action:"daylight", icon:"st.illuminance.illuminance.bright", backgroundColor:"#FFFFFB"
+		}
+		standardTile("warmwhite", "device.warmwhite", height: 1, inactiveLabel: false, canChangeIcon: false) {
+		    state "offwarmwhite", label:"warm white", action:"warmwhite", icon:"st.illuminance.illuminance.dark", backgroundColor:"#D8D8D8"
+		    state "onwarmwhite", label:"warm white", action:"warmwhite", icon:"st.illuminance.illuminance.bright", backgroundColor:"#FFF4E5"
+		}
+		standardTile("red", "device.red", height: 1, inactiveLabel: false, canChangeIcon: false) {
+		    state "offred", label:"red", action:"red", icon:"st.illuminance.illuminance.dark", backgroundColor:"#D8D8D8"
+		    state "onred", label:"red", action:"red", icon:"st.illuminance.illuminance.bright", backgroundColor:"#FF0000"
+		}
+		standardTile("green", "device.green", height: 1, inactiveLabel: false, canChangeIcon: false) {
+		    state "offgreen", label:"green", action:"green", icon:"st.illuminance.illuminance.dark", backgroundColor:"#D8D8D8"
+		    state "ongreen", label:"green", action:"green", icon:"st.illuminance.illuminance.bright", backgroundColor:"#00FF00"
+		}
+		standardTile("blue", "device.blue", height: 1, inactiveLabel: false, canChangeIcon: false) {
+		    state "offblue", label:"blue", action:"blue", icon:"st.illuminance.illuminance.dark", backgroundColor:"#D8D8D8"
+		    state "onblue", label:"blue", action:"blue", icon:"st.illuminance.illuminance.bright", backgroundColor:"#0000FF"
+		}
+		standardTile("cyan", "device.cyan", height: 1, inactiveLabel: false, canChangeIcon: false) {
+		    state "offcyan", label:"cyan", action:"cyan", icon:"st.illuminance.illuminance.dark", backgroundColor:"#D8D8D8"
+		    state "oncyan", label:"cyan", action:"cyan", icon:"st.illuminance.illuminance.bright", backgroundColor:"#00FFFF"
+		}
+		standardTile("magenta", "device.magenta", height: 1, inactiveLabel: false, canChangeIcon: false) {
+		    state "offmagenta", label:"magenta", action:"magenta", icon:"st.illuminance.illuminance.dark", backgroundColor:"#D8D8D8"
+		    state "onmagenta", label:"magenta", action:"magenta", icon:"st.illuminance.illuminance.bright", backgroundColor:"#FF00FF"
+		}
+		standardTile("orange", "device.orange", height: 1, inactiveLabel: false, canChangeIcon: false) {
+		    state "offorange", label:"orange", action:"orange", icon:"st.illuminance.illuminance.dark", backgroundColor:"#D8D8D8"
+		    state "onorange", label:"orange", action:"orange", icon:"st.illuminance.illuminance.bright", backgroundColor:"#FF6600"
+		}
+		standardTile("purple", "device.purple", height: 1, inactiveLabel: false, canChangeIcon: false) {
+		    state "offpurple", label:"purple", action:"purple", icon:"st.illuminance.illuminance.dark", backgroundColor:"#D8D8D8"
+		    state "onpurple", label:"purple", action:"purple", icon:"st.illuminance.illuminance.bright", backgroundColor:"#BF00FF"
+		}
+		standardTile("yellow", "device.yellow", height: 1, inactiveLabel: false, canChangeIcon: false) {
+		    state "offyellow", label:"yellow", action:"yellow", icon:"st.illuminance.illuminance.dark", backgroundColor:"#D8D8D8"
+		    state "onyellow", label:"yellow", action:"yellow", icon:"st.illuminance.illuminance.bright", backgroundColor:"#FFFF00"
+		}
+		standardTile("white", "device.white", height: 1, inactiveLabel: false, canChangeIcon: false) {
+		    state "offwhite", label:"White", action:"white", icon:"st.illuminance.illuminance.dark", backgroundColor:"#D8D8D8"
+		    state "onwhite", label:"White", action:"white", icon:"st.illuminance.illuminance.bright", backgroundColor:"#FFFFFF"
+		}
 		main(["switch"])
 		details(["switch", "level", "color", "lastUpdated"])
 	}
@@ -79,6 +136,7 @@ void off() {
 }
 
 def setColor(value) {
+    toggleTiles("off") //turn off the hard color tiles
     log.debug("Color value: $value")
     // Update our color and then just call the set level with the current level
     sendEvent(name: "color", value: value)
@@ -106,7 +164,7 @@ def setLevel(level) {
 }
 
 def adjustColor(hex, level) {
-	log.debug("adjustColor Routine")
+    log.debug("adjustColor Routine")
     // Convert the hex color, apply the level, then send to the setColor routine
     def c = hexToRgb(colorHex)
 
@@ -139,3 +197,63 @@ def generateEvent(String name, String value) {
   def nowTime = new Date().format("h:mm a", location.timeZone)
   sendEvent(name: "lastUpdated", value: nowDay + " at " + nowTime, displayed: false)
 }
+
+def doColorButton(colorName) {
+    log.debug "doColorButton: '${colorName}()'"
+
+    toggleTiles(colorName.toLowerCase().replaceAll("\\s",""))
+
+    def colorButtonHEX = getColorData(colorName)
+
+    adjustColor(colorButtonHEX)
+}
+
+def getColorData(colorName) {
+    log.debug "getColorData: ${colorName}"
+
+    def colorRGB = colorNameToRgb(colorName)
+    def colorHex = rgbToHex(colorRGB)
+
+    colorHex
+}
+
+def colorNameToRgb(color) {
+	final colors = [
+		[name:"Soft White",	r: 255, g: 241, b: 224	],
+		[name:"Daylight", 	r: 255, g: 255, b: 251	],
+		[name:"Warm White", 	r: 255, g: 244, b: 229	],
+
+		[name:"Red", 		r: 255, g: 0,	b: 0	],
+		[name:"Green", 		r: 0, 	g: 255,	b: 0	],
+		[name:"Blue", 		r: 0, 	g: 0,	b: 255	],
+
+		[name:"Cyan", 		r: 0, 	g: 255,	b: 255	],
+		[name:"Magenta", 	r: 255, g: 0,	b: 33	],
+		[name:"Orange", 	r: 255, g: 102, b: 0	],
+
+		[name:"Purple", 	r: 170, g: 0,	b: 255	],
+		[name:"Yellow", 	r: 255, g: 255, b: 0	],
+		[name:"White", 		r: 255, g: 255, b: 255	]
+	]
+    def colorData = [:]
+    colorData = colors.find { it.name == color }
+
+    colorData
+}
+
+// rows of buttons
+def softwhite() { doColorButton("Soft White") }
+def daylight()  { doColorButton("Daylight") }
+def warmwhite() { doColorButton("Warm White") }
+
+def red() 	{ doColorButton("Red") }
+def green() 	{ doColorButton("Green") }
+def blue() 	{ doColorButton("Blue") }
+
+def cyan() 	{ doColorButton("Cyan") }
+def magenta()	{ doColorButton("Magenta") }
+def orange() 	{ doColorButton("Orange") }
+
+def purple()	{ doColorButton("Purple") }
+def yellow() 	{ doColorButton("Yellow") }
+def white() 	{ doColorButton("White") }
