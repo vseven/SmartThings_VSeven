@@ -95,7 +95,7 @@ def setLevel(level) {
 	log.debug("Got here")
     if (level > 0) {
 	// Get the last known color and if null use full on
-	def colorHex = device.latestValue("color").hex
+	def colorHex = device.latestValue("color.hex")
 	if (colorHex == null) {colorHex = "#FFFFFF"}
 	adjustColor(colorHex,level)
     }
