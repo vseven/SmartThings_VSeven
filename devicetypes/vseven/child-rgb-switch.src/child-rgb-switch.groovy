@@ -75,6 +75,7 @@ void off() {
 
 def setColor(value) {
     log.debug("Color value in hex: $value.hex")
+    sendEvent(name: "color", value: value)
     // If the color is being changed we should also turn on
     //parent.childOn(device.deviceNetworkId)
     // If selecting a color and device is off then turn it on
@@ -83,7 +84,7 @@ def setColor(value) {
 
 def setLevel(value) {
     log.debug("Level value in percentage: $value")
-    sendEvent(name: "level", value: level, unit: "%")
+    sendEvent(name: "level", value: level)
     //parent.childSetLevel(device.deviceNetworkId, level)
 	
     // Turn on or off based on level selection
