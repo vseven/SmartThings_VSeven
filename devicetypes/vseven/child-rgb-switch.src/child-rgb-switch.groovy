@@ -123,7 +123,6 @@ void on() {
 	def lastColor = device.latestValue("color.hex")
 	//log.debug("On pressed.  Turning status on and sending last known HEX value of $lastColor")
 	sendEvent(name: "switch", value: "on")
-	sendEvent(name: "color", value: lastColor)
 	//parent.childOn(device.deviceNetworkId)
 	// Send the last hex value to turn back on
 	//parent.childSetColor(device.deviceNetworkId, lastColor)
