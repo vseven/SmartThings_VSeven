@@ -136,8 +136,8 @@ void off() {
     toggleTiles("off")
     sendEvent(name: "switch", value: "off")
     //log.debug("Off pressed.  Send HEX of #000000 directly to parent but don't update device (retain last set color).")
-    //parent.childOff(device.deviceNetworkId)
-    //parent.childSetColorRGB(device.deviceNetworkId, "#000000")
+    parent.childOff(device.deviceNetworkId)
+    parent.childSetColorRGB(device.deviceNetworkId, "#000000")
 }
 
 def setColor(value) {
@@ -156,7 +156,6 @@ def setLevel(value) {
     def level = Math.min(value as Integer, 100)
     log.debug("Level value in percentage: $level")
     sendEvent(name: "level", value: level)
-    //parent.childSetLevel(device.deviceNetworkId, level)
 	
     // Turn on or off based on level selection
     if (level == 0) { 
@@ -187,7 +186,7 @@ def adjustColor(colorInHEX) {
     def adjustedColor = "#${r}${g}${b}"
     log.debug("Adjusted color is $adjustedColor")
 	
-    //parent.childSetColorRGB(device.deviceNetworkId, adjustedColor)
+    parent.childSetColorRGB(device.deviceNetworkId, adjustedColor)
 }
 
 def generateEvent(String name, String value) {
