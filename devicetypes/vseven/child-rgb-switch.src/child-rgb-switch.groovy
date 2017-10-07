@@ -147,7 +147,7 @@ def setColor(value) {
 }
 
 def setLevel(value) {
-    def level = Math.min(value as Integer, 99)
+    def level = Math.min(value as Integer, 100)
     log.debug("Level value in percentage: $level")
     sendEvent(name: "level", value: level)
     //parent.childSetLevel(device.deviceNetworkId, level)
