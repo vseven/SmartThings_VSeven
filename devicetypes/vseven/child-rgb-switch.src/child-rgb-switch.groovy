@@ -157,7 +157,7 @@ def setLevel(value) {
 	off() 
     } else {
 	if (device.latestValue("switch") == "off") { on() }
-	def lastColor = device.latestValue("color")
+	def lastColor = device.currentStatus("color")
 	adjustColor(lastColor)
     }
 }
@@ -165,7 +165,7 @@ def setLevel(value) {
 def adjustColor(colorInHEX) {
     // Convert the hex color, apply the level after making sure its valid, then send to parent
     //log.debug("colorInHEX passed in: $colorInHEX")
-    def level = device.latestValue("level")
+    def level = device.currentStatus("level")
     if(level == null)
     	level = 50
     log.debug "level is: ${level}"
