@@ -143,6 +143,12 @@ void off() {
 def setColor(value) {
     toggleTiles("off") //turn off the hard color tiles
     sendEvent(name: "color", value: value.hex)
+    // Since the color selector takes into account lightness we have to reconvert the HEX and adjust the slider
+    def colorRGB = hexToRgb(value.hex)
+    def colorHSL = rgbToHSL(colorRGB)
+    def myLightness = colorHSL.l * 100
+    log.debug("Lightness: $myLightness")
+    sendEvent(name: "level", value: myLightness)
     adjustColor(value.hex)
 }
 
@@ -157,7 +163,8 @@ def setLevel(value) {
 	off() 
     } else {
 	if (device.latestValue("switch") == "off") { on() }
-	def lastColor = device.currentStatus("color")
+	def lastColor = device.latestValue("color")
+	    log.debug("lastColor value is $lastColor")
 	adjustColor(lastColor)
     }
 }
@@ -165,7 +172,8 @@ def setLevel(value) {
 def adjustColor(colorInHEX) {
     // Convert the hex color, apply the level after making sure its valid, then send to parent
     //log.debug("colorInHEX passed in: $colorInHEX")
-    def level = device.currentStatus("level")
+    def level = device.latestValue("level")
+    log.debug("level value is $level")
     if(level == null)
     	level = 50
     log.debug "level is: ${level}"
@@ -197,6 +205,8 @@ def doColorButton(colorName) {
     toggleTiles(colorName.toLowerCase().replaceAll("\\s",""))
     def colorButtonHEX = getColorData(colorName)
     
+    // Update the devices color for the button.
+    sendEvent(name: "color", value: colorButtonHEX)
     adjustColor(colorButtonHEX)
 }
 
@@ -236,6 +246,44 @@ def rgbToHex(rgb) {
     def hexColor = "#${r}${g}${b}"
 
     hexColor
+}
+
+def rgbToHSL(rgb) {
+	def r = rgb.r / 255
+    def g = rgb.g / 255
+    def b = rgb.b / 255
+    def h = 0
+    def s = 0
+    def l = 0
+
+    def var_min = [r,g,b].min()
+    def var_max = [r,g,b].max()
+    def del_max = var_max - var_min
+
+    l = (var_max + var_min) / 2
+
+    if (del_max == 0) {
+            h = 0
+            s = 0
+    } else {
+    	if (l < 0.5) { s = del_max / (var_max + var_min) }
+        else { s = del_max / (2 - var_max - var_min) }
+
+        def del_r = (((var_max - r) / 6) + (del_max / 2)) / del_max
+        def del_g = (((var_max - g) / 6) + (del_max / 2)) / del_max
+        def del_b = (((var_max - b) / 6) + (del_max / 2)) / del_max
+
+        if (r == var_max) { h = del_b - del_g }
+        else if (g == var_max) { h = (1 / 3) + del_r - del_b }
+        else if (b == var_max) { h = (2 / 3) + del_g - del_r }
+
+		if (h < 0) { h += 1 }
+        if (h > 1) { h -= 1 }
+    }
+    def hsl = [:]
+    hsl = [h: h * 100, s: s * 100, l: l]
+
+    hsl
 }
 
 def colorNameToRgb(color) {
