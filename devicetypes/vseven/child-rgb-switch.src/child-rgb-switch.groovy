@@ -155,10 +155,10 @@ def setLevel(value) {
     // Turn on or off based on level selection
     if (level == 0) { 
 	off() 
-    } else if (device.latestValue("switch") == "off") {
-	on()
+    } else {
+	if (device.latestValue("switch") == "off") { on() }
 	def lastColor = device.latestValue("color")
-    adjustColor(lastColor)
+	adjustColor(lastColor)
     }
 }
 
