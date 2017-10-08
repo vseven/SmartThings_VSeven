@@ -21,7 +21,7 @@
 
 // for the UI
 metadata {
-	definition (name: "Child RGB Switch", namespace: "vseven", author: "Alan (vseven) - based on code by Dan Ogorchock") {
+	definition (name: "Child RGB Switch", namespace: "ogiewon", author: "Alan (vseven) - based on code by Dan Ogorchock") {
 	capability "Switch"		
 	capability "Switch Level"
 	capability "Actuator"
@@ -124,8 +124,8 @@ void on() {
     sendEvent(name: "switch", value: "on")
     def lastColor = device.latestValue("color")
     log.debug("On pressed.  Sending last known color value of $lastColor or if null command to white.")
-    //parent.childOn(device.deviceNetworkId)
-    if ( lastColor == Null ) {
+    parent.childOn(device.deviceNetworkId)
+    if ( lastColor == Null ) {  // For initial run
     	white() 
     } else {
     	adjustColor(lastColor)
@@ -135,9 +135,8 @@ void on() {
 void off() {
     toggleTiles("off")
     sendEvent(name: "switch", value: "off")
-    //log.debug("Off pressed.  Send HEX of #000000 directly to parent but don't update device (retain last set color).")
-    //parent.childOff(device.deviceNetworkId)
-    //parent.childSetColorRGB(device.deviceNetworkId, "#000000")
+    //log.debug("Off pressed.  Update parent device.")
+    parent.childOff(device.deviceNetworkId)
 }
 
 def setColor(value) {
@@ -147,14 +146,14 @@ def setColor(value) {
     def colorRGB = hexToRgb(value.hex)
     def colorHSL = rgbToHSL(colorRGB)
     def myLightness = colorHSL.l * 100
-    log.debug("Lightness: $myLightness")
+    // log.debug("Lightness: $myLightness")
     sendEvent(name: "level", value: myLightness)
     adjustColor(value.hex)
 }
 
 def setLevel(value) {
     def level = Math.min(value as Integer, 100)
-    log.debug("Level value in percentage: $level")
+    // log.debug("Level value in percentage: $level")
     sendEvent(name: "level", value: level)
 	
     // Turn on or off based on level selection
@@ -163,7 +162,7 @@ def setLevel(value) {
     } else {
 	if (device.latestValue("switch") == "off") { on() }
 	def lastColor = device.latestValue("color")
-	    log.debug("lastColor value is $lastColor")
+	    // log.debug("lastColor value is $lastColor")
 	adjustColor(lastColor)
     }
 }
@@ -172,7 +171,7 @@ def adjustColor(colorInHEX) {
     // Convert the hex color, apply the level after making sure its valid, then send to parent
     //log.debug("colorInHEX passed in: $colorInHEX")
     def level = device.latestValue("level")
-    log.debug("level value is $level")
+    // log.debug("level value is $level")
     if(level == null)
     	level = 50
     log.debug "level is: ${level}"
@@ -186,7 +185,7 @@ def adjustColor(colorInHEX) {
     def adjustedColor = "#${r}${g}${b}"
     log.debug("Adjusted color is $adjustedColor")
 	
-    //parent.childSetColorRGB(device.deviceNetworkId, adjustedColor)
+    parent.childSetColorRGB(device.deviceNetworkId, adjustedColor)
 }
 
 def generateEvent(String name, String value) {
@@ -324,7 +323,7 @@ def toggleTiles(color) {
         } else {
             //log.debug "Turning ${it} off"
             cmds << sendEvent(name: it, value: "off${it}", displayed: false)
-	}
+      }
     })
 }
 
