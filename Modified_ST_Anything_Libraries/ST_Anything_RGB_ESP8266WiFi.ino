@@ -61,9 +61,9 @@
 //******************************************************************************************
 //Define which Arduino Pins will be used for each device
 //******************************************************************************************
-#define PIN_RGB1_Red           D5  // SmartThings Capability "Color Control"
-#define PIN_RGB1_Green         D6  // SmartThings Capability "Color Control"
-#define PIN_RGB1_Blue          D7  // SmartThings Capability "Color Control"
+#define PIN_RGB1_Red           12  // SmartThings Capability "Color Control"
+#define PIN_RGB1_Green         13  // SmartThings Capability "Color Control"
+#define PIN_RGB1_Blue          15  // SmartThings Capability "Color Control"
 
 //******************************************************************************************
 //ESP8266 WiFi Information
