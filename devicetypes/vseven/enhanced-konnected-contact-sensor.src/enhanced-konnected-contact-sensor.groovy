@@ -91,7 +91,7 @@ switch(state) {
 
 
 def updateLabels (String value) {
-	// log.debug("updateLabels called.  Passed value is $value.  openDisplayLabel is $openDisplayLabel.  closedDisplayLabel is $closedDisplayLabel.")
+	// log.debug("updateLabels called.  Passed value is $value.  displayLabel is $displayLabel.")
 	// Update tile with custom labels
     def myPassedValue
     
