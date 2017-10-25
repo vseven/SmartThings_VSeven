@@ -12,7 +12,8 @@
  *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
  *  for the specific language governing permissions and limitations under the License.
  *
- *  Modified by Allan (vseven) to include custom labels.  Name and namespace also modified to not conflict with existing contact DTH.
+ *  Modified by Allan (vseven) to include custom labels, inverting the status reported, and inverting the background color
+ *  Name and namespace also modified to not conflict with existing contact DTH.
  */
 metadata {
   definition (name: "Enhanced Konnected Contact Sensor", namespace: "vseven", author: "konnected.io") {
