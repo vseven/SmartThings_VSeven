@@ -12,7 +12,7 @@
  *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
  *  for the specific language governing permissions and limitations under the License.
  *
- * Modified by Allan (vseven) to include custom labels.  Name and namespace also modified to not conflict with existing contact DTH.
+ *  Modified by Allan (vseven) to include custom labels.  Name and namespace also modified to not conflict with existing contact DTH.
  */
 metadata {
   definition (name: "Enhanced Konnected Contact Sensor", namespace: "vseven", author: "konnected.io") {
@@ -79,14 +79,14 @@ def updated() {
 def setStatus(state) { 
 switch(state) {
     case "0" :
-	if (invertStatus.equals("true") {
+	if (invertStatus.equals("true")) {
 		sendEvent(name: "contact", value: "open")
 	} else {
 		sendEvent(name: "contact", value: "closed")
 	}
       break
     case "1" :
-	if (invertStatus.equals("true") {
+	if (invertStatus.equals("true")) {
 		sendEvent(name: "contact", value: "closed")
 	} else {
 		sendEvent(name: "contact", value: "open")
