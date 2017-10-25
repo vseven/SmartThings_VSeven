@@ -22,7 +22,6 @@ metadata {
   preferences {
     section("prefs") {
       input(name: "invertStatus", type: "boolean", title: "Invert the contact closure status.  Useful for when you want to reverse the actual contact closure so a closed contact will be reported as Open and a open contact will be reported as Closed.")
-	}
       input(name: "displayLabel", type: "ENUM", title: "Select the text to display for the contact.  First value is when Closed, second when Open.", multiple: false, 
       		required: true, options: ["Closed/Open", "On/Off", "True/False", "Yes/No", "Active/Inactive", "Running/Off", "Heating/Off", "Cooling/Off", "Armed/Disarmed"])
       input(name: "invertColors", type: "boolean", title: "Invert the background colors.  Useful for when you want to show Open with a blue background and Closed with orange.  Does not affect the actual closure state.")
