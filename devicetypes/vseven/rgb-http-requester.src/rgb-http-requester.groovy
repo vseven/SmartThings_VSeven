@@ -33,6 +33,7 @@ metadata {
 	capability "Light"
 
 	command "generateEvent", ["string", "string"]
+		
 	command "softwhite"
 	command "daylight"
 	command "warmwhite"
@@ -71,9 +72,6 @@ metadata {
 			tileAttribute ("device.color", key: "COLOR_CONTROL") {
 				attributeState "color", action:"color control.setColor"
 			}
-		}
- 		valueTile("lastUpdated", "device.lastUpdated", inactiveLabel: false, decoration: "flat", width: 6, height: 2) {
-    			state "default", label:'Last Updated ${currentValue}', backgroundColor:"#ffffff"
 		}
 		standardTile("softwhite", "device.softwhite", width: 2, height: 2, inactiveLabel: false, canChangeIcon: false) {
 		    state "offsoftwhite", label:"soft white", action:"softwhite", icon:"st.illuminance.illuminance.dark", backgroundColor:"#D8D8D8"
@@ -125,7 +123,7 @@ metadata {
 		}
 		main(["switch"])
 		details(["switch", "level", "color", "softwhite","daylight","warmwhite","red","green","blue","white","cyan",
-			 "magenta","orange","purple","yellow","lastUpdated"])
+			 "magenta","orange","purple","yellow"])
 	}
 }
 
@@ -213,16 +211,6 @@ def sendToWebServer(String stringToSend) {
 		]
 	)
 	sendHubCommand(result)
-}
-
-def generateEvent(String name, String value) {
-    //log.debug("Passed values to routine generateEvent in device named $device: Name - $name  -  Value - $value")
-    // The name coming in from ST_Anything will be "dimmerSwitch", but we want to the ST standard "switch" attribute for compatibility with normal SmartApps
-    sendEvent(name: "switch", value: value)
-    // Update lastUpdated date and time
-    def nowDay = new Date().format("MMM dd", location.timeZone)
-    def nowTime = new Date().format("h:mm a", location.timeZone)
-    sendEvent(name: "lastUpdated", value: nowDay + " at " + nowTime, displayed: false)
 }
 
 def doColorButton(colorName) {
