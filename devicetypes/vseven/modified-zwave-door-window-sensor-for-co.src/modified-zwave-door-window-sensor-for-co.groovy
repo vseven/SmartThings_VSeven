@@ -37,18 +37,18 @@ metadata {
 
 	// UI tile definitions
 	tiles (scale: 2) {
-        multiAttributeTile(name:"carbonMonoxideDetector", type: "generic", width: 6, height: 4){
-			tileAttribute ("device.alarmState", key: "PRIMARY_CONTROL") {
+		multiAttributeTile(name:"smoke", type: "lighting", width: 6, height: 4){
+			tileAttribute ("device.smoke", key: "PRIMARY_CONTROL") {
 				attributeState("clear", label:"clear", icon:"st.alarm.smoke.clear", backgroundColor:"#ffffff")
-				attributeState("detected", label:"CO", icon:"st.alarm.carbon-monoxide.carbon-monoxide", backgroundColor:"#e86d13")				
+				attributeState("detected", label:"CO", icon:"st.alarm.smoke.smoke", backgroundColor:"#e86d13")				
 			}
 		}
 		valueTile("battery", "device.battery", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 			state "battery", label:'${currentValue}% battery', unit:""
 		}
 
-		main "carbonMonoxideDetector"
-		details(["carbonMonoxideDetector", "battery"])
+		main "smoke"
+		details(["smoke", "battery"])
 	}
 }
 
@@ -101,9 +101,9 @@ def configure() {
 
 def sensorValueEvent(value) {
 	if (value) {
-		createEvent(name: "carbonMonoxide", value: "clear", descriptionText: "$device.displayName is Normal")
+		createEvent(name: "smoke", value: "clear", descriptionText: "$device.displayName is Normal")
 	} else {
-		createEvent(name: "carbonMonoxide", value: "detected", descriptionText: "$device.displayName is in Alarm")
+		createEvent(name: "smoke", value: "detected", descriptionText: "$device.displayName is in Alarm")
 	}
 }
 
