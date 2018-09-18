@@ -138,15 +138,19 @@ def resetRuntime()
 	updateRuntimeDisplay(0)
 }
 
-def generateEvent(String name, String value) {
-	//log.debug("Passed values to routine generateEvent in device named $device: Name - $name  -  Value - $value")
+def parse(String description) {
+    //log.debug("Passed values to routine generateEvent in device named $device: Name - $name  -  Value - $value")
 	def currentDate = new Date()
 	//log.debug("currentDate time: " + currentDate.time)
 	if (device.currentValue("lastUpdatedTime") == null) {sendEvent(name: "lastUpdatedTime", value: currentDate.time, isStateChange: true)}
 	//log.debug("lastUpdatedTime: " + device.currentValue("lastUpdatedTime"))
 	//log.debug("my calculateRuntime preference is: " + calculateRuntime)
-	
-	// Update runtime.  If the last value matches what we want to track add the time in
+    log.debug "parse(${description}) called"
+    def parts = description.split(" ")
+    def name  = parts.length>0?parts[0].trim():null
+    def value = parts.length>1?parts[1].trim():null
+    if (name && value) {
+	   // Update runtime.  If the last value matches what we want to track add the time in
 	if ((device.currentValue("contact") == calculateRuntime) && ((device.latestValue("contact") != calculateRuntime)) || (device.latestValue("contact") == calculateRuntime)) {
 		//log.debug("Last state of contact matches when we should be tracking or we switch to what we should track so add to runtime")
 		def myDifference = currentDate.time - device.currentValue("lastUpdatedTime")
@@ -156,18 +160,18 @@ def generateEvent(String name, String value) {
 		sendEvent(name: "totalRuntimeInMilliseconds", value: myTotal, displayed: false, isStateChange:true)
 		updateRuntimeDisplay(myTotal)
 	}
-    
-	// Update device
-	sendEvent(name: name,value: value)
-    
-	// Update lastUpdatedTime and the lastUpdated display string
-	sendEvent(name: "lastUpdatedTime", value: currentDate.time, displayed: false)
-	def nowDay = new Date().format("MMM dd", location.timeZone)
-	def nowTime = new Date().format("h:mm a", location.timeZone)
-	sendEvent(name: "lastUpdated", value: nowDay + " at " + nowTime, displayed: false)
-
+        // Update device
+        sendEvent(name: name, value: value)
+        // Update lastUpdated date and time
+        def nowDay = new Date().format("MMM dd", location.timeZone)
+        def nowTime = new Date().format("h:mm a", location.timeZone)
+        sendEvent(name: "lastUpdated", value: nowDay + " at " + nowTime, displayed: false)
 	// Update the display
 	updateLabels(value)
+    }
+    else {
+    	log.debug "Missing either name or value.  Cannot parse!"
+    }
 }
 
 def updateRuntimeDisplay (Number valueInMilliseconds) {
