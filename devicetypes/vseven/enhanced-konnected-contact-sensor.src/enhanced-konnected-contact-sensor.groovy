@@ -16,7 +16,7 @@
  *  Name and namespace also modified to not conflict with existing contact DTH.
  */
 metadata {
-  definition (name: "Enhanced Konnected Contact Sensor", namespace: "vseven", author: "konnected.io") {
+  definition (name: "Enhanced Konnected Contact Sensor", namespace: "vseven", author: "konnected.io", mnmn: "SmartThings", vid: "generic-contact") {
     capability "Contact Sensor"
     capability "Sensor"
   }
