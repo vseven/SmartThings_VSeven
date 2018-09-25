@@ -19,7 +19,7 @@
 import physicalgraph.zigbee.zcl.DataType
 
 metadata {
-	definition (name: "Enhanced SmartSense Humidity/Temp Sensor",namespace: "vseven", author: "SmartThings.  Modified by vseven") {
+	definition (name: "Enhanced SmartSense Humidity/Temp Sensor",namespace: "vseven", author: "SmartThings.  Modified by vseven", mnmn: "SmartThings", vid: "generic-humidity") {
 		capability "Configuration"
 		capability "Battery"
 		capability "Refresh"
