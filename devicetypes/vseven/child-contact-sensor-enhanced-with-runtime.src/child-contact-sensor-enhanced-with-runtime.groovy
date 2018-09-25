@@ -27,7 +27,7 @@
 
  
 metadata {
-	definition (name: "Child Contact Sensor Enhanced with Runtime", namespace: "vseven", author: "Dan Ogorchock (Modified by vseven)") {
+	definition (name: "Child Contact Sensor Enhanced with Runtime", namespace: "vseven", author: "Dan Ogorchock (Modified by vseven)", mnmn: "SmartThings", vid: "generic-contact") {
 	capability "Contact Sensor"
 	capability "Sensor"        
         
