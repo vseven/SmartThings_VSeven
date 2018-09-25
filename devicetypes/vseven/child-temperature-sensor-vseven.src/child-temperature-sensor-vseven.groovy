@@ -24,7 +24,7 @@
  * 
  */
 metadata {
-	definition (name: "Child Temperature Sensor", namespace: "vseven", author: "Daniel Ogorchock", mnmn: "SmartThings", vid: "generic-humidity") {
+	definition (name: "Child Temperature Sensor vseven", namespace: "vseven", author: "Daniel Ogorchock", mnmn: "SmartThings", vid: "generic-humidity") {
 		capability "Temperature Measurement"
 		capability "Sensor"
 
