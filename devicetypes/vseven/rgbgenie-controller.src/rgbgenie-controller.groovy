@@ -19,7 +19,7 @@
 import physicalgraph.zigbee.zcl.DataType
 
 metadata {
-    definition (name: "RGBgenie RGBW Controller", namespace: "vseven", author: "SmartThings - Modified by Allan (vseven)", mnmn: "SmartThings", vid: "generic-rgbw-color-bulb") {
+    definition (name: "RGBgenie Controller", namespace: "vseven", author: "SmartThings - Modified by Allan (vseven)", mnmn: "SmartThings", vid: "generic-rgbw-color-bulb") {
 
         capability "Actuator"
         capability "Color Control"
