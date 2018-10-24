@@ -27,6 +27,7 @@ metadata {
 	definition (name: "Child Temperature Sensor vseven", namespace: "vseven", author: "Daniel Ogorchock", mnmn: "SmartThings", vid: "generic-humidity") {
 		capability "Temperature Measurement"
 		capability "Sensor"
+		capability "Health Check"
 
 		attribute "lastUpdated", "String"
 	}
@@ -76,7 +77,7 @@ metadata {
 
 def parse(String description) {
     log.debug "parse(${description}) called"
-	def parts = description.split(" ")
+    def parts = description.split(" ")
     def name  = parts.length>0?parts[0].trim():null
     def value = parts.length>1?parts[1].trim():null
     if (name && value) {
