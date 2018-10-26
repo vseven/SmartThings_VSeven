@@ -24,13 +24,13 @@ metadata {
 		capability "Refresh"
 		capability "Actuator"
 		capability "Sensor"
-    	capability "Health Check"
-    	capability "Light"
+    		capability "Health Check"
+    		capability "Light"
 
 		command "setWhiteLevel"
 		command "reset"
     
-    	attribute "whiteLevel", "number"
+    		attribute "whiteLevel", "number"
 
 		fingerprint mfr: "0330 ", prod: "0201", model: "D002", deviceJoinName: "RGBgenie RGBW Controller ZW-1002"
 	}
@@ -202,7 +202,6 @@ def setColor(value) {
 
 def setWhiteLevel(percent) {
 	def result = []
-log.debug("setWhiteLevel called with value of ${percent}")
 	if(percent > 99) percent = 99
 	sendEvent(name: "whiteLevel", value: percent)
 	result << zwave.switchColorV3.switchColorSet(red: 0, green: 0, blue: 0, warmWhite: percent, coldWhite: percent)
