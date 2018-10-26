@@ -25,23 +25,22 @@ metadata {
 		capability "Refresh"
 		capability "Actuator"
 		capability "Sensor"
-    capability "Health Check"
-    capability "Light"
+    		capability "Health Check"
+    		capability "Light"
 
 		command "reset"
 
 		fingerprint inClusters: "0x33"
-    fingerprint inClusters: "0x26,0x33"
+    		fingerprint inClusters: "0x26,0x33"
 		fingerprint inClusters: "0x26,0x33,0x98"
 		fingerprint deviceId: "0x11", inClusters: "0x98,0x33"
 		fingerprint deviceId: "0x1102", inClusters: "0x98"		
 		fingerprint mfr: "0086", prod: "0103", model: "0079", deviceJoinName: "Aeotec LED Strip" //US
-    fingerprint mfr: "0086", prod: "0003", model: "0079", deviceJoinName: "Aeotec LED Strip" //EU
+		fingerprint mfr: "0086", prod: "0003", model: "0079", deviceJoinName: "Aeotec LED Strip" //EU
 	}
 
 	simulator {
 	}
-
 
 	tiles(scale: 2) {
 		multiAttributeTile(name:"switch", type: "lighting", width: 6, height: 4, canChangeIcon: true) {
@@ -58,23 +57,33 @@ metadata {
 				attributeState "color", action:"setColor"
 			}
 		}
-  }
-  controlTile("colorTempSliderControl", "device.colorTemperature", "slider", width: 2, height: 2, inactiveLabel: false, range:"(2700..6500)") {
-      state "colorTemperature", action:"color temperature.setColorTemperature"
-  }
+  	}
+  	controlTile("colorTempSliderControl", "device.colorTemperature", "slider", width: 2, height: 2, inactiveLabel: false, range:"(2700..6500)") {
+   	   state "colorTemperature", action:"color temperature.setColorTemperature"
+ 	 }
 	standardTile("reset", "device.reset", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 		state "default", label:"Reset Color", action:"reset", icon:"st.lights.philips.hue-single"
-  }
-  standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-      state "default", label:"Refresh", action:"refresh.refresh", icon:"st.secondary.refresh"
-  }
+  	}
+	standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
+		state "default", label:"Refresh", action:"refresh.refresh", icon:"st.secondary.refresh"
+	}
 
 	main(["switch"])
-  details(["switch", "colorTempSliderControl", "reset", "refresh"])
+	details(["switch", "colorTempSliderControl", "reset", "refresh"])
 }
 
 def updated() {
-	response(refresh())
+     addDeviceWatch
+     response(refresh())
+}
+
+def installed() {
+     addDeviceWatch
+}
+
+def addDeviceWatch() {
+     // Device-Watch simply pings if no device events received for 122 min (checkInterval)
+     sendEvent(name: "checkInterval", value: 2 * 60 * 60 + 2 * 60, displayed: false, data: [protocol: "zwave", hubHardwareId: device.hub.hardwareID, offlinePingable: "1"])
 }
 
 def parse(description) {
@@ -229,4 +238,8 @@ def rgbToHSV(red, green, blue) {
 def huesatToRGB(hue, sat) {
 	def color = colorUtil.hsvToHex(Math.round(hue) as int, Math.round(sat) as int)
 	return colorUtil.hexToRgb(color)
+}
+
+def ping() {
+	refresh()
 }
