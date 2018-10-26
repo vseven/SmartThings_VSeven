@@ -223,7 +223,7 @@ private command(physicalgraph.zwave.Command cmd) {
 	}
 }
 
-private commands(commands, delay=200) {
+private commands(commands, delay=500) {
 	delayBetween(commands.collect{ command(it) }, delay)
 }
 
