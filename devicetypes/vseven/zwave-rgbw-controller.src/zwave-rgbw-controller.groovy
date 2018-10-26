@@ -53,7 +53,7 @@ metadata {
 			}
 		}
   	}
-  controlTile("whiteSliderControl", "device.whiteLevel", "slider", width: 2, height: 2, inactiveLabel: false) {
+   	controlTile("whiteSliderControl", "device.whiteLevel", "slider", width: 2, height: 2, inactiveLabel: false) {
    	   state "whiteLevel", action:"setWhiteLevel", label:'White Level'
  	 }
 	standardTile("reset", "device.reset", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
@@ -64,7 +64,7 @@ metadata {
 	}
 
 	main(["switch"])
-	details(["switch", "colorTempSliderControl", "reset", "refresh"])
+	details(["switch", "whiteSliderControl", "reset", "refresh"])
 }
 
 def updated() {
