@@ -17,7 +17,7 @@
  */
 
 metadata {
-	definition (name: "ZWave RGBW Bulb", namespace: "vseven", author: "vseven (Allan)", ocfDeviceType: "oic.d.light", mnmn: "SmartThings", vid: "generic-rgbw-color-bulb") {
+	definition (name: "ZWave RGBW Controller", namespace: "vseven", author: "vseven (Allan)", ocfDeviceType: "oic.d.light", mnmn: "SmartThings", vid: "generic-rgbw-color-bulb") {
 		capability "Switch Level"
 		capability "Color Control"
 		capability "Switch"
