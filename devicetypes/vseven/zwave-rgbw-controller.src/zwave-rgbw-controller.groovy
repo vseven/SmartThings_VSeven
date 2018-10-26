@@ -68,15 +68,13 @@ metadata {
 }
 
 def updated() {
-     addDeviceWatch
+     // Device-Watch simply pings if no device events received for 62 min (checkInterval)
+     log.debug("Adding checkInterval for health checks")
+     sendEvent(name: "checkInterval", value: 1 * 60 + 2 * 60, displayed: false, data: [protocol: "zwave", hubHardwareId: device.hub.hardwareID, offlinePingable: "1"])
      response(refresh())
 }
 
 def installed() {
-     addDeviceWatch
-}
-
-def addDeviceWatch() {
      // Device-Watch simply pings if no device events received for 62 min (checkInterval)
      log.debug("Adding checkInterval for health checks")
      sendEvent(name: "checkInterval", value: 1 * 60 + 2 * 60, displayed: false, data: [protocol: "zwave", hubHardwareId: device.hub.hardwareID, offlinePingable: "1"])
@@ -203,7 +201,8 @@ def setColor(value) {
 
 def setWhiteLevel(percent) {
 	if(percent > 99) percent = 99
-	command(zwave.switchColorV3.switchColorSet(red:0, green:0, blue:0, percent))
+	sendEvent(name: "whiteLevel", value: percent)
+	result << zwave.switchColorV3.switchColorSet(red: 0, green: 0, blue: 0, warmWhite: percent, coldWhite: percent)
 }
 
 def reset() {
