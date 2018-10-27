@@ -183,12 +183,10 @@ def setColor(value) {
 	if (value.hex) {
 		def c = value.hex.findAll(/[0-9a-fA-F]{2}/).collect { Integer.parseInt(it, 16) }
 		result << zwave.switchColorV3.switchColorSet(red:c[0], green:c[1], blue:c[2], warmWhite:0, coldWhite:0)
-	} else {
-		if (color.hue && color.saturation) {
+	} else if (value.hue && value.saturation) {
 			def rgb = huesatToRGB(value.hue, value.saturation)
 			result << zwave.switchColorV3.switchColorSet(red: rgb[0], green: rgb[1], blue: rgb[2], warmWhite:0, coldWhite:0)
 			sendEvent(name: "whiteLevel", value: 0)
-		}
 	}
 
 	if(value.hue) sendEvent(name: "hue", value: value.hue)
