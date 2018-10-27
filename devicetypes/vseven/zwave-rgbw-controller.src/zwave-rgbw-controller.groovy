@@ -71,14 +71,14 @@ metadata {
 def updated() {
      // Device-Watch simply pings if no device events received for 62 min (checkInterval)
      log.debug("Adding checkInterval for health checks")
-     sendEvent(name: "checkInterval", value: 1 * 60 + 2 * 60, displayed: false, data: [protocol: "zwave", hubHardwareId: device.hub.hardwareID, offlinePingable: "1"])
+     sendEvent(name: "checkInterval", value: 1 * 60 * 60 + 2 * 60, displayed: false, data: [protocol: "zwave", hubHardwareId: device.hub.hardwareID, offlinePingable: "1"])
      response(refresh())
 }
 
 def installed() {
      // Device-Watch simply pings if no device events received for 62 min (checkInterval)
      log.debug("Adding checkInterval for health checks")
-     sendEvent(name: "checkInterval", value: 1 * 60 + 2 * 60, displayed: false, data: [protocol: "zwave", hubHardwareId: device.hub.hardwareID, offlinePingable: "1"])
+     sendEvent(name: "checkInterval", value: 1 * 60 * 60 + 2 * 60, displayed: false, data: [protocol: "zwave", hubHardwareId: device.hub.hardwareID, offlinePingable: "1"])
 }
 
 def parse(description) {
