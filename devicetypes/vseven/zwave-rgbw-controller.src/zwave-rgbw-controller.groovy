@@ -17,20 +17,20 @@
  */
 
 metadata {
-	definition (name: "ZWave RGBW Controller", namespace: "vseven", author: "vseven (Allan)", ocfDeviceType: "oic.d.light", mnmn: "SmartThings", vid: "generic-rgbw-color-bulb") {
+	definition (name: "ZWave RGBW Controller", namespace: "smartthings", author: "SmartThings", ocfDeviceType: "oic.d.light", mnmn: "SmartThings", vid: "generic-rgbw-color-bulb") {
 		capability "Switch Level"
 		capability "Color Control"
 		capability "Switch"
 		capability "Refresh"
 		capability "Actuator"
 		capability "Sensor"
-    		capability "Health Check"
-    		capability "Light"
+    capability "Health Check"
+    capability "Light"
 
 		command "setWhiteLevel"
 		command "reset"
     
-    		attribute "whiteLevel", "number"
+    attribute "whiteLevel", "number"
 
 		fingerprint mfr: "0330 ", prod: "0201", model: "D002", deviceJoinName: "RGBgenie RGBW Controller ZW-1002"
 	}
@@ -53,9 +53,9 @@ metadata {
 				attributeState "color", action:"setColor"
 			}
 		}
-  	}
-   	controlTile("whiteSliderControl", "device.whiteLevel", "slider", width: 2, height: 2, inactiveLabel: false) {
-   	   state "whiteLevel", action:"setWhiteLevel", label:'White Level'
+  }
+  controlTile("whiteSliderControl", "device.whiteLevel", "slider", width: 2, height: 2, inactiveLabel: false) {
+    state "whiteLevel", action:"setWhiteLevel", label:'White Level'
  	 }
 	standardTile("reset", "device.reset", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 		state "default", label:"Reset Color", action:"reset", icon:"st.lights.philips.hue-single"
@@ -69,16 +69,16 @@ metadata {
 }
 
 def updated() {
-     // Device-Watch simply pings if no device events received for 62 min (checkInterval)
+     // Device-Watch simply pings if no device events received for 122 min (checkInterval)
      log.debug("Adding checkInterval for health checks")
-     sendEvent(name: "checkInterval", value: 1 * 60 * 60 + 2 * 60, displayed: false, data: [protocol: "zwave", hubHardwareId: device.hub.hardwareID, offlinePingable: "1"])
+     sendEvent(name: "checkInterval", value: 2 * 60 * 60 + 2 * 60, displayed: false, data: [protocol: "zwave", hubHardwareId: device.hub.hardwareID, offlinePingable: "1"])
      response(refresh())
 }
 
 def installed() {
-     // Device-Watch simply pings if no device events received for 62 min (checkInterval)
+     // Device-Watch simply pings if no device events received for 122 min (checkInterval)
      log.debug("Adding checkInterval for health checks")
-     sendEvent(name: "checkInterval", value: 1 * 60 * 60 + 2 * 60, displayed: false, data: [protocol: "zwave", hubHardwareId: device.hub.hardwareID, offlinePingable: "1"])
+     sendEvent(name: "checkInterval", value: 2 * 60 * 60 + 2 * 60, displayed: false, data: [protocol: "zwave", hubHardwareId: device.hub.hardwareID, offlinePingable: "1"])
 }
 
 def parse(description) {
@@ -184,7 +184,9 @@ def setColor(value) {
 		def c = value.hex.findAll(/[0-9a-fA-F]{2}/).collect { Integer.parseInt(it, 16) }
 		result << zwave.switchColorV3.switchColorSet(red:c[0], green:c[1], blue:c[2], warmWhite:0, coldWhite:0)
 	} else {
-		def rgb = huesatToRGB(value.hue, value.saturation)
+		def hue = (value.hue == null) ? device.currentValue("hue") : value.hue
+		def saturation = (value.saturation == null) ? device.currentValue("saturation") : value.saturation
+		def rgb = huesatToRGB(hue, saturation)
 		result << zwave.switchColorV3.switchColorSet(red: rgb[0], green: rgb[1], blue: rgb[2], warmWhite:0, coldWhite:0)
 	}
 
