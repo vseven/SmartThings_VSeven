@@ -17,7 +17,7 @@
  */
 
 metadata {
-	definition (name: "RGBgenie RGBW Controller", namespace: "rgbgenie", author: "RGBgenie", ocfDeviceType: "oic.d.light", mnmn: "SmartThings", vid: "generic-rgbw-color-bulb") {
+	definition (name: "RGBgenie Z-Wave RGBW Controller", namespace: "rgbgenie", author: "RGBgenie", ocfDeviceType: "oic.d.light", mnmn: "SmartThings", vid: "generic-rgbw-color-bulb") {
 		capability "Switch Level"
 		capability "Color Control"
 		capability "Switch"
