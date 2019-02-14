@@ -208,7 +208,6 @@ def setChannel4Level(percent) {
 }
 
 def CheckOnOff() {
-	log.debug "CheckOnOff called"
 	def ch1 = device.latestValue("channel1Level")
 	def ch2 = device.latestValue("channel2Level")
 	def ch3 = device.latestValue("channel3Level")
@@ -216,11 +215,9 @@ def CheckOnOff() {
 	
   if((ch1 > 0) || (ch2 > 0) || (ch3 > 0) || (ch4 > 0)) {
 	  sendEvent(name: "switch", value: "on")
-	  log.debug "CheckOnOff - A channel is above 0"
   }
   if((ch1 == 0) && (ch2 == 0) && (ch3 == 0) && (ch4 == 0)) {
 	  sendEvent(name: "switch", value: "off")
-	  log.debug "CheckOnOff - No channel is above 0"
   }
 	
 }
