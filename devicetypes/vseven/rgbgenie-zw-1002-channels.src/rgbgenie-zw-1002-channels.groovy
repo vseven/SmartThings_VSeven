@@ -207,7 +207,7 @@ def setChannel4Level(percent) {
 	CheckOnOff
 }
 
-def CheckOnOff {
+def CheckOnOff() {
   if((device.channel1Level > 0) || (device.channel2Level > 0) || (device.channel3Level > 0) || (device.channel4Level > 0)) sendEvent(name: "switch", value: "on")
   if((device.channel1Level = 0) && (device.channel2Level = 0) && (device.channel3Level = 0) && (device.channel4Level = 0)) sendEvent(name: "switch", value: "off")
 	
