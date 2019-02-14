@@ -53,7 +53,7 @@ metadata {
 			}
 		}
   }
-  controlTile("channel1SliderControl", "device.channel1Level", "slider", width: 1, height: 4, inactiveLabel: false) {
+  controlTile("channel1SliderControl", "device.channel1Level", "slider", width: 3, height: 2, inactiveLabel: false) {
     state "channel1Level", action:"setChannel1Level", label:'Channel 1'
  	 }
   controlTile("channel2SliderControl", "device.channel2Level", "slider", width: 3, height: 2, inactiveLabel: true) {
@@ -208,8 +208,15 @@ def setChannel4Level(percent) {
 }
 
 def CheckOnOff() {
-  if((device.channel1Level > 0) || (device.channel2Level > 0) || (device.channel3Level > 0) || (device.channel4Level > 0)) sendEvent(name: "switch", value: "on")
-  if((device.channel1Level = 0) && (device.channel2Level = 0) && (device.channel3Level = 0) && (device.channel4Level = 0)) sendEvent(name: "switch", value: "off")
+	log.debug "CheckOnOff called"
+  if((device.channel1Level > 0) || (device.channel2Level > 0) || (device.channel3Level > 0) || (device.channel4Level > 0)) {
+	  sendEvent(name: "switch", value: "on")
+	  log.debug "CheckOnOff - A channel is above 0"
+  }
+  if((device.channel1Level = 0) && (device.channel2Level = 0) && (device.channel3Level = 0) && (device.channel4Level = 0)) {
+	  sendEvent(name: "switch", value: "off")
+	  log.debug "CheckOnOff - No channel is above 0"
+  }
 	
 }
 
