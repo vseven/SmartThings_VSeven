@@ -171,7 +171,7 @@ def setChannel1Level(percent) {
     
 	commands(result)
 	
-	CheckOnOff
+	CheckOnOff()
 }
 
 def setChannel2Level(percent) {
@@ -182,7 +182,7 @@ def setChannel2Level(percent) {
     
 	commands(result)
 	
-	CheckOnOff
+	CheckOnOff()
 }
 
 def setChannel3Level(percent) {
@@ -193,7 +193,7 @@ def setChannel3Level(percent) {
     
 	commands(result)
 	
-	CheckOnOff
+	CheckOnOff()
 }
 
 def setChannel4Level(percent) {
@@ -204,7 +204,7 @@ def setChannel4Level(percent) {
     
 	commands(result)
 	
-	CheckOnOff
+	CheckOnOff()
 }
 
 def CheckOnOff() {
