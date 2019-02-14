@@ -218,7 +218,7 @@ def CheckOnOff() {
 	  sendEvent(name: "switch", value: "on")
 	  log.debug "CheckOnOff - A channel is above 0"
   }
-  if((ch1 = 0) && (ch2 = 0) && (ch3 = 0) && (ch4 = 0)) {
+  if((ch1 == 0) && (ch2 == 0) && (ch3 == 0) && (ch4 == 0)) {
 	  sendEvent(name: "switch", value: "off")
 	  log.debug "CheckOnOff - No channel is above 0"
   }
