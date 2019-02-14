@@ -53,11 +53,11 @@ metadata {
 			}
 		}
   }
-  controlTile("channel1SliderControl", "device.channel1Level", "slider", width: 3, height: 2, inactiveLabel: false) {
+  controlTile("channel1SliderControl", "device.channel1Level", "slider", width: 1, height: 4, inactiveLabel: false) {
     state "channel1Level", action:"setChannel1Level", label:'Channel 1'
  	 }
   controlTile("channel2SliderControl", "device.channel2Level", "slider", width: 3, height: 2, inactiveLabel: true) {
-    state "channel2Level", action:"setChanne21Level", label:'Channel 2'
+    state "channel2Level", action:"setChannel2Level", label:'Channel 2'
  	 }
   controlTile("channel3SliderControl", "device.channel3Level", "slider", width: 3, height: 2, inactiveLabel: false) {
     state "channel3Level", action:"setChannel3Level", label:'Channel 3'
