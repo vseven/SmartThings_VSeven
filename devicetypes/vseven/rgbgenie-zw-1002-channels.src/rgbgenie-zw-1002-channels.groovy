@@ -1,5 +1,5 @@
 /**
- *  Copyright 2018 RGBgenie
+ *  Copyright 2019 RGBgenie
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  *  in compliance with the License. You may obtain a copy of the License at:
@@ -73,7 +73,7 @@ metadata {
 	}
 
 	main(["switch"])
-	details(["switch", "channel1SliderControl", "channel1Status", "channel2SliderControl", "channel3SliderControl", "channel4SliderControl", "reset", "refresh"])
+	details(["switch", "channel1SliderControl", "channel2SliderControl", "channel3SliderControl", "channel4SliderControl", "reset", "refresh"])
 }
 
 def updated() {
@@ -142,11 +142,19 @@ def zwaveEvent(physicalgraph.zwave.Command cmd) {
 }
 
 def on() {
-	command(zwave.basicV1.basicSet(value: 0xFF))
+	sendEvent(name: "switch", value: "on")
+	setChannel1Level(device.latestValue("channel1Level"))
+	setChannel2Level(device.latestValue("channel2Level"))
+	setChannel3Level(device.latestValue("channel3Level"))
+	setChannel4Level(device.latestValue("channel4Level"))
 }
 
 def off() {
-	command(zwave.basicV1.basicSet(value: 0x00))
+	def result = []
+	sendEvent(name: "switch", value: "off")
+	result << zwave.switchColorV3.switchColorSet(red: 0, green: 0, blue: 0, warmWhite: 0)
+    
+	commands(result)
 }
 
 def refresh() {
@@ -158,37 +166,51 @@ def refresh() {
 def setChannel1Level(percent) {
 	def result = []
 	if(percent > 99) percent = 99
-	sendEvent(name: "channel1evel", value: percent)
+	sendEvent(name: "channelLevel", value: percent)
 	result << zwave.switchColorV3.switchColorSet(red: percent)
     
 	commands(result)
+	
+	CheckOnOff
 }
 
 def setChannel2Level(percent) {
 	def result = []
 	if(percent > 99) percent = 99
-	sendEvent(name: "channe21evel", value: percent)
+	sendEvent(name: "channe2Level", value: percent)
 	result << zwave.switchColorV3.switchColorSet(green: percent)
     
 	commands(result)
+	
+	CheckOnOff
 }
 
 def setChannel3Level(percent) {
 	def result = []
 	if(percent > 99) percent = 99
-	sendEvent(name: "channe31evel", value: percent)
+	sendEvent(name: "channe3Level", value: percent)
 	result << zwave.switchColorV3.switchColorSet(blue: percent)
     
 	commands(result)
+	
+	CheckOnOff
 }
 
 def setChannel4Level(percent) {
 	def result = []
 	if(percent > 99) percent = 99
-	sendEvent(name: "channel4evel", value: percent)
+	sendEvent(name: "channel4Level", value: percent)
 	result << zwave.switchColorV3.switchColorSet(warmWhite: percent)
     
 	commands(result)
+	
+	CheckOnOff
+}
+
+def CheckOnOff {
+  if((device.channel1Level > 0) || (device.channel2Level > 0) || (device.channel3Level > 0) || (device.channel4Level > 0)) sendEvent(name: "switch", value: "on")
+  if((device.channel1Level = 0) && (device.channel2Level = 0) && (device.channel3Level = 0) && (device.channel4Level = 0)) sendEvent(name: "switch", value: "off")
+	
 }
 
 def reset() {
