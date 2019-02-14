@@ -56,7 +56,7 @@ metadata {
   controlTile("channel1SliderControl", "device.channel1Level", "slider", width: 3, height: 2, inactiveLabel: false) {
     state "channel1Level", action:"setChannel1Level", label:'Channel 1'
  	 }
-  controlTile("channel2SliderControl", "device.channe21Level", "slider", width: 3, height: 2, inactiveLabel: true) {
+  controlTile("channel2SliderControl", "device.channel2Level", "slider", width: 3, height: 2, inactiveLabel: true) {
     state "channel2Level", action:"setChanne21Level", label:'Channel 2'
  	 }
   controlTile("channel3SliderControl", "device.channel3Level", "slider", width: 3, height: 2, inactiveLabel: false) {
@@ -166,7 +166,7 @@ def refresh() {
 def setChannel1Level(percent) {
 	def result = []
 	if(percent > 99) percent = 99
-	sendEvent(name: "channelLevel", value: percent)
+	sendEvent(name: "channel1Level", value: percent)
 	result << zwave.switchColorV3.switchColorSet(red: percent)
     
 	commands(result)
@@ -177,7 +177,7 @@ def setChannel1Level(percent) {
 def setChannel2Level(percent) {
 	def result = []
 	if(percent > 99) percent = 99
-	sendEvent(name: "channe2Level", value: percent)
+	sendEvent(name: "channel2Level", value: percent)
 	result << zwave.switchColorV3.switchColorSet(green: percent)
     
 	commands(result)
@@ -188,7 +188,7 @@ def setChannel2Level(percent) {
 def setChannel3Level(percent) {
 	def result = []
 	if(percent > 99) percent = 99
-	sendEvent(name: "channe3Level", value: percent)
+	sendEvent(name: "channel3Level", value: percent)
 	result << zwave.switchColorV3.switchColorSet(blue: percent)
     
 	commands(result)
