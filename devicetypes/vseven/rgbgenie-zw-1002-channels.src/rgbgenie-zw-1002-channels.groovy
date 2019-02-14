@@ -53,17 +53,21 @@ metadata {
 			}
 		}
   }
-  controlTile("channel1SliderControl", "device.channel1Level", "slider", width: 6, height: 2, inactiveLabel: false) {
+  controlTile("channel1SliderControl", "device.channel1Level", "slider", width: 4, height: 1, inactiveLabel: false) {
     state "channel1Level", action:"setChannel1Level", label:'Channel 1'
  	 }
-  controlTile("channel2SliderControl", "device.channe21Level", "slider", width: 6, height: 2, inactiveLabel: false) {
+	
+	valueTile("channel1Status", "device.channel1Level", width: 2, height: 1, inactiveLabel: false, decoration: "flat") {
+		state "channel1Level", label: 'Channel 1: ${currentValue}%'
+	}
+  controlTile("channel2SliderControl", "device.channe21Level", "slider", width: 4, height: 1, inactiveLabel: true) {
     state "channel2Level", action:"setChanne21Level", label:'Channel 2'
  	 }
-  controlTile("channel3SliderControl", "device.channel3Level", "slider", width: 6, height: 2, inactiveLabel: false) {
+  controlTile("channel3SliderControl", "device.channel3Level", "slider", width: 4, height: 1, inactiveLabel: false) {
     state "channel3Level", action:"setChannel3Level", label:'Channel 3'
  	 }
-  controlTile("channel4SliderControl", "device.channel4Level", "slider", width: 6, height: 2, inactiveLabel: false) {
-    state "channel4Level", action:"setChannel1Level", label:'Channel 4'
+  controlTile("channel4SliderControl", "device.channel4Level", "slider", width: 4, height: 1, inactiveLabel: false) {
+    state "channel4Level", action:"setChannel4Level", label:'Channel 4'
  	 }
 	standardTile("reset", "device.reset", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 		state "default", label:"Reset Color", action:"reset", icon:"st.lights.philips.hue-single"
@@ -73,7 +77,7 @@ metadata {
 	}
 
 	main(["switch"])
-	details(["switch", "channel1SliderControl", "channel2SliderControl", "channel3SliderControl", "channel4SliderControl", "reset", "refresh"])
+	details(["switch", "channel1SliderControl", "channel1Status", "channel2SliderControl", "channel3SliderControl", "channel4SliderControl", "reset", "refresh"])
 }
 
 def updated() {
