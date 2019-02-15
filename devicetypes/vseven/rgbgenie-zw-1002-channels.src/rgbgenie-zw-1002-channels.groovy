@@ -145,25 +145,25 @@ def zwaveEvent(physicalgraph.zwave.Command cmd) {
 }
 
 def on() {
-	log.dwbug "On called"
+	log.debug "On called"
 	command(zwave.basicV1.basicSet(value: 0xFF))
-	log.dwbug "sent.  calling set lvl 1"	
+	log.debug "sent.  calling set lvl 1"	
 	setChannel1Level(device.latestValue("channel1Level"))
-	log.dwbug "calling set 2"
+	log.debug "calling set 2"
 	setChannel2Level(device.latestValue("channel2Level"))
-	log.dwbug "calling set 3"
+	log.debug "calling set 3"
 	setChannel3Level(device.latestValue("channel3Level"))
-	log.dwbug "calling set 4"
+	log.debug "calling set 4"
 	setChannel4Level(device.latestValue("channel4Level"))
 }
 
 def off() {
-	log.dwbug "Off called"
+	log.debug "Off called"
 	command(zwave.basicV1.basicSet(value: 0x00))
 }
 
 def setLevel(level) {
-	log.dwbug "setLevel called"
+	log.debug "setLevel called"
 	setLevel(level, 1)
 }
 
@@ -181,12 +181,12 @@ def refresh() {
 def setChannel1Level(percent) {
 	def result = []
 	if(percent > 99) percent = 99
-	log.dwbug "sendEvent"
+	log.debug "sendEvent"
 	sendEvent(name: "channel1Level", value: percent)
-	log.dwbug "On called"
+	log.debug "On called"
 	result << zwave.switchColorV3.switchColorSet(red: percent)
     
-	log.dwbug "sending command"
+	log.debug "sending command"
 	commands(result)
 	
 	CheckOnOff()
@@ -226,7 +226,7 @@ def setChannel4Level(percent) {
 }
 
 def CheckOnOff() {
-	log.dwbug "CheckOnOff called"
+	log.debug "CheckOnOff called"
 	def ch1 = device.latestValue("channel1Level")
 	def ch2 = device.latestValue("channel2Level")
 	def ch3 = device.latestValue("channel3Level")
