@@ -30,7 +30,6 @@ metadata {
 		command "setChannel2Level"
 		command "setChannel3Level"
 		command "setChannel4Level"
-		command "reset"
     
 		attribute "channel1Level", "number"
 		attribute "channel2Level", "number"
@@ -68,15 +67,12 @@ metadata {
   controlTile("channel4SliderControl", "device.channel4Level", "slider", width: 3, height: 2, inactiveLabel: false) {
     state "channel4Level", action:"setChannel4Level", label:'Channel 4'
  	 }
-	standardTile("reset", "device.reset", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-		state "default", label:"Reset", action:"reset", icon:"st.lights.philips.hue-single"
-  	}
 	standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 		state "default", label:"Refresh", action:"refresh.refresh", icon:"st.secondary.refresh"
 	}
 
 	main(["switch"])
-	details(["switch", "channel1SliderControl", "channel2SliderControl", "channel3SliderControl", "channel4SliderControl", "reset", "refresh"])
+	details(["switch", "channel1SliderControl", "channel2SliderControl", "channel3SliderControl", "channel4SliderControl", "refresh"])
 }
 
 def updated() {
@@ -205,15 +201,6 @@ def setChannel4Level(percent) {
 	result << zwave.switchColorV3.switchColorSet(warmWhite: full)
     
 	commands(result)
-}
-
-
-def reset() {
-	log.debug "reset()"
-	setChannel1Level("0")
-	setChannel2Level("0")
-	setChannel3Level("0")
-	setChannel4Level("0")
 }
 
 private command(physicalgraph.zwave.Command cmd) {
