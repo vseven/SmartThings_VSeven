@@ -145,25 +145,14 @@ def zwaveEvent(physicalgraph.zwave.Command cmd) {
 }
 
 def on() {
-	log.debug "On called"
 	command(zwave.basicV1.basicSet(value: 0xFF))
-	log.debug "sent.  calling set lvl 1"	
-	setChannel1Level(device.latestValue("channel1Level"))
-	log.debug "calling set 2"
-	setChannel2Level(device.latestValue("channel2Level"))
-	log.debug "calling set 3"
-	setChannel3Level(device.latestValue("channel3Level"))
-	log.debug "calling set 4"
-	setChannel4Level(device.latestValue("channel4Level"))
 }
 
 def off() {
-	log.debug "Off called"
 	command(zwave.basicV1.basicSet(value: 0x00))
 }
 
 def setLevel(level) {
-	log.debug "setLevel called"
 	setLevel(level, 1)
 }
 
@@ -178,23 +167,12 @@ def refresh() {
 	], 1000)
 }
 
-
-def setWhiteLevel(percent) {
-	def result = []
-	if(percent > 99) percent = 99
-	sendEvent(name: "whiteLevel", value: percent)
-	result << zwave.switchColorV3.switchColorSet(red: 0, green: 0, blue: 0, warmWhite: percent, coldWhite: percent)
-    
-	commands(result)
-}
-
 def setChannel1Level(percent) {
 	def result = []
-	if(percent > 99) percent = 99
-	log.debug "sendEvent"
+	if(percent > 99) percent = 100
 	sendEvent(name: "channel1Level", value: percent)
-	log.debug "On called"
-	result << zwave.switchColorV3.switchColorSet(red: percent, green: 0, blue: 0, warmWhite: 0, coldWhite: 0)
+	def full = percent * 2.55
+	result << zwave.switchColorV3.switchColorSet(red: full, green: 0, blue: 0, warmWhite: 0, coldWhite: 0)
     
 	log.debug "sending command"
 	commands(result)
