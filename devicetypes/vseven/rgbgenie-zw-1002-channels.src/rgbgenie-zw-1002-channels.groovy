@@ -178,18 +178,28 @@ def refresh() {
 	], 1000)
 }
 
+
+def setWhiteLevel(percent) {
+	def result = []
+	if(percent > 99) percent = 99
+	sendEvent(name: "whiteLevel", value: percent)
+	result << zwave.switchColorV3.switchColorSet(red: 0, green: 0, blue: 0, warmWhite: percent, coldWhite: percent)
+    
+	commands(result)
+}
+
 def setChannel1Level(percent) {
 	def result = []
 	if(percent > 99) percent = 99
 	log.debug "sendEvent"
 	sendEvent(name: "channel1Level", value: percent)
 	log.debug "On called"
-	result << zwave.switchColorV3.switchColorSet(red: percent)
+	result << zwave.switchColorV3.switchColorSet(red: percent, green: 0, blue: 0, warmWhite: 0, coldWhite: 0)
     
 	log.debug "sending command"
 	commands(result)
 	
-	CheckOnOff()
+	//CheckOnOff()
 }
 
 def setChannel2Level(percent) {
