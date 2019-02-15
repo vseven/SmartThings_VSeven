@@ -207,28 +207,13 @@ def setChannel4Level(percent) {
 	commands(result)
 }
 
-def CheckOnOff() {
-	log.debug "CheckOnOff called"
-	def ch1 = device.latestValue("channel1Level")
-	def ch2 = device.latestValue("channel2Level")
-	def ch3 = device.latestValue("channel3Level")
-	def ch4 = device.latestValue("channel4Level")
-	
-  if((ch1 > 0) || (ch2 > 0) || (ch3 > 0) || (ch4 > 0)) {
-	  //on()
-  }
-  if((ch1 == 0) && (ch2 == 0) && (ch3 == 0) && (ch4 == 0)) {
-	  //off()
-  }
-	
-}
 
 def reset() {
 	log.debug "reset()"
-	setChannel1Level(0)
-	setChannel2Level(0)
-	setChannel3Level(0)
-	setChannel4Level(0)
+	setChannel1Level("0")
+	setChannel2Level("0")
+	setChannel3Level("0")
+	setChannel4Level("0")
 }
 
 private command(physicalgraph.zwave.Command cmd) {
