@@ -218,10 +218,10 @@ def CheckOnOff() {
 	def ch4 = device.latestValue("channel4Level")
 	
   if((ch1 > 0) || (ch2 > 0) || (ch3 > 0) || (ch4 > 0)) {
-	  sendEvent(name: "switch", value: "on")
+	  on()
   }
   if((ch1 == 0) && (ch2 == 0) && (ch3 == 0) && (ch4 == 0)) {
-	  sendEvent(name: "switch", value: "off")
+	  off()
   }
 	
 }
