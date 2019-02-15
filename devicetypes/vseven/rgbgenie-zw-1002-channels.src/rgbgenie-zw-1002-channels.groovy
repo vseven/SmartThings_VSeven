@@ -144,6 +144,8 @@ def zwaveEvent(physicalgraph.zwave.Command cmd) {
 def on() {
 	sendEvent(name: "switch", value: "on")
 	command(zwave.basicV1.basicSet(value: 0xFF))
+	command(zwave.switchMultilevelV3.switchMultilevelSet(value: 99, dimmingDuration: 1))
+	
 	setChannel1Level(device.latestValue("channel1Level"))
 	setChannel2Level(device.latestValue("channel2Level"))
 	setChannel3Level(device.latestValue("channel3Level"))
