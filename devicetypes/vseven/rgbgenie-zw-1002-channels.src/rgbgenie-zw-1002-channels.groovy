@@ -182,7 +182,7 @@ def setChannel2Level(percent) {
 	def result = []
 	if(percent > 99) percent = 99
 	sendEvent(name: "channel2Level", value: percent)
-	result << zwave.switchColorV3.switchColorSet(green: percent)
+	result << zwave.switchColorV3.switchColorSet(red: 0, green: percent, blue: 0, warmWhite: 0, coldWhite: 0)
     
 	commands(result)
 	
