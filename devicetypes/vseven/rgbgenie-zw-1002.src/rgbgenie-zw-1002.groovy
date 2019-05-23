@@ -37,7 +37,11 @@ metadata {
 
 	simulator {
 	}
-
+	preferences {
+    		section("prefs") {
+      			input(name: "allowAll", type: "boolean", title: "Allow both the color channels and white channel to be on at the same time.")
+      		}
+	}
 	tiles(scale: 2) {
 		multiAttributeTile(name:"switch", type: "lighting", width: 6, height: 4, canChangeIcon: true) {
 			tileAttribute("device.switch", key: "PRIMARY_CONTROL") {
@@ -171,18 +175,26 @@ def setColor(value) {
 	log.debug "setColor: ${value}"
 	if (value.hex) {
 		def c = colorUtil.hexToRgb(value.hex)
-		result << zwave.switchColorV3.switchColorSet(red:c[0], green:c[1], blue:c[2], warmWhite:0, coldWhite:0)
+		if (allowAll.equals("true")) {
+			result << zwave.switchColorV3.switchColorSet(red:c[0], green:c[1], blue:c[2])
+		} else {
+			result << zwave.switchColorV3.switchColorSet(red:c[0], green:c[1], blue:c[2], warmWhite:0, coldWhite:0)
+			sendEvent(name: "whiteLevel", value: 0)
+		}
 	} else {
-		def rgb = huesatToRGB(vale.hue, value.saturation)
-		result << zwave.switchColorV3.switchColorSet(red: rgb[0], green: rgb[1], blue: rgb[2], warmWhite:0, coldWhite:0)
+		def rgb = huesatToRGB(value.hue, value.saturation)
+		if (allowAll.equals("true")) {
+			result << zwave.switchColorV3.switchColorSet(red:c[0], green:c[1], blue:c[2])
+		} else {
+			result << zwave.switchColorV3.switchColorSet(red:c[0], green:c[1], blue:c[2], warmWhite:0, coldWhite:0)
+			sendEvent(name: "whiteLevel", value: 0)
+		}		
 	}
-
-	if(value.hue) sendEvent(name: "hue", value: value.hue)
-	if(value.hex) sendEvent(name: "color", value: value.hex)
 	if(value.switch) sendEvent(name: "switch", value: value.switch)
+	if(value.hex) sendEvent(name: "color", value: value.hex)
+	if(value.hue) sendEvent(name: "hue", value: value.hue)
 	if(value.saturation) sendEvent(name: "saturation", value: value.saturation)
 			
-	sendEvent(name: "whiteLevel", value: 0)
 	
 	commands(result)
 }
@@ -191,8 +203,11 @@ def setWhiteLevel(percent) {
 	def result = []
 	if(percent > 99) percent = 99
 	sendEvent(name: "whiteLevel", value: percent)
-	result << zwave.switchColorV3.switchColorSet(red: 0, green: 0, blue: 0, warmWhite: percent, coldWhite: percent)
-    
+	if (allowAll.equals("true")) {
+		result << zwave.switchColorV3.switchColorSet(warmWhite: percent, coldWhite: percent)
+	} else {
+		result << zwave.switchColorV3.switchColorSet(red: 0, green: 0, blue: 0, warmWhite: percent, coldWhite: percent)
+	}	
 	commands(result)
 }
 
