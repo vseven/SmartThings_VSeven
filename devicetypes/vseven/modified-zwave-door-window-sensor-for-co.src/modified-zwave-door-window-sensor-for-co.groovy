@@ -17,7 +17,7 @@
  */
 
 metadata {
-	definition (name: "Modified Z-Wave Door/Window Sensor for CO", namespace: "vseven", author: "SmartThings.  Modified by vseven.", mnmn: "SmartThings", vid: "generic-smoke") {
+	definition (name: "Modified Z-Wave Door/Window Sensor for CO", namespace: "vseven", author: "SmartThings.  Modified by vseven.", mnmn: "SmartThings", ocfDeviceType: "x.com.st.d.sensor.smoke", vid: "generic-smoke") {
 		capability "Smoke Detector"
 		capability "Sensor"
 		capability "Battery"
