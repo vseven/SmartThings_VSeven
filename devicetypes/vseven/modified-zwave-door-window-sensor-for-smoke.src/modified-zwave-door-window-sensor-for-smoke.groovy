@@ -22,6 +22,7 @@ metadata {
 		capability "Sensor"
 		capability "Battery"
 		capability "Configuration"
+		capability "Health Check"
 
 		fingerprint deviceId: "0x2001", inClusters: "0x30,0x80,0x84,0x85,0x86,0x72"
 		fingerprint deviceId: "0x07", inClusters: "0x30"
@@ -90,6 +91,7 @@ def updated() {
 		cmds = [zwave.wakeUpV1.wakeUpNoMoreInformation().format()]
 	}
 	response(cmds)
+	initialize()
 }
 
 def configure() {
@@ -99,9 +101,22 @@ def configure() {
 	], 6000)
 }
 
+def installed() {
+	initialize()
+}
+
+def initialize() {
+     sendEvent(name: "checkInterval", value: 21720, displayed: false, data: [protocol: "zwave", hubHardwareId: device.hub.hardwareID, offlinePingable: "1"])
+     response(refresh())
+}
+
+def ping() {
+	refresh()
+}
+
 def sensorValueEvent(value) {
 	if (value) {
-		createEvent(name: "smoke", value: "clear", descriptionText: "$device.displayName is Normal")
+		createEvent(name: "smoke", value: "clear", descriptionText: "$device.displayName is Normal")f
 	} else {
 		createEvent(name: "smoke", value: "detected", descriptionText: "$device.displayName is in Alarm")
 	}
