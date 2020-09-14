@@ -27,7 +27,7 @@
 
 // for the UI
 metadata {
-	definition (name: "Child RGB Switch", namespace: "vseven", author: "Allan (vseven) - based on code by Dan Ogorchock", ocfDeviceType: "oic.d.light", mnmn: "SmartThings", vid: "generic-rgbw-color-bulb") {
+	definition (name: "Child RGB Switch VSeven", namespace: "vseven", author: "Allan (vseven) - based on code by Dan Ogorchock", ocfDeviceType: "oic.d.light", mnmn: "SmartThings", vid: "generic-rgbw-color-bulb") {
 	capability "Switch Level"
 	capability "Color Control"
 	capability "Switch"
