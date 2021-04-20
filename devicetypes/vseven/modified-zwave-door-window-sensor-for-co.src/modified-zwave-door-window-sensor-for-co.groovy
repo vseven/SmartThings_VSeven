@@ -17,8 +17,8 @@
  */
 
 metadata {
-	definition(name: "Modified Z-Wave Door/Window Sensor for Smoke", namespace: "vseven", author: "SmartThings.  Modified by vseven.", ocfDeviceType: "x.com.st.d.sensor.smoke", vid: "generic-smoke") {
-		capability "Smoke Detector"
+	definition(name: "Modified Z-Wave Door/Window Sensor for CO", namespace: "vseven", author: "SmartThings.  Modified by vseven.", ocfDeviceType: "x.com.st.d.sensor.smoke", vid: "generic-carbon-monoxide-3") {
+		capability "Carbon Monoxide Detector"
 		capability "Sensor"
 		capability "Battery"
 		capability "Configuration"
@@ -74,18 +74,18 @@ metadata {
 
 	// UI tile definitions
 	tiles(scale: 2) {
-		multiAttributeTile(name: "smoke", type: "generic", width: 6, height: 4) {
-			tileAttribute("device.smoke", key: "PRIMARY_CONTROL") {
+		multiAttributeTile(name: "carbonMonoxide", type: "generic", width: 6, height: 4) {
+			tileAttribute("device.carbonMonoxide", key: "PRIMARY_CONTROL") {
 				attributeState("clear", label: "clear", icon: "st.alarm.smoke.clear", backgroundColor: "#ffffff")
-				attributeState("closed", label: "CO", icon: "st.alarm.smoke.smoke", backgroundColor: "#e86d13")
+				attributeState("closed", label: "CO", icon: "st.alarm.carbon-monoxide.carbon-monoxide", backgroundColor: "#e86d13")
 			}
 		}
 		valueTile("battery", "device.battery", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
 			state "battery", label: '${currentValue}% battery', unit: ""
 		}
 
-		main "smoke"
-		details(["smoke", "battery"])
+		main "carbonMonoxide"
+		details(["carbonMonoxide", "battery"])
 	}
 }
 
@@ -138,9 +138,9 @@ def configure() {
 
 def sensorValueEvent(value) {
 	if (value) {
-		createEvent(name: "smoke", value: "clear", descriptionText: "$device.displayName is Normal")
+		createEvent(name: "carbonMonoxide", value: "clear", descriptionText: "$device.displayName is Normal")
 	} else {
-		createEvent(name: "smoke", value: "detected", descriptionText: "$device.displayName is in Alarm")
+		createEvent(name: "carbonMonoxide", value: "detected", descriptionText: "$device.displayName is in Alarm")
 	}
 }
 
